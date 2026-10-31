@@ -1,0 +1,4 @@
+m65_continue_outside.c:4:12: error: 'continue' statement not in loop statement
+    4 |     if (x) continue;
+      |            ^
+1 error generated.

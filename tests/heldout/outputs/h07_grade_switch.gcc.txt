@@ -1,0 +1,4 @@
+h07_grade_switch.c: In function 'main':
+h07_grade_switch.c:5:13: error: switch quantity not an integer
+    5 |     switch (grade) {
+      |             ^~~~~

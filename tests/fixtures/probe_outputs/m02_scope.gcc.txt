@@ -1,0 +1,11 @@
+m02_scope.c: In function 'main':
+m02_scope.c:4:13: warning: unused variable 'square' [-Wunused-variable]
+    4 |         int square = i * i;
+      |             ^~~~~~
+m02_scope.c:6:23: error: 'i' undeclared (first use in this function)
+    6 |     printf("%d %d\n", i, square);
+      |                       ^
+m02_scope.c:6:23: note: each undeclared identifier is reported only once for each function it appears in
+m02_scope.c:6:26: error: 'square' undeclared (first use in this function)
+    6 |     printf("%d %d\n", i, square);
+      |                          ^~~~~~

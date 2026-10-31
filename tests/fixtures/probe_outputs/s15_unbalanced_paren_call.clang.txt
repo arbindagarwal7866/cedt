@@ -1,0 +1,7 @@
+s15_unbalanced_paren_call.c:4:27: error: expected ')'
+    4 |     printf("%d\n", (a + 2);
+      |                           ^
+s15_unbalanced_paren_call.c:4:11: note: to match this '('
+    4 |     printf("%d\n", (a + 2);
+      |           ^
+1 error generated.

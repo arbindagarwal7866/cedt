@@ -1,0 +1,24 @@
+p09_missing_stdlib.c: In function 'main':
+p09_missing_stdlib.c:3:14: warning: implicit declaration of function 'malloc' [-Wimplicit-function-declaration]
+    3 |     int *p = malloc(10 * sizeof(int));
+      |              ^~~~~~
+p09_missing_stdlib.c:2:1: note: include '<stdlib.h>' or provide a declaration of 'malloc'
+    1 | #include <stdio.h>
+  +++ |+#include <stdlib.h>
+    2 | int main() {
+p09_missing_stdlib.c:3:14: warning: incompatible implicit declaration of built-in function 'malloc' [-Wbuiltin-declaration-mismatch]
+    3 |     int *p = malloc(10 * sizeof(int));
+      |              ^~~~~~
+p09_missing_stdlib.c:3:14: note: include '<stdlib.h>' or provide a declaration of 'malloc'
+p09_missing_stdlib.c:5:5: warning: implicit declaration of function 'free' [-Wimplicit-function-declaration]
+    5 |     free(p);
+      |     ^~~~
+p09_missing_stdlib.c:5:5: note: include '<stdlib.h>' or provide a declaration of 'free'
+p09_missing_stdlib.c:5:5: warning: incompatible implicit declaration of built-in function 'free' [-Wbuiltin-declaration-mismatch]
+p09_missing_stdlib.c:5:5: note: include '<stdlib.h>' or provide a declaration of 'free'
+p09_missing_stdlib.c:6:5: warning: implicit declaration of function 'exit' [-Wimplicit-function-declaration]
+    6 |     exit(0);
+      |     ^~~~
+p09_missing_stdlib.c:6:5: note: include '<stdlib.h>' or provide a declaration of 'exit'
+p09_missing_stdlib.c:6:5: warning: incompatible implicit declaration of built-in function 'exit' [-Wbuiltin-declaration-mismatch]
+p09_missing_stdlib.c:6:5: note: include '<stdlib.h>' or provide a declaration of 'exit'

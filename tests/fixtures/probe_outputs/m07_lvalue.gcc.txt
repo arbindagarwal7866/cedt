@@ -1,0 +1,4 @@
+m07_lvalue.c: In function 'main':
+m07_lvalue.c:4:15: error: lvalue required as left operand of assignment
+    4 |     if (x % 2 = 0)
+      |               ^

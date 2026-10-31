@@ -1,0 +1,2 @@
+prog.c:3:5: error: expected ';' before 'return'
+    3 |     return 0;

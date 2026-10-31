@@ -1,0 +1,7 @@
+m12_return_value_void.c: In function 'show':
+m12_return_value_void.c:4:12: warning: 'return' with a value, in function returning void [-Wreturn-type]
+    4 |     return x;
+      |            ^
+m12_return_value_void.c:2:6: note: declared here
+    2 | void show(int x) {
+      |      ^~~~

@@ -1,0 +1,16 @@
+l10_single_quote_string.c: In function 'main':
+l10_single_quote_string.c:3:12: warning: character constant too long for its type
+    3 |     printf('Hello');
+      |            ^~~~~~~
+l10_single_quote_string.c:3:12: warning: passing argument 1 of 'printf' makes pointer from integer without a cast [-Wint-conversion]
+    3 |     printf('Hello');
+      |            ^~~~~~~
+      |            |
+      |            int
+In file included from l10_single_quote_string.c:1:
+/usr/include/stdio.h:363:43: note: expected 'const char * restrict' but argument is of type 'int'
+  363 | extern int printf (const char *__restrict __format, ...);
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+l10_single_quote_string.c:3:5: warning: format not a string literal and no format arguments [-Wformat-security]
+    3 |     printf('Hello');
+      |     ^~~~~~

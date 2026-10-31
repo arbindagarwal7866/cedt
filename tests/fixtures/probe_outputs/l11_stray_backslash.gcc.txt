@@ -1,0 +1,7 @@
+l11_stray_backslash.c: In function 'main':
+l11_stray_backslash.c:4:15: error: stray '\' in program
+    4 |     int y = 6 \ 2;
+      |               ^
+l11_stray_backslash.c:4:17: error: expected ',' or ';' before numeric constant
+    4 |     int y = 6 \ 2;
+      |                 ^

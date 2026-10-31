@@ -1,0 +1,15 @@
+p03_bad_directive.c:1:2: error: invalid preprocessing directive #inlcude; did you mean #include?
+    1 | #inlcude <stdio.h>
+      |  ^~~~~~~
+      |  include
+p03_bad_directive.c: In function 'main':
+p03_bad_directive.c:3:5: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+    3 |     printf("hi\n");
+      |     ^~~~~~
+p03_bad_directive.c:1:1: note: include '<stdio.h>' or provide a declaration of 'printf'
+  +++ |+#include <stdio.h>
+    1 | #inlcude <stdio.h>
+p03_bad_directive.c:3:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+    3 |     printf("hi\n");
+      |     ^~~~~~
+p03_bad_directive.c:3:5: note: include '<stdio.h>' or provide a declaration of 'printf'

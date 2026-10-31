@@ -1,0 +1,8 @@
+k04_typo_call.c:3:5: error: call to undeclared function 'prinft'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    3 |     prinft("hi\n");
+      |     ^
+k04_typo_call.c:3:5: note: did you mean 'printf'?
+/usr/include/stdio.h:363:12: note: 'printf' declared here
+  363 | extern int printf (const char *__restrict __format, ...);
+      |            ^
+1 error generated.

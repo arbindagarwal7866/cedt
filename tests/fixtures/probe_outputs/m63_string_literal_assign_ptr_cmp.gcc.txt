@@ -1,0 +1,4 @@
+m63_string_literal_assign_ptr_cmp.c: In function 'main':
+m63_string_literal_assign_ptr_cmp.c:5:11: warning: comparison between pointer and integer
+    5 |     if (s == a) printf("x\n");
+      |           ^~

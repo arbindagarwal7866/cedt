@@ -1,0 +1,7 @@
+h01_bubble_sort.c: In function 'main':
+h01_bubble_sort.c:9:28: error: expected ';' before 'a'
+    9 |                 temp = a[j]
+      |                            ^
+      |                            ;
+   10 |                 a[j] = a[j + 1];
+      |                 ~           

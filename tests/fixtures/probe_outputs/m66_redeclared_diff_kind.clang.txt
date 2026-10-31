@@ -1,0 +1,7 @@
+m66_redeclared_diff_kind.c:3:5: error: redefinition of 'count' as different kind of symbol
+    3 | int count = 5;
+      |     ^
+m66_redeclared_diff_kind.c:2:5: note: previous definition is here
+    2 | int count(int n) { return n; }
+      |     ^
+1 error generated.

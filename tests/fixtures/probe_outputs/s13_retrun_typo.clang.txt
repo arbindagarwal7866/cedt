@@ -1,0 +1,4 @@
+s13_retrun_typo.c:4:5: error: use of undeclared identifier 'retrun'
+    4 |     retrun 0;
+      |     ^
+1 error generated.

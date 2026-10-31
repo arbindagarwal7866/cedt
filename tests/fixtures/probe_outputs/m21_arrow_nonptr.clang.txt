@@ -1,0 +1,5 @@
+m21_arrow_nonptr.c:5:22: error: member reference type 'struct Point' is not a pointer; did you mean to use '.'?
+    5 |     printf("%d\n", pt->x);
+      |                    ~~^~
+      |                      .
+1 error generated.

@@ -1,0 +1,4 @@
+m36_excess_init.c:3:26: warning: excess elements in array initializer [-Wexcess-initializers]
+    3 |     int a[3] = {1, 2, 3, 4};
+      |                          ^
+1 warning generated.

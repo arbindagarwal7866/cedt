@@ -1,0 +1,4 @@
+m08_array_assign.c:4:10: error: array type 'char[20]' is not assignable
+    4 |     name = "Arbind";
+      |     ~~~~ ^
+1 error generated.

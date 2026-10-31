@@ -1,0 +1,148 @@
+{
+  "phase": "linker",
+  "description": "Errors from the linker (ld) and the compiler driver - after compilation, while building the final program.",
+  "rules": [
+    {
+      "id": "K001",
+      "title": "Function used but its body was never found (undefined reference)",
+      "phase": "linker",
+      "origin": "linker",
+      "patterns": ["^undefined reference to '(?P<symbol>.+)'$"],
+      "handler": "undefined_reference",
+      "what": "Your code calls `{symbol}`, and the compiler accepted that, but when the LINKER joined everything together it could not find the actual body (definition) of `{symbol}`.",
+      "why": [
+        "The function is declared (prototype) but never defined, or its definition has a different name/spelling.",
+        "The function lives in a library that was not linked (e.g. math functions need `-lm` on Linux).",
+        "The program is split into several files but not all of them were compiled together."
+      ],
+      "fix": ["Write the definition of `{symbol}` (with exactly the same name), or link the library / file that contains it."],
+      "example": {"wrong": "int add(int a, int b);   /* only a prototype */\nint main() { return add(2, 3); }", "right": "int add(int a, int b) { return a + b; }\nint main() { return add(2, 3); }"},
+      "tip": "Compilation has two steps: the COMPILER checks each file, then the LINKER joins them. This error comes from the second step, so it has no line number.",
+      "samples": ["undefined reference to 'add'", "undefined reference to 'main'"]
+    },
+    {
+      "id": "K002",
+      "title": "Same function or variable defined twice",
+      "phase": "linker",
+      "origin": "linker",
+      "patterns": ["^multiple definition of '(?P<symbol>.+?)'(?:; .*)?$"],
+      "handler": "multiple_definition",
+      "what": "`{symbol}` is defined (with a body or a value) in more than one place, so the linker does not know which one to use.",
+      "why": ["Two .c files both define `{symbol}` (for example both have a `main`).", "A variable or function is DEFINED in a header file that is included by several .c files."],
+      "fix": ["Keep exactly one definition. In headers put only declarations (`extern int x;`, prototypes)."],
+      "example": {"wrong": "/* header.h */\nint count = 0;", "right": "/* header.h */\nextern int count;\n/* one .c file */\nint count = 0;"},
+      "samples": ["multiple definition of 'main'", "multiple definition of 'count'"]
+    },
+    {
+      "id": "K003",
+      "title": "Output file is locked (program still running)",
+      "phase": "linker",
+      "origin": "linker",
+      "patterns": ["^cannot open output file (?P<file>.+?): (?P<reason>Permission denied|Invalid argument|No such file or directory)$", "^unable to open output file '(?P<file>[^']+)'.*$"],
+      "what": "The linker could not write `{file}` ({reason}). On Windows this almost always means the previous run of your program is STILL OPEN.",
+      "why": ["The console window of the last run was not closed, so Windows keeps the .exe file locked.", "An antivirus is scanning the new .exe.", "The output folder does not exist or is read-only."],
+      "fix": ["Close the running program's window (or end it in Task Manager), then build again."],
+      "example": {},
+      "samples": ["cannot open output file bin\\Debug\\lab1.exe: Permission denied"]
+    },
+    {
+      "id": "K004",
+      "title": "Library not found",
+      "phase": "linker",
+      "origin": "linker",
+      "patterns": ["^cannot find -l(?P<lib>\\S+?)(?:: No such file or directory)?$", "^library not found for -l(?P<lib>\\S+)$", "^unable to find library -l(?P<lib>\\S+)$"],
+      "what": "The linker was asked to use the library `{lib}` (`-l{lib}`), but it is not installed or not in the search path.",
+      "why": ["The library is not installed, or its name is misspelled in the build command."],
+      "fix": ["Install the library (or fix its name), or remove `-l{lib}` if it is not needed."],
+      "example": {},
+      "samples": ["cannot find -lfoo: No such file or directory", "library not found for -lfoo"]
+    },
+    {
+      "id": "K005",
+      "title": "Linking failed (summary line)",
+      "phase": "linker",
+      "origin": "linker",
+      "level": "info",
+      "patterns": ["ld returned \\d+ exit status", "linker command failed with exit code", "^symbol\\(s\\) not found for architecture", "duplicate symbols? for architecture"],
+      "what": "This line only says that the linker failed. The real reason is in the linker message(s) just above it.",
+      "why": [],
+      "fix": ["Fix the linker error above; this line will then disappear."],
+      "example": {},
+      "samples": ["collect2: error: ld returned 1 exit status", "clang: error: linker command failed with exit code 1 (use -v to see invocation)"]
+    },
+    {
+      "id": "K006",
+      "title": "Array too large for the program",
+      "phase": "linker",
+      "origin": "linker",
+      "patterns": ["relocation truncated to fit"],
+      "what": "A global array (or the total of global data) is so large (over 2 GB) that the linker cannot place it.",
+      "why": ["Declaring something like `int a[1000000000];` - 4 GB of memory."],
+      "fix": ["Use a smaller size (only as much as the problem needs), or allocate with malloc."],
+      "example": {"wrong": "int a[1000000000];", "right": "int a[1000000];"},
+      "samples": ["relocation truncated to fit: R_X86_64_PC32 against symbol 'a'"]
+    },
+    {
+      "id": "K007",
+      "title": "gets() is dangerous",
+      "phase": "linker",
+      "origin": "linker",
+      "patterns": ["the 'gets' function is dangerous and should not be used"],
+      "what": "`gets()` reads a line without checking the array size, so a long input overflows the array. It was removed from the C language in C11.",
+      "why": ["Old textbooks still use gets()."],
+      "fix": ["Use `fgets(name, sizeof name, stdin);` instead (note: fgets keeps the newline character)."],
+      "example": {"wrong": "gets(name);", "right": "fgets(name, sizeof name, stdin);"},
+      "samples": ["warning: the 'gets' function is dangerous and should not be used."]
+    },
+    {
+      "id": "D001",
+      "title": "Source file not found",
+      "phase": "preprocessor",
+      "origin": "driver",
+      "patterns": ["^(?P<file>.+?): No such file or directory$", "^no such file or directory: '(?P<file>.+?)'$"],
+      "what": "The compiler could not open the file `{file}` given on the command line.",
+      "why": ["The file name is misspelled (or the extension is different, e.g. .cpp vs .c).", "The terminal is in a different folder than the file."],
+      "fix": ["Check the name with `ls` (macOS/Linux) or `dir` (Windows), and `cd` into the folder that contains the file."],
+      "example": {"wrong": "gcc progg.c", "right": "gcc prog.c -o prog"},
+      "samples": ["progg.c: No such file or directory", "no such file or directory: 'progg.c'"]
+    },
+    {
+      "id": "D002",
+      "title": "No input files",
+      "phase": "preprocessor",
+      "origin": "driver",
+      "level": "info",
+      "patterns": ["^no input files$"],
+      "what": "The compiler was started without any (existing) source file to compile.",
+      "why": ["The file name was missing or wrong in the command."],
+      "fix": ["Run it like `gcc prog.c -o prog`."],
+      "example": {},
+      "samples": ["no input files"]
+    },
+    {
+      "id": "D003",
+      "title": "Unknown compiler option",
+      "phase": "preprocessor",
+      "origin": "driver",
+      "patterns": ["^unrecognized command[- ]line option '(?P<opt>[^']+)'.*$", "^unknown argument: '(?P<opt>[^']+)'$", "^unsupported option '(?P<opt>[^']+)'.*$"],
+      "what": "The compiler does not understand the option `{opt}`.",
+      "why": ["A typo in the command, or an option meant for a different compiler/version."],
+      "fix": ["Remove or correct `{opt}`."],
+      "example": {},
+      "samples": ["unrecognized command-line option '-stdd=c99'", "unknown argument: '-foo'"]
+    },
+    {
+      "id": "D004",
+      "title": "Warnings treated as errors",
+      "phase": "preprocessor",
+      "origin": "any",
+      "level": "info",
+      "patterns": ["warnings being treated as errors"],
+      "what": "The build uses `-Werror`, so every warning stops the build like an error.",
+      "why": [],
+      "fix": ["Fix the warnings listed above (recommended), or remove -Werror from the build options."],
+      "example": {},
+      "samples": ["cc1: all warnings being treated as errors"]
+    }
+  ]
+}

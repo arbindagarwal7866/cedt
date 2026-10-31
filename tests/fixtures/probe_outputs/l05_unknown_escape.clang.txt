@@ -1,0 +1,4 @@
+l05_unknown_escape.c:3:15: warning: unknown escape sequence '\d' [-Wunknown-escape-sequence]
+    3 |     printf("C:\data\new\n");
+      |               ^~
+1 warning generated.

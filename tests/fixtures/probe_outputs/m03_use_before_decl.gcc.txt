@@ -1,0 +1,5 @@
+m03_use_before_decl.c: In function 'main':
+m03_use_before_decl.c:3:5: error: 'total' undeclared (first use in this function)
+    3 |     total = 10;
+      |     ^~~~~
+m03_use_before_decl.c:3:5: note: each undeclared identifier is reported only once for each function it appears in

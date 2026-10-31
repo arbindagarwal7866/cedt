@@ -1,0 +1,3 @@
+/usr/bin/ld: /tmp/k01_undefined_ref-16975b.o: in function `main':
+k01_undefined_ref.c:(.text+0x1a): undefined reference to `add'
+clang: error: linker command failed with exit code 1 (use -v to see invocation)

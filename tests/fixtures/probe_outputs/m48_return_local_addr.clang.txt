@@ -1,0 +1,4 @@
+m48_return_local_addr.c:4:13: warning: address of stack memory associated with local variable 'x' returned [-Wreturn-stack-address]
+    4 |     return &x;
+      |             ^
+1 warning generated.

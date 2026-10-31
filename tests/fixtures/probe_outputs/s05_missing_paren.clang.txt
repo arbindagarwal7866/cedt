@@ -1,0 +1,7 @@
+s05_missing_paren.c:4:15: error: expected ')'
+    4 |     if (x > 0 {
+      |               ^
+s05_missing_paren.c:4:8: note: to match this '('
+    4 |     if (x > 0 {
+      |        ^
+1 error generated.

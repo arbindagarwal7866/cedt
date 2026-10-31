@@ -1,0 +1,4 @@
+m67_array_index_float.c:5:6: error: array subscript is not an integer
+    5 |     a[i] = 3;
+      |      ^~
+1 error generated.

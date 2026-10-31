@@ -1,0 +1,7 @@
+m14_format_mismatch.c: In function 'main':
+m14_format_mismatch.c:4:14: warning: format '%d' expects argument of type 'int', but argument 2 has type 'double' [-Wformat=]
+    4 |     printf("%d\n", pi);
+      |             ~^     ~~
+      |              |     |
+      |              int   double
+      |             %f

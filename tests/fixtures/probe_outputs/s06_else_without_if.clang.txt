@@ -1,0 +1,8 @@
+s06_else_without_if.c:4:15: warning: if statement has empty body [-Wempty-body]
+    4 |     if (x > 0);
+      |               ^
+s06_else_without_if.c:4:15: note: put the semicolon on a separate line to silence this warning
+s06_else_without_if.c:8:5: error: expected expression
+    8 |     else
+      |     ^
+1 warning and 1 error generated.

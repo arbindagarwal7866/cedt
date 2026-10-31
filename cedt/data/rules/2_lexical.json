@@ -1,0 +1,123 @@
+{
+  "phase": "lexical",
+  "description": "Errors found by the scanner while breaking the text into tokens (characters, numbers, strings, comments).",
+  "rules": [
+    {
+      "id": "L001",
+      "title": "Character that is not part of C/C++",
+      "phase": "lexical",
+      "patterns": [
+        "^stray '(?P<char>.+?)' in program$",
+        "^unexpected character <U\\+(?P<code>[0-9A-Fa-f]+)>$",
+        "^character <U\\+(?P<code>[0-9A-Fa-f]+)> not allowed (?:in an identifier|at the start of an identifier)$",
+        "^non-ASCII characters are not allowed outside of literals and identifiers$",
+        "^treating Unicode character <U\\+(?P<code>[0-9A-Fa-f]+)> as (?:an )?identifier character rather than as '(?P<ascii>.)' symbol$"
+      ],
+      "handler": "stray_char",
+      "what": "Line {line} contains a character that is not part of the C/C++ language: {shown}.",
+      "why": [
+        "Code copied from a PDF, Word file, WhatsApp or a website often contains curly 'smart' quotes, long dashes or invisible non-breaking spaces.",
+        "A typing mistake produced a symbol that C does not use, such as `@`."
+      ],
+      "fix": [
+        "Delete the marked characters and retype them with your keyboard (normal `\"`, `'`, `-` and spaces).",
+        "When copying code, paste it into a plain-text editor first or switch off 'smart quotes'."
+      ],
+      "example": {"wrong": "printf(\u201cHello\u201d);", "right": "printf(\"Hello\");"},
+      "tip": "One wrong character usually produces several errors on the same line (undeclared names, missing brackets). Fix the character and they all go away.",
+      "samples": ["stray '\\342' in program", "unexpected character <U+201C>", "stray '@' in program"]
+    },
+    {
+      "id": "L002",
+      "title": "String or character never closed",
+      "phase": "lexical",
+      "patterns": ["^missing terminating (?:'(?P<q1>[\"'])'|(?P<q2>[\"'])) character$"],
+      "handler": "unterminated_literal",
+      "what": "A {kind} starts with `{quote}` on line {line} but the closing `{quote}` is missing, so the compiler swallowed the rest of the line.",
+      "why": ["The closing quote was forgotten.", "A quote inside the text was not escaped, e.g. `\"He said \"hi\"\"` (write `\\\"` inside strings)."],
+      "fix": ["Add the closing `{quote}` at the end of the text."],
+      "example": {"wrong": "printf(\"Hello World);", "right": "printf(\"Hello World\");"},
+      "tip": "The errors on the following lines (expected expression, expected ';') are side effects of this one.",
+      "samples": ["missing terminating \" character", "missing terminating '\"' character", "missing terminating ' character"]
+    },
+    {
+      "id": "L003",
+      "title": "Invalid number (letters stuck to a number)",
+      "phase": "lexical",
+      "patterns": [
+        "^invalid suffix \"(?P<suffix>[^\"]+)\" on (?P<kind>integer|floating) constant$",
+        "^invalid suffix '(?P<suffix>[^']+)' on (?P<kind>integer|floating) constant$",
+        "^invalid digit '(?P<suffix>[^']+)' in (?P<kind>decimal) constant$",
+        "^(?P<kind>exponent) has no digits$"
+      ],
+      "handler": "invalid_suffix",
+      "what": "The scanner read `{number}` as one number, but `{suffix}` is not a valid ending for a number.",
+      "why": ["Maths-style multiplication such as `2x` (C needs `2 * x`).", "A variable name that starts with a digit, such as `1stNumber` - names must start with a letter or `_`."],
+      "fix": ["Write the multiplication sign: `2 * x`.", "Or rename the variable so it starts with a letter: `number1`."],
+      "example": {"wrong": "int y = 2x + 1;", "right": "int y = 2 * x + 1;"},
+      "samples": ["invalid suffix \"x\" on integer constant", "invalid suffix 'x' on integer constant"]
+    },
+    {
+      "id": "L004",
+      "title": "Number with a leading zero (octal)",
+      "phase": "lexical",
+      "patterns": ["^invalid digit \"(?P<digit>\\d)\" in octal constant$", "^invalid digit '(?P<digit>\\d)' in octal constant$"],
+      "handler": "octal_digit",
+      "what": "In C/C++ a number that starts with `0` is written in OCTAL (base 8), which only uses the digits 0-7. So `{number}` is not a valid number because it contains `{digit}`.",
+      "why": ["Writing dates or months with a leading zero (`08`, `09`), or padding numbers with zeros."],
+      "fix": ["Remove the leading zero: write `{fixed_number}` instead of `{number}`."],
+      "example": {"wrong": "int month = 08;", "right": "int month = 8;"},
+      "tip": "Even without an error, `010` means eight, not ten!",
+      "samples": ["invalid digit \"8\" in octal constant", "invalid digit '9' in octal constant"]
+    },
+    {
+      "id": "L005",
+      "title": "Unknown escape sequence in a string",
+      "phase": "lexical",
+      "patterns": ["^unknown escape sequence:? '\\\\(?P<esc>.+?)'$"],
+      "handler": "unknown_escape",
+      "what": "Inside a string, a backslash `\\` starts a special code like `\\n` (new line) or `\\t` (tab). `\\{esc}` is not one of these codes.",
+      "why": ["A Windows path written with single backslashes, e.g. `\"C:\\data\"`.", "You wanted to print a backslash itself."],
+      "fix": ["To print one backslash write two: `\\\\`.", "For file paths you can also use forward slashes: `\"C:/data/file.txt\"`."],
+      "example": {"wrong": "printf(\"C:\\data\\n\");", "right": "printf(\"C:\\\\data\\n\");"},
+      "samples": ["unknown escape sequence: '\\d'", "unknown escape sequence '\\d'"]
+    },
+    {
+      "id": "L006",
+      "title": "Comment never closed",
+      "phase": "lexical",
+      "patterns": ["^unterminated (?:/\\* )?comment$"],
+      "handler": "unterminated_comment",
+      "what": "A comment started with `/*` on line {line} but there is no `*/` to end it, so the rest of your file became part of the comment.",
+      "why": ["The closing `*/` was forgotten or typed as `/*` again."],
+      "fix": ["Add `*/` where the comment should end (usually at the end of line {line})."],
+      "example": {"wrong": "/* calculate the sum\nint sum = a + b;", "right": "/* calculate the sum */\nint sum = a + b;"},
+      "tip": "For one-line comments `//` is safer - it ends automatically at the end of the line.",
+      "samples": ["unterminated comment", "unterminated /* comment"]
+    },
+    {
+      "id": "L007",
+      "title": "Several characters inside single quotes",
+      "phase": "lexical",
+      "patterns": ["^multi-character character constant$", "^character constant too long for its type$"],
+      "handler": "multichar",
+      "what": "Single quotes `' '` hold exactly ONE character, like `'a'`. `{literal}` has more than one character inside.",
+      "why": ["Text (a string) written with single quotes instead of double quotes.", "A typo such as `'/n'` instead of `'\\n'`."],
+      "fix": ["For text use double quotes: `\"Hello\"`.", "For a single character keep one character: `'y'`."],
+      "example": {"wrong": "printf('Hello');", "right": "printf(\"Hello\");"},
+      "samples": ["multi-character character constant", "character constant too long for its type"]
+    },
+    {
+      "id": "L008",
+      "title": "Empty character constant",
+      "phase": "lexical",
+      "patterns": ["^empty character constant$"],
+      "handler": "empty_char",
+      "what": "`''` (two single quotes with nothing between them) is not a valid character - a character constant must contain exactly one character.",
+      "why": ["You wanted a space `' '`, the null character `'\\0'`, or an empty string `\"\"`."],
+      "fix": ["Use `' '` for a space, `'\\0'` for the null character, or `\"\"` for an empty string."],
+      "example": {"wrong": "char c = '';", "right": "char c = ' ';"},
+      "samples": ["empty character constant"]
+    }
+  ]
+}

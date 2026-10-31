@@ -1,0 +1,6 @@
+m01_undeclared.c: In function 'main':
+m01_undeclared.c:5:20: error: 'conut' undeclared (first use in this function); did you mean 'count'?
+    5 |     printf("%d\n", conut);
+      |                    ^~~~~
+      |                    count
+m01_undeclared.c:5:20: note: each undeclared identifier is reported only once for each function it appears in

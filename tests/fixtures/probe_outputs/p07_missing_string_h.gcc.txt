@@ -1,0 +1,18 @@
+p07_missing_string_h.c: In function 'main':
+p07_missing_string_h.c:4:5: warning: implicit declaration of function 'strcpy' [-Wimplicit-function-declaration]
+    4 |     strcpy(a, "hi");
+      |     ^~~~~~
+p07_missing_string_h.c:2:1: note: include '<string.h>' or provide a declaration of 'strcpy'
+    1 | #include <stdio.h>
+  +++ |+#include <string.h>
+    2 | int main() {
+p07_missing_string_h.c:4:5: warning: incompatible implicit declaration of built-in function 'strcpy' [-Wbuiltin-declaration-mismatch]
+    4 |     strcpy(a, "hi");
+      |     ^~~~~~
+p07_missing_string_h.c:4:5: note: include '<string.h>' or provide a declaration of 'strcpy'
+p07_missing_string_h.c:5:25: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
+    5 |     printf("%d\n", (int)strlen(a));
+      |                         ^~~~~~
+p07_missing_string_h.c:5:25: note: include '<string.h>' or provide a declaration of 'strlen'
+p07_missing_string_h.c:5:25: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
+p07_missing_string_h.c:5:25: note: include '<string.h>' or provide a declaration of 'strlen'

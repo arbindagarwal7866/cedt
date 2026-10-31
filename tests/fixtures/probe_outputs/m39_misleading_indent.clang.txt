@@ -1,0 +1,7 @@
+m39_misleading_indent.c:6:9: warning: misleading indentation; statement is not part of the previous 'if' [-Wmisleading-indentation]
+    6 |         printf("really big\n");
+      |         ^
+m39_misleading_indent.c:4:5: note: previous statement is here
+    4 |     if (x > 5)
+      |     ^
+1 warning generated.

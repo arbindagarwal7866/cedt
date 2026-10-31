@@ -1,0 +1,5 @@
+l09_stray_char.c:3:14: error: expected ';' at end of declaration
+    3 |     int x = 5 @ 3;
+      |              ^
+      |              ;
+1 error generated.

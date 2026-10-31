@@ -1,0 +1,12 @@
+h13_linked_list.c: In function 'main':
+h13_linked_list.c:9:25: warning: implicit declaration of function 'malloc' [-Wimplicit-function-declaration]
+    9 |     struct Node *head = malloc(sizeof(struct Node));
+      |                         ^~~~~~
+h13_linked_list.c:2:1: note: include '<stdlib.h>' or provide a declaration of 'malloc'
+    1 | #include <stdio.h>
+  +++ |+#include <stdlib.h>
+    2 | 
+h13_linked_list.c:9:25: warning: incompatible implicit declaration of built-in function 'malloc' [-Wbuiltin-declaration-mismatch]
+    9 |     struct Node *head = malloc(sizeof(struct Node));
+      |                         ^~~~~~
+h13_linked_list.c:9:25: note: include '<stdlib.h>' or provide a declaration of 'malloc'

@@ -1,0 +1,10 @@
+s16_else_if_two_stmts.c:6:9: warning: misleading indentation; statement is not part of the previous 'if' [-Wmisleading-indentation]
+    6 |         printf("b\n");
+      |         ^
+s16_else_if_two_stmts.c:4:5: note: previous statement is here
+    4 |     if (x > 0)
+      |     ^
+s16_else_if_two_stmts.c:7:5: error: expected expression
+    7 |     else
+      |     ^
+1 warning and 1 error generated.

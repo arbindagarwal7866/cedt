@@ -1,0 +1,1253 @@
+{
+  "phase": "semantic",
+  "description": "Errors found by semantic analysis: names that are not declared, types that do not match, wrong number of arguments...",
+  "rules": [
+    {
+      "id": "M001",
+      "title": "Name used but never declared",
+      "phase": "semantic",
+      "priority": 55,
+      "patterns": [
+        "^'(?P<name>[^']+)' undeclared \\(first use in this function\\)(?:; did you mean '(?P<suggest>[^']+)'\\?)?$",
+        "^'(?P<name>[^']+)' undeclared here \\(not in a function\\)(?:; did you mean '(?P<suggest>[^']+)'\\?)?$",
+        "^'(?P<name>[^']+)' was not declared in this scope(?:; did you mean '(?P<suggest>[^']+)'\\?)?$",
+        "^use of undeclared identifier '(?P<name>[^']+)'(?:; did you mean '(?P<suggest>[^']+)'\\?)?$",
+        "^'(?P<name>[^']+)' is not a member of 'std'(?:; did you mean '(?P<suggest>[^']+)'\\?)?$",
+        "^no member named '(?P<name>[^']+)' in namespace 'std'(?:; did you mean '(?P<suggest>[^']+)'\\?)?$"
+      ],
+      "handler": "undeclared",
+      "what": "You used the name `{name}` on line {line}, but the compiler has never seen it declared (created) before this line.",
+      "why": [
+        "A spelling mistake - C/C++ is case-sensitive, so `Count` and `count` are different names.",
+        "The variable was declared inside another block `{ }` (or a for loop) and does not exist here.",
+        "The variable is declared later in the code, after this line.",
+        "A library name is used without its `#include`."
+      ],
+      "fix": [
+        "Declare `{name}` before using it, e.g. `int {name} = 0;`, or fix the spelling."
+      ],
+      "example": {
+        "wrong": "int count = 0;\nprintf(\"%d\", conut);",
+        "right": "int count = 0;\nprintf(\"%d\", count);"
+      },
+      "samples": [
+        "'conut' undeclared (first use in this function); did you mean 'count'?",
+        "use of undeclared identifier 'i'",
+        "'cout' was not declared in this scope; did you mean 'std::cout'?"
+      ]
+    },
+    {
+      "id": "M002",
+      "title": "Function called before it is declared",
+      "phase": "semantic",
+      "priority": 55,
+      "patterns": [
+        "^implicit declaration of function '(?P<name>[^']+)'(?:; did you mean '(?P<suggest>[^']+)'\\?)?$",
+        "^call to undeclared (?:library )?function '(?P<name>[^']+)'(?: with type '(?P<type>.+?)')?; ISO C99 and later do not support implicit function declarations$",
+        "^incompatible implicit declaration of built-in function '(?P<name>[^']+)'$",
+        "^implicitly declaring library function '(?P<name>[^']+)' with type .*$"
+      ],
+      "handler": "implicit_function",
+      "what": "The function `{name}` is called on line {line}, but the compiler has not seen any declaration of it yet.",
+      "why": [
+        "The `#include` for a library function is missing (printf needs stdio.h, strlen needs string.h, sqrt needs math.h ...).",
+        "Your own function is written AFTER main() and has no prototype above main().",
+        "The function name is misspelled."
+      ],
+      "fix": [
+        "Add the right `#include`, or put a prototype of `{name}` above main()."
+      ],
+      "example": {
+        "wrong": "int main() {\n    printf(\"%d\", square(4));\n}\nint square(int x) { return x * x; }",
+        "right": "int square(int x);   /* prototype */\nint main() {\n    printf(\"%d\", square(4));\n}\nint square(int x) { return x * x; }"
+      },
+      "tip": "Since C99 calling an undeclared function is an error (Clang and GCC 14+ refuse to compile it). Older GCC only warns and guesses that it returns int - which often causes wrong results.",
+      "samples": [
+        "implicit declaration of function 'printf'",
+        "call to undeclared library function 'strcpy' with type 'char *(char *, const char *)'; ISO C99 and later do not support implicit function declarations",
+        "implicit declaration of function 'prinft'; did you mean 'printf'?"
+      ]
+    },
+    {
+      "id": "M003",
+      "title": "Missing return type (implicit int)",
+      "phase": "semantic",
+      "patterns": [
+        "^return type defaults to 'int'$",
+        "^type defaults to 'int' in declaration of '(?P<name>[^']+)'$",
+        "^type specifier missing, defaults to 'int'.*$",
+        "^ISO C\\+\\+ forbids declaration of '(?P<name>[^']+)' with no type$",
+        "^a type specifier is required for all declarations$"
+      ],
+      "handler": "implicit_int",
+      "what": "A function or variable on line {line} has no type written in front of it. Old C assumed `int`; modern C/C++ requires the type.",
+      "why": [
+        "Writing `main()` instead of `int main()` (seen in old textbooks)."
+      ],
+      "fix": [
+        "Write the type explicitly: `int main()`."
+      ],
+      "example": {
+        "wrong": "main() {\n    return 0;\n}",
+        "right": "int main() {\n    return 0;\n}"
+      },
+      "samples": [
+        "return type defaults to 'int'",
+        "type specifier missing, defaults to 'int'; ISO C99 and later do not support implicit int",
+        "a type specifier is required for all declarations"
+      ]
+    },
+    {
+      "id": "M004",
+      "title": "Unknown type name",
+      "phase": "semantic",
+      "priority": 52,
+      "patterns": [
+        "^unknown type name '(?P<name>[^']+)'(?:; did you mean '(?P<suggest>[^']+)'\\?)?$",
+        "^'(?P<name>[^']+)' does not name a type(?:; did you mean '(?P<suggest>[^']+)'\\?)?$",
+        "^no template named '(?P<name>[^']+)'(?:; did you mean '(?P<suggest>[^']+)'\\?)?.*$",
+        "^'(?P<name>[^']+)' is not a type$"
+      ],
+      "handler": "unknown_type",
+      "what": "`{name}` is used as a type on line {line}, but no type with that name exists.",
+      "why": [
+        "A spelling or capitalisation mistake (`Int`, `Float`, `integer`).",
+        "A type that needs a header or `std::` (`string`, `vector`, `bool` in C).",
+        "A struct used without the word `struct` in C."
+      ],
+      "fix": [
+        "Use a valid type such as `int`, `float`, `double`, `char`."
+      ],
+      "example": {
+        "wrong": "Int marks = 90;",
+        "right": "int marks = 90;"
+      },
+      "samples": [
+        "unknown type name 'Int'; did you mean 'int'?",
+        "'strng' does not name a type",
+        "no template named 'vector'"
+      ]
+    },
+    {
+      "id": "M005",
+      "title": "Wrong number of arguments in a function call",
+      "phase": "semantic",
+      "priority": 55,
+      "patterns": [
+        "^too (?P<amount>few|many) arguments to function '(?P<func>[^']+)'(?:; expected (?P<expected>\\d+), have (?P<have>\\d+))?$",
+        "^too (?P<amount>few|many) arguments to function call, expected (?:at least |at most )?(?P<expected>\\d+), have (?P<have>\\d+)$",
+        "^too (?P<amount>few|many) arguments to function call, (?:at least argument|single argument) '(?P<param>[^']+)' (?:must be specified|was not specified)$",
+        "^too (?P<amount>few|many) arguments to function call.*$"
+      ],
+      "handler": "arg_count",
+      "what": "The call on line {line} passes {have} argument(s), but `{func}` is defined to take {expected}.",
+      "why": [
+        "An argument is missing or there is one too many.",
+        "The function was changed but this call was not updated."
+      ],
+      "fix": [
+        "Call it with exactly the parameters listed in its definition: `{signature}`."
+      ],
+      "example": {
+        "wrong": "int add(int a, int b);\nadd(5);",
+        "right": "int add(int a, int b);\nadd(5, 3);"
+      },
+      "samples": [
+        "too few arguments to function 'add'",
+        "too many arguments to function call, expected 2, have 3"
+      ]
+    },
+    {
+      "id": "M006",
+      "title": "Assigning to something that is not a variable (lvalue required)",
+      "phase": "semantic",
+      "priority": 55,
+      "patterns": [
+        "^lvalue required as left operand of assignment$",
+        "^lvalue required as (?P<op>increment|decrement) operand$",
+        "^expression is not assignable$",
+        "^lvalue required as unary '&' operand$",
+        "^cannot take the address of an rvalue of type '(?P<type>[^']+)'$"
+      ],
+      "handler": "lvalue",
+      "what": "The left side of `=` on line {line} is not a variable, so nothing can be stored into it. Only variables (lvalues) can be assigned.",
+      "why": [
+        "`=` was used instead of `==` in a comparison, e.g. `if (x % 2 = 0)`.",
+        "The two sides are swapped: `5 = x` instead of `x = 5`.",
+        "An expression on the left: `x + 1 = y`."
+      ],
+      "fix": [
+        "To COMPARE use `==`; to ASSIGN put the variable on the left: `x = 5;`."
+      ],
+      "example": {
+        "wrong": "if (x % 2 = 0)",
+        "right": "if (x % 2 == 0)"
+      },
+      "samples": [
+        "lvalue required as left operand of assignment",
+        "expression is not assignable"
+      ]
+    },
+    {
+      "id": "M007",
+      "title": "Assigning to a whole array",
+      "phase": "semantic",
+      "priority": 55,
+      "patterns": [
+        "^assignment to expression with array type$",
+        "^array type '(?P<type>[^']+)' is not assignable$",
+        "^incompatible types (?:in assignment|when assigning to type '(?P<to>[^']+)' from type '(?P<from>[^']+)')$",
+        "^invalid array assignment$"
+      ],
+      "handler": "array_assign",
+      "what": "An array cannot be assigned with `=` after it is created. You can only store values into its elements, one at a time (`a[0] = ...`).",
+      "why": [
+        "Treating an array like a single variable: `int a[10];` creates 10 separate values, not one.",
+        "Writing `name = \"Ram\";` for `char name[20];` - this works in Python/Java but not in C."
+      ],
+      "fix": [
+        "Store into one element: `a[i] = value;`.",
+        "For text in a char array, copy it with `strcpy(name, \"Ram\");` (needs `#include <string.h>`)."
+      ],
+      "example": {
+        "wrong": "int a[10];\na = x + y;",
+        "right": "int a[10];\na[0] = x + y;"
+      },
+      "samples": [
+        "assignment to expression with array type",
+        "array type 'char[20]' is not assignable"
+      ]
+    },
+    {
+      "id": "M008",
+      "title": "Same name declared twice",
+      "phase": "semantic",
+      "priority": 50,
+      "patterns": [
+        "^redefinition of '(?P<name>[^']+)'(?: with a different type.*)?$",
+        "^redeclaration of '(?P<name>[^']+)' with no linkage$",
+        "^redeclaration of '(?:[^']*?)(?P<name>\\w+)'$",
+        "^conflicting declaration '(?:[^']*?)(?P<name>\\w+)'$"
+      ],
+      "handler": "redefinition",
+      "what": "`{name}` is declared a second time on line {line}. In one scope each name can only be created once.",
+      "why": [
+        "You wanted to CHANGE the value, but wrote the type again (`int x = 2;` instead of `x = 2;`).",
+        "Two different things were given the same name."
+      ],
+      "fix": [
+        "To change the value, drop the type: `{name} = ...;`",
+        "Or give the second variable a different name."
+      ],
+      "example": {
+        "wrong": "int x = 1;\nint x = 2;",
+        "right": "int x = 1;\nx = 2;"
+      },
+      "samples": [
+        "redefinition of 'x'",
+        "redeclaration of 'int x'"
+      ]
+    },
+    {
+      "id": "M009",
+      "title": "Conflicting types for a function",
+      "phase": "semantic",
+      "priority": 50,
+      "patterns": [
+        "^conflicting types for '(?P<name>[^']+)'(?:; have '(?P<type>.+)')?$",
+        "^functions that differ only in their return type cannot be overloaded$",
+        "^ambiguating new declaration of '(?P<decl>.+)'$"
+      ],
+      "handler": "conflicting_types",
+      "what": "`{name}` is declared in two different ways (different return type or parameters).",
+      "why": [
+        "The function was CALLED before it was declared, so C guessed `int {name}()` - and the real definition later does not match that guess.",
+        "The prototype at the top and the definition below do not match."
+      ],
+      "fix": [
+        "Put a prototype that exactly matches the definition above main()."
+      ],
+      "example": {
+        "wrong": "int square(int x);\nfloat square(float x) { return x * x; }",
+        "right": "float square(float x);\nfloat square(float x) { return x * x; }"
+      },
+      "samples": [
+        "conflicting types for 'area'; have 'float(float)'",
+        "conflicting types for 'square'"
+      ]
+    },
+    {
+      "id": "M010",
+      "title": "Same name used for two different things",
+      "phase": "semantic",
+      "patterns": [
+        "^'(?P<name>[^']+)' redeclared as different kind of symbol$",
+        "^redefinition of '(?P<name>[^']+)' as different kind of symbol$"
+      ],
+      "what": "`{name}` is used both as a function and as a variable (or similar). One name can only mean one thing in the same scope.",
+      "why": [
+        "A variable was given the same name as a function."
+      ],
+      "fix": [
+        "Rename the variable, e.g. `{name}Value` or `total{name}`."
+      ],
+      "example": {
+        "wrong": "int count(int n);\nint count = 5;",
+        "right": "int count(int n);\nint countValue = 5;"
+      },
+      "samples": [
+        "'count' redeclared as different kind of symbol"
+      ]
+    },
+    {
+      "id": "M011",
+      "title": "main must return int",
+      "phase": "semantic",
+      "patterns": [
+        "^return type of 'main' is not 'int'$",
+        "^'::main' must return 'int'$",
+        "^'main' must return 'int'$"
+      ],
+      "handler": "void_main",
+      "what": "`main` must be declared as `int main()`, because it returns a status number to the operating system (0 = success).",
+      "why": [
+        "`void main()` appears in many old textbooks and Turbo C programs, but it is not valid standard C/C++."
+      ],
+      "fix": [
+        "Write `int main()` and end it with `return 0;`."
+      ],
+      "example": {
+        "wrong": "void main() {\n    printf(\"hi\");\n}",
+        "right": "int main() {\n    printf(\"hi\");\n    return 0;\n}"
+      },
+      "samples": [
+        "return type of 'main' is not 'int'",
+        "'::main' must return 'int'"
+      ]
+    },
+    {
+      "id": "M012",
+      "title": "void function returns a value",
+      "phase": "semantic",
+      "patterns": [
+        "^'return' with a value, in function returning void$",
+        "^void function '(?P<func>[^']+)' should not return a value$",
+        "^return-statement with a value, in function returning 'void'$"
+      ],
+      "handler": "return_mismatch",
+      "what": "The function `{func}` is declared `void` (it returns nothing), but line {line} tries to return a value.",
+      "why": [
+        "The function should return a value but was declared void, or the return value is not needed."
+      ],
+      "fix": [
+        "Change `void` to the right return type (e.g. `int {func}(...)`), or write just `return;`."
+      ],
+      "example": {
+        "wrong": "void show(int x) {\n    return x;\n}",
+        "right": "int show(int x) {\n    return x;\n}"
+      },
+      "samples": [
+        "'return' with a value, in function returning void",
+        "void function 'show' should not return a value"
+      ]
+    },
+    {
+      "id": "M013",
+      "title": "return without a value in a non-void function",
+      "phase": "semantic",
+      "patterns": [
+        "^'return' with no value, in function returning non-void$",
+        "^non-void function '(?P<func>[^']+)' should return a value$",
+        "^return-statement with no value, in function returning '(?P<type>[^']+)'$"
+      ],
+      "handler": "return_mismatch",
+      "what": "The function `{func}` promises to return a value, but the `return;` on line {line} returns nothing.",
+      "why": [
+        "The value after `return` was forgotten."
+      ],
+      "fix": [
+        "Return a value of the right type, e.g. `return 0;`, or make the function `void`."
+      ],
+      "example": {
+        "wrong": "int max(int a, int b) {\n    return;\n}",
+        "right": "int max(int a, int b) {\n    return a > b ? a : b;\n}"
+      },
+      "samples": [
+        "'return' with no value, in function returning non-void"
+      ]
+    },
+    {
+      "id": "M014",
+      "title": "Using the result of a void function",
+      "phase": "semantic",
+      "patterns": [
+        "^void value not ignored as it ought to be$",
+        "^invalid use of void expression$",
+        "^initializing '(?P<to>[^']+)' with an expression of incompatible type 'void'$",
+        "^assigning to '(?P<to>[^']+)' from incompatible type 'void'$",
+        "^variable or field '(?P<name>[^']+)' declared void$"
+      ],
+      "handler": "void_value",
+      "what": "Line {line} tries to use the result of a function that returns `void` (nothing).",
+      "why": [
+        "The function prints its result instead of returning it."
+      ],
+      "fix": [
+        "Make the function return the value (change `void` to e.g. `int` and add `return`), or call it on its own line without `=`."
+      ],
+      "example": {
+        "wrong": "void greet(void);\nint r = greet();",
+        "right": "void greet(void);\ngreet();"
+      },
+      "samples": [
+        "void value not ignored as it ought to be",
+        "initializing 'int' with an expression of incompatible type 'void'"
+      ]
+    },
+    {
+      "id": "M015",
+      "title": "Calling something that is not a function",
+      "phase": "semantic",
+      "patterns": [
+        "^called object(?: '(?P<name>[^']+)')? is not a function or function pointer$",
+        "^called object type '(?P<type>[^']+)' is not a function or function pointer$",
+        "^'(?P<name>[^']+)' cannot be used as a function$",
+        "^expression cannot be used as a function$"
+      ],
+      "handler": "not_a_function",
+      "what": "Line {line} uses `( )` after something that is not a function, so the compiler tried to 'call' it.",
+      "why": [
+        "Maths-style multiplication `2(x + 1)` - C needs `2 * (x + 1)`.",
+        "A variable has the same name as a function and hides it."
+      ],
+      "fix": [
+        "Add the `*` operator, or rename the variable that hides the function."
+      ],
+      "example": {
+        "wrong": "int y = 2(x + 1);",
+        "right": "int y = 2 * (x + 1);"
+      },
+      "samples": [
+        "called object is not a function or function pointer",
+        "called object type 'int' is not a function or function pointer"
+      ]
+    },
+    {
+      "id": "M016",
+      "title": "Using [ ] on something that is not an array",
+      "phase": "semantic",
+      "patterns": [
+        "^subscripted value is neither array nor pointer nor vector$",
+        "^subscripted value is not an array, pointer, or vector$",
+        "^invalid types '(?P<types>.+)' for array subscript$"
+      ],
+      "handler": "subscript",
+      "what": "Square brackets `[ ]` on line {line} are used on a variable that is not an array or pointer.",
+      "why": [
+        "The variable was declared as a single value (`int x;`) instead of an array (`int x[10];`).",
+        "Wrong variable name used."
+      ],
+      "fix": [
+        "Declare it as an array, e.g. `int {name}[10];`, or remove the `[ ]`."
+      ],
+      "example": {
+        "wrong": "int x;\nx[0] = 1;",
+        "right": "int x[10];\nx[0] = 1;"
+      },
+      "samples": [
+        "subscripted value is neither array nor pointer nor vector",
+        "subscripted value is not an array, pointer, or vector"
+      ]
+    },
+    {
+      "id": "M017",
+      "title": "Array index is not an integer",
+      "phase": "semantic",
+      "patterns": [
+        "^array subscript is not an integer$"
+      ],
+      "what": "The index inside `[ ]` on line {line} is not a whole number (it is a float/double or a pointer).",
+      "why": [
+        "The loop/index variable was declared as `float` or `double`."
+      ],
+      "fix": [
+        "Declare index variables as `int`, or convert: `a[(int)i]`."
+      ],
+      "example": {
+        "wrong": "double i = 1;\na[i] = 3;",
+        "right": "int i = 1;\na[i] = 3;"
+      },
+      "samples": [
+        "array subscript is not an integer"
+      ]
+    },
+    {
+      "id": "M018",
+      "title": "Operator used with the wrong types",
+      "phase": "semantic",
+      "priority": 45,
+      "patterns": [
+        "^invalid operands to binary (?P<op>\\S+) \\(have '(?P<t1>.+?)' and '(?P<t2>.+?)'\\)$",
+        "^invalid operands to binary expression \\('(?P<t1>.+?)'(?: \\(aka '.+?'\\))? and '(?P<t2>.+?)'(?: \\(aka '.+?'\\))?\\)$"
+      ],
+      "handler": "invalid_operands",
+      "what": "The operator `{op}` on line {line} cannot be used with a `{t1}` and a `{t2}`.",
+      "why": [
+        "`%` (remainder) only works on whole numbers.",
+        "Structures cannot be compared or added with operators in C.",
+        "Two pointers or two strings cannot be added with `+`."
+      ],
+      "fix": [
+        "Use a function or operate on the members/values instead."
+      ],
+      "example": {
+        "wrong": "double a = 5.5;\nint r = a % 2;",
+        "right": "double a = 5.5;\ndouble r = fmod(a, 2);   /* #include <math.h> */"
+      },
+      "samples": [
+        "invalid operands to binary % (have 'double' and 'int')",
+        "invalid operands to binary expression ('double' and 'int')"
+      ]
+    },
+    {
+      "id": "M019",
+      "title": "Use -> for pointers, not .",
+      "phase": "semantic",
+      "patterns": [
+        "^'(?P<name>[^']+)' is a pointer; did you mean to use '->'\\?$",
+        "^request for member '(?P<member>[^']+)' in '(?P<name>[^']+)', which is of pointer type '(?P<type>[^']+)' \\(maybe you meant to use '->' \\?\\)$",
+        "^member reference type '(?P<type>[^']+)' is a pointer; did you mean to use '->'\\?$"
+      ],
+      "handler": "member_access",
+      "what": "`{name}` is a POINTER to a structure. To reach a member through a pointer you must use `->`, not `.`.",
+      "why": [
+        "`p.x` works for a structure variable; for a pointer write `p->x` (which means `(*p).x`)."
+      ],
+      "fix": [
+        "Replace `.` with `->` on line {line}."
+      ],
+      "example": {
+        "wrong": "struct Point *p = &pt;\nprintf(\"%d\", p.x);",
+        "right": "struct Point *p = &pt;\nprintf(\"%d\", p->x);"
+      },
+      "samples": [
+        "'p' is a pointer; did you mean to use '->'?",
+        "member reference type 'struct Point *' is a pointer; did you mean to use '->'?"
+      ]
+    },
+    {
+      "id": "M020",
+      "title": "Use . for structure variables, not ->",
+      "phase": "semantic",
+      "patterns": [
+        "^invalid type argument of '->' \\(have '(?P<type>[^']+)'\\)$",
+        "^member reference type '(?P<type>[^']+)' is not a pointer(?:; did you mean to use '\\.'\\?)?$",
+        "^base operand of '->' has non-pointer type '(?P<type>[^']+)'$",
+        "^base operand of '->' is not a pointer$"
+      ],
+      "handler": "member_access",
+      "what": "`->` is only for POINTERS to structures. This variable is a structure itself (`{type}`), so use `.`.",
+      "why": [
+        "Mixing up `.` (structure variable) and `->` (pointer to structure)."
+      ],
+      "fix": [
+        "Replace `->` with `.` on line {line}."
+      ],
+      "example": {
+        "wrong": "struct Point pt;\nprintf(\"%d\", pt->x);",
+        "right": "struct Point pt;\nprintf(\"%d\", pt.x);"
+      },
+      "samples": [
+        "invalid type argument of '->' (have 'struct Point')",
+        "member reference type 'struct Point' is not a pointer; did you mean to use '.'?"
+      ]
+    },
+    {
+      "id": "M021",
+      "title": "Structure has no such member",
+      "phase": "semantic",
+      "patterns": [
+        "^'(?P<type>.+?)'(?: \\{aka '.+?'\\})? has no member named '(?P<member>[^']+)'(?:; did you mean '(?P<suggest>[^']+)'\\?)?$",
+        "^no member named '(?P<member>[^']+)' in '(?P<type>.+?)'(?:; did you mean '(?P<suggest>[^']+)'\\?)?$",
+        "^request for member '(?P<member>[^']+)' in something not a structure or union$",
+        "^request for member '(?P<member>[^']+)' in '(?P<name>[^']+)', which is of non-class type '(?P<type>[^']+)'$"
+      ],
+      "handler": "no_member",
+      "what": "`{type}` does not contain a member called `{member}`.",
+      "why": [
+        "A spelling mistake in the member name.",
+        "The member was never declared inside the struct/class.",
+        "`.` was used on a variable that is not a structure at all."
+      ],
+      "fix": [
+        "Use one of the members that actually exist: {members}."
+      ],
+      "example": {
+        "wrong": "struct Student { int age; };\ns.agee = 20;",
+        "right": "struct Student { int age; };\ns.age = 20;"
+      },
+      "samples": [
+        "'struct Student' has no member named 'agee'; did you mean 'age'?",
+        "no member named 'agee' in 'struct Student'"
+      ]
+    },
+    {
+      "id": "M022",
+      "title": "Structure type not defined (incomplete type)",
+      "phase": "semantic",
+      "patterns": [
+        "^storage size of '(?P<name>[^']+)' isn't known$",
+        "^variable has incomplete type '(?P<type>[^']+)'$",
+        "^invalid use of undefined type '(?P<type>[^']+)'$",
+        "^dereferencing pointer to incomplete type '(?P<type>[^']+)'$",
+        "^incomplete definition of type '(?P<type>[^']+)'$",
+        "^aggregate '(?P<decl>.+)' has incomplete type and cannot be defined$",
+        "^field '(?P<name>[^']+)' has incomplete type$"
+      ],
+      "handler": "incomplete_type",
+      "what": "The structure type used on line {line} was never defined (or its name is misspelled), so the compiler does not know how big it is.",
+      "why": [
+        "The struct name is spelled differently here than in its definition.",
+        "The `struct ... { ... };` definition is missing or comes after this line."
+      ],
+      "fix": [
+        "Use exactly the same struct name as in the definition, and define the struct above its first use."
+      ],
+      "example": {
+        "wrong": "struct Student { int roll; };\nstruct Studnet s;",
+        "right": "struct Student { int roll; };\nstruct Student s;"
+      },
+      "samples": [
+        "storage size of 's' isn't known",
+        "variable has incomplete type 'struct Studnet'"
+      ]
+    },
+    {
+      "id": "M023",
+      "title": "switch on a value that is not a whole number",
+      "phase": "semantic",
+      "patterns": [
+        "^switch quantity not an integer$",
+        "^statement requires expression of integer type \\('(?P<type>[^']+)' invalid\\)$"
+      ],
+      "handler": "switch_type",
+      "what": "`switch` only works with whole-number values (int, char, enum). It cannot switch on strings, floats or doubles.",
+      "why": [
+        "Trying to switch on a string such as a command name, or on a float."
+      ],
+      "fix": [
+        "Use an if / else-if chain instead, comparing strings with `strcmp(a, b) == 0`."
+      ],
+      "example": {
+        "wrong": "switch (cmd) {\n    case \"start\": ...\n}",
+        "right": "if (strcmp(cmd, \"start\") == 0) {\n    ...\n}"
+      },
+      "samples": [
+        "switch quantity not an integer",
+        "statement requires expression of integer type ('char *' invalid)"
+      ]
+    },
+    {
+      "id": "M024",
+      "title": "case label is not a constant",
+      "phase": "semantic",
+      "patterns": [
+        "^case label does not reduce to an integer constant$",
+        "^expression is not an integer constant expression$",
+        "^integer constant expression must have integer type, not '(?P<type>[^']+)'$",
+        "^the value of '(?P<name>[^']+)' is not usable in a constant expression$",
+        "^'(?P<name>[^']+)' cannot appear in a constant-expression$",
+        "^pointers are not permitted as case values$"
+      ],
+      "what": "Every `case` label must be a constant known at compile time (like `1`, `'a'` or a `#define`), not a variable or a string.",
+      "why": [
+        "A variable was used as a case label (`case a:`).",
+        "A string was used (`case \"yes\":`)."
+      ],
+      "fix": [
+        "Use a literal value or a `#define`/`enum` constant. To compare with variables, use if / else-if."
+      ],
+      "example": {
+        "wrong": "int a = 2;\nswitch (x) { case a: ... }",
+        "right": "#define TWO 2\nswitch (x) { case TWO: ... }"
+      },
+      "samples": [
+        "case label does not reduce to an integer constant",
+        "expression is not an integer constant expression"
+      ]
+    },
+    {
+      "id": "M025",
+      "title": "Duplicate case value",
+      "phase": "semantic",
+      "patterns": [
+        "^duplicate case value(?: '(?P<value>[^']+)')?$"
+      ],
+      "what": "Two `case` labels in the same switch have the same value, so the second one could never be reached.",
+      "why": [
+        "Copy-paste of a case block without changing the value."
+      ],
+      "fix": [
+        "Give every case a different value."
+      ],
+      "example": {
+        "wrong": "case 1: ...\ncase 1: ...",
+        "right": "case 1: ...\ncase 2: ..."
+      },
+      "samples": [
+        "duplicate case value",
+        "duplicate case value '1'"
+      ]
+    },
+    {
+      "id": "M026",
+      "title": "break / continue outside a loop",
+      "phase": "semantic",
+      "patterns": [
+        "^(?P<kw>break) statement not within loop or switch$",
+        "^'(?P<kw>break)' statement not in loop or switch statement$",
+        "^(?P<kw>continue) statement not within a loop$",
+        "^'(?P<kw>continue)' statement not in loop statement$"
+      ],
+      "handler": "break_outside",
+      "what": "`{kw}` on line {line} is not inside a loop{switch_text}. `{kw}` only works inside for/while/do{switch_text}.",
+      "why": [
+        "`break` was used to leave an `if` - but `if` is not a loop.",
+        "A `;` right after `for (...)` or `while (...)` ended the loop, leaving the block below outside it."
+      ],
+      "fix": [
+        "Remove the `{kw}`, or move it inside the loop."
+      ],
+      "example": {
+        "wrong": "if (x > 1)\n    break;",
+        "right": "while (x > 1) {\n    break;\n}"
+      },
+      "samples": [
+        "break statement not within loop or switch",
+        "'continue' statement not in loop statement"
+      ]
+    },
+    {
+      "id": "M027",
+      "title": "Pointer and integer mixed up",
+      "phase": "semantic",
+      "priority": 50,
+      "patterns": [
+        "^(?P<what>.+?) makes (?P<kind>pointer from integer|integer from pointer) without a cast$",
+        "^incompatible (?P<kind>integer to pointer|pointer to integer) conversion (?P<what>.+?)(?:; (?:take the address with &|dereference with \\*|remove &|remove \\*))?$"
+      ],
+      "handler": "int_conversion",
+      "what": "On line {line} a number is used where an address (pointer) is needed, or the other way round.",
+      "why": [
+        "`&` is missing (scanf and pointer parameters need addresses).",
+        "Double quotes `\"a\"` (a string = pointer) used where a single char `'a'` was meant.",
+        "A single character `s[0]` passed where a whole string is needed."
+      ],
+      "fix": [
+        "Check what the variable/function expects: an address (`&x`, array name) or a value (`x`, `*p`)."
+      ],
+      "example": {
+        "wrong": "char c = \"a\";",
+        "right": "char c = 'a';"
+      },
+      "samples": [
+        "initialization of 'int *' from 'int' makes pointer from integer without a cast",
+        "passing argument 1 of 'strlen' makes pointer from integer without a cast",
+        "incompatible integer to pointer conversion initializing 'int *' with an expression of type 'int'"
+      ]
+    },
+    {
+      "id": "M028",
+      "title": "Incompatible pointer types",
+      "phase": "semantic",
+      "patterns": [
+        "^(?P<what>.+?) from incompatible pointer type '(?P<from>[^']+)'$",
+        "^incompatible pointer types (?P<what>.+)$"
+      ],
+      "what": "A pointer of one type is stored into a pointer of another type on line {line} (for example the address of a float into an `int *`).",
+      "why": [
+        "The pointer and the variable it points to were declared with different types."
+      ],
+      "fix": [
+        "Make the pointer type match the variable: `float *p = &f;`."
+      ],
+      "example": {
+        "wrong": "float f = 2.5;\nint *p = &f;",
+        "right": "float f = 2.5;\nfloat *p = &f;"
+      },
+      "samples": [
+        "assignment to 'int *' from incompatible pointer type 'float *'",
+        "incompatible pointer types assigning to 'int *' from 'float *'"
+      ]
+    },
+    {
+      "id": "M029",
+      "title": "Changing a const variable",
+      "phase": "semantic",
+      "patterns": [
+        "^assignment of read-only (?:variable|location|parameter|member) '(?P<name>[^']+)'$",
+        "^(?:increment|decrement) of read-only (?:variable|location|parameter) '(?P<name>[^']+)'$",
+        "^cannot assign to variable '(?P<name>[^']+)' with const-qualified type '(?P<type>[^']+)'$",
+        "^read-only variable is not assignable$"
+      ],
+      "what": "`{name}` was declared `const` (constant), so its value cannot be changed after it is created.",
+      "why": [
+        "The variable really should change - then it must not be const.",
+        "You meant to change a different variable."
+      ],
+      "fix": [
+        "Remove `const` from the declaration if the value must change, or do not assign to it."
+      ],
+      "example": {
+        "wrong": "const int MAX = 10;\nMAX = 20;",
+        "right": "int max = 10;\nmax = 20;"
+      },
+      "samples": [
+        "assignment of read-only variable 'MAX'",
+        "cannot assign to variable 'MAX' with const-qualified type 'const int'"
+      ]
+    },
+    {
+      "id": "M030",
+      "title": "Using * on something that is not a pointer",
+      "phase": "semantic",
+      "patterns": [
+        "^invalid type argument of unary '\\*' \\(have '(?P<type>[^']+)'\\)$",
+        "^indirection requires pointer operand \\('(?P<type>[^']+)' invalid\\)$"
+      ],
+      "what": "`*` (dereference) on line {line} is applied to a `{type}`, which is not a pointer. Only pointers can be dereferenced.",
+      "why": [
+        "The variable is a normal value, not a pointer.",
+        "`*` was meant as multiplication but has nothing on its left side."
+      ],
+      "fix": [
+        "Remove the `*`, or declare/use a pointer (`int *p = &x;` then `*p`)."
+      ],
+      "example": {
+        "wrong": "int x = 5;\nprintf(\"%d\", *x);",
+        "right": "int x = 5;\nprintf(\"%d\", x);"
+      },
+      "samples": [
+        "invalid type argument of unary '*' (have 'int')",
+        "indirection requires pointer operand ('int' invalid)"
+      ]
+    },
+    {
+      "id": "M031",
+      "title": "Array initialised with a variable size",
+      "phase": "semantic",
+      "patterns": [
+        "^variable-sized object may not be initialized.*$"
+      ],
+      "what": "The array on line {line} has a VARIABLE size (like `int a[n]`). Such arrays cannot be given starting values with `= {...}`.",
+      "why": [
+        "The size is a variable, so the compiler cannot check the initial values at compile time."
+      ],
+      "fix": [
+        "Use a constant size (`#define N 5` then `int a[N] = {0};`), or set the values with a loop / `memset`."
+      ],
+      "example": {
+        "wrong": "int n = 5;\nint a[n] = {0};",
+        "right": "#define N 5\nint a[N] = {0};"
+      },
+      "samples": [
+        "variable-sized object may not be initialized",
+        "variable-sized object may not be initialized except with an empty initializer"
+      ]
+    },
+    {
+      "id": "M032",
+      "title": "Array size missing",
+      "phase": "semantic",
+      "patterns": [
+        "^array size missing in '(?P<name>[^']+)'$",
+        "^definition of variable with array type needs an explicit size or an initializer$",
+        "^storage size of '(?P<name>[^']+)' isn't constant$",
+        "^size of array '(?P<name>[^']+)' is negative$",
+        "^size of array (?:'(?P<name>[^']+)' )?has non-integer type$"
+      ],
+      "what": "The array on line {line} has no valid size. An array needs a size in `[ ]` or a list of starting values.",
+      "why": [
+        "`int a[];` without a size and without `= {...}`."
+      ],
+      "fix": [
+        "Give a size: `int a[10];`, or initial values: `int a[] = {1, 2, 3};`."
+      ],
+      "example": {
+        "wrong": "int a[];",
+        "right": "int a[10];"
+      },
+      "samples": [
+        "array size missing in 'a'",
+        "definition of variable with array type needs an explicit size or an initializer"
+      ]
+    },
+    {
+      "id": "M033",
+      "title": "Too many values in an array initialiser",
+      "phase": "semantic",
+      "patterns": [
+        "^excess elements in (?:array|scalar|struct|char array) initializer$",
+        "^too many initializers for '(?P<type>[^']+)'$",
+        "^initializer-string for (?:array of '?char'?|char array|'(?P<type>[^']+)') is too long$"
+      ],
+      "handler": "excess_init",
+      "what": "More values are given than the array (or string) can hold on line {line}.",
+      "why": [
+        "The array size is too small for the list of values.",
+        "A char array has no room for the hidden `\\0` that ends every string."
+      ],
+      "fix": [
+        "Make the array bigger, or leave the size empty so the compiler counts: `int a[] = {1, 2, 3, 4};`."
+      ],
+      "example": {
+        "wrong": "char s[5] = \"hello\";   /* needs 6 places */",
+        "right": "char s[6] = \"hello\";"
+      },
+      "samples": [
+        "excess elements in array initializer",
+        "initializer-string for array of 'char' is too long"
+      ]
+    },
+    {
+      "id": "M034",
+      "title": "Initialiser that does not fit the variable",
+      "phase": "semantic",
+      "patterns": [
+        "^invalid initializer$",
+        "^array initializer must be an initializer list(?: or (?:wide )?string literal)?$",
+        "^incompatible types when initializing type '(?P<to>[^']+)' using type '(?P<from>[^']+)'$"
+      ],
+      "what": "The starting value on line {line} cannot be stored in this variable (for example a single value for a whole array).",
+      "why": [
+        "An array was initialised with one value instead of a `{...}` list.",
+        "A struct was assigned to a number or vice versa."
+      ],
+      "fix": [
+        "Use `{ }` for arrays: `int a[3] = {0};`, and make sure the value has the variable's type."
+      ],
+      "example": {
+        "wrong": "int a[3] = 5;",
+        "right": "int a[3] = {5, 5, 5};"
+      },
+      "samples": [
+        "invalid initializer",
+        "array initializer must be an initializer list"
+      ]
+    },
+    {
+      "id": "M035",
+      "title": "Wrong type of argument passed to a function",
+      "phase": "semantic",
+      "priority": 40,
+      "patterns": [
+        "^incompatible type for argument (?P<argn>\\d+) of '(?P<func>[^']+)'$",
+        "^passing '(?P<from>.+?)' to parameter of incompatible type '(?P<to>.+?)'$",
+        "^(?:assigning to|initializing|returning) '(?P<to>.+?)' (?:with an expression of|from) incompatible type '(?P<from>.+?)'$",
+        "^incompatible types when (?P<what>.+)$"
+      ],
+      "what": "A value of the wrong type is used on line {line} - the compiler cannot convert it automatically.",
+      "why": [
+        "A struct, array or string is passed/assigned where a number is expected (or the reverse)."
+      ],
+      "fix": [
+        "Pass a value of the type that the function or variable expects."
+      ],
+      "example": {
+        "wrong": "struct P p;\nint x = p;",
+        "right": "struct P p;\nint x = p.x;"
+      },
+      "samples": [
+        "incompatible type for argument 1 of 'f'",
+        "passing 'struct P' to parameter of incompatible type 'int'"
+      ]
+    },
+    {
+      "id": "M036",
+      "title": "Global variable initialised with a non-constant",
+      "phase": "semantic",
+      "patterns": [
+        "^initializer element is not constant$",
+        "^initializer element is not a compile-time constant$",
+        "^variably modified '(?P<name>[^']+)' at file scope$"
+      ],
+      "what": "Variables declared OUTSIDE functions (global variables) can only be initialised with constant values in C, not with other variables or function calls.",
+      "why": [
+        "`int n = 5; int m = n * 2;` written above main()."
+      ],
+      "fix": [
+        "Move the declaration inside main(), or initialise it with a constant / `#define`."
+      ],
+      "example": {
+        "wrong": "int n = 5;\nint m = n * 2;   /* outside main */",
+        "right": "#define N 5\nint m = N * 2;"
+      },
+      "samples": [
+        "initializer element is not constant"
+      ]
+    },
+    {
+      "id": "M037",
+      "title": "Variable declared right after a case label",
+      "phase": "semantic",
+      "patterns": [
+        "^a label can only be part of a statement and a declaration is not a statement$",
+        "^label followed by a declaration is a C23 extension$",
+        "^jump to case label$",
+        "^cannot jump from switch statement to this case label$",
+        "^jump bypasses variable initialization$",
+        "^crosses initialization of '(?P<decl>.+)'$"
+      ],
+      "what": "A variable is declared directly inside a `case` without its own `{ }` block. Jumping to the next case would skip its initialisation.",
+      "why": [
+        "Declaring a variable right after `case 1:`."
+      ],
+      "fix": [
+        "Put braces around the code of that case: `case 1: { int y = 5; ... break; }`."
+      ],
+      "example": {
+        "wrong": "case 1:\n    int y = 5;\n    break;",
+        "right": "case 1: {\n    int y = 5;\n    break;\n}"
+      },
+      "samples": [
+        "jump to case label",
+        "a label can only be part of a statement and a declaration is not a statement"
+      ]
+    },
+    {
+      "id": "M038",
+      "title": "for-loop variable needs C99 mode (old compiler)",
+      "phase": "semantic",
+      "patterns": [
+        "^'for' loop initial declarations are only allowed in C99 or C11 mode$",
+        "^'for' loop initial declaration used outside C99 mode$"
+      ],
+      "what": "Your compiler is running in old C89 mode, where you cannot declare a variable inside `for ( )`.",
+      "why": [
+        "Old versions of GCC (e.g. in Dev-C++ / old Code::Blocks) default to the 1989 C standard."
+      ],
+      "fix": [
+        "Compile with `-std=c99` (or newer), or declare the variable before the loop: `int i; for (i = 0; ...)`."
+      ],
+      "example": {
+        "wrong": "for (int i = 0; i < n; i++)",
+        "right": "int i;\nfor (i = 0; i < n; i++)"
+      },
+      "samples": [
+        "'for' loop initial declarations are only allowed in C99 or C11 mode"
+      ]
+    },
+    {
+      "id": "M039",
+      "title": "Array size is negative",
+      "phase": "semantic",
+      "patterns": [
+        "^'(?P<name>[^']+)' declared as an array with a negative size$",
+        "^size of array '(?P<name>[^']+)' is negative$",
+        "^size of array is negative$"
+      ],
+      "what": "The array `{name}` on line {line} is given a negative size. An array is a row of boxes, so its size must be a positive whole number (1 or more).",
+      "why": [
+        "A minus sign typed by mistake, or a calculation such as `N - 10` that gives a negative number."
+      ],
+      "fix": [
+        "Use a positive size, e.g. `int {name}[5];`."
+      ],
+      "example": {
+        "wrong": "int a[-5];",
+        "right": "int a[5];"
+      },
+      "samples": [
+        "'a' declared as an array with a negative size",
+        "size of array 'a' is negative"
+      ]
+    },
+    {
+      "id": "M040",
+      "title": "Array size is not a whole number",
+      "phase": "semantic",
+      "patterns": [
+        "^size of array has non-integer type '(?P<type>[^']+)'$",
+        "^size of array '(?P<name>[^']+)' has non-integer type$",
+        "^size of array has non-integral type '(?P<type>[^']+)'$"
+      ],
+      "what": "The size inside `[ ]` on line {line} is a decimal number. You cannot have half a box: the size of an array must be a whole number (`int`).",
+      "why": [
+        "A decimal size like `2.5`, or a `float` / `double` variable used as the size."
+      ],
+      "fix": [
+        "Use a whole number: `int b[3];`, or convert a decimal variable with `(int)`: `int b[(int)n];`."
+      ],
+      "example": {
+        "wrong": "int b[2.5];",
+        "right": "int b[3];"
+      },
+      "samples": [
+        "size of array has non-integer type 'double'",
+        "size of array 'b' has non-integer type"
+      ]
+    },
+    {
+      "id": "M041",
+      "title": "2D array without the column size",
+      "phase": "semantic",
+      "patterns": [
+        "^array has incomplete element type '(?P<type>[^']+\\[\\])'$",
+        "^array type has incomplete element type '(?P<type>[^']+\\[\\])'$",
+        "^declaration of '(?P<name>[^']+)' as multidimensional array must have bounds for all dimensions except the first$"
+      ],
+      "what": "On line {line} a 2D array is declared with empty `[ ][ ]`. Only the FIRST size (rows) may be left empty; the compiler must know the number of COLUMNS to lay the array out in memory.",
+      "why": [
+        "Writing `int m[][] = ...` like a 1D array `int a[] = ...`."
+      ],
+      "fix": [
+        "Give the column size: `int m[][2] = {{1, 2}, {3, 4}};` or both sizes: `int m[2][2]`."
+      ],
+      "example": {
+        "wrong": "int m[][] = {{1, 2}, {3, 4}};",
+        "right": "int m[][2] = {{1, 2}, {3, 4}};"
+      },
+      "samples": [
+        "array has incomplete element type 'int[]'",
+        "array type has incomplete element type 'int[]'",
+        "declaration of 'm' as multidimensional array must have bounds for all dimensions except the first"
+      ]
+    },
+    {
+      "id": "M042",
+      "title": "sizeof on an array parameter gives the pointer size",
+      "phase": "semantic",
+      "patterns": [
+        "^sizeof on array function parameter will return size of '(?P<ptr>[^']+)' instead of '(?P<arr>[^']+)'$",
+        "^'sizeof \\(?(?P<name>\\w+)\\)?' will return the size of the pointer, not the array itself$",
+        "^'sizeof' on array function parameter '(?P<name>[^']+)' will return size of '(?P<ptr>[^']+)'$"
+      ],
+      "what": "On line {line} `sizeof` is used on an array PARAMETER. When an array is passed to a function, only its address (a pointer) is passed, so `sizeof` gives the size of the pointer (8 bytes), not of the whole array - the element count you calculate will be wrong.",
+      "why": [
+        "The `sizeof(a) / sizeof(a[0])` trick only works where the array is declared (e.g. in main), not inside a function that receives it."
+      ],
+      "fix": [
+        "Pass the number of elements as an extra parameter: `int sum(int a[], int n)` and call `sum(a, 5)`."
+      ],
+      "example": {
+        "wrong": "int sum(int a[]) {\n    int n = sizeof(a) / sizeof(a[0]);",
+        "right": "int sum(int a[], int n) {\n    /* n is passed in by the caller */"
+      },
+      "samples": [
+        "sizeof on array function parameter will return size of 'int *' instead of 'int[]'",
+        "'sizeof (a)' will return the size of the pointer, not the array itself"
+      ]
+    },
+    {
+      "id": "M043",
+      "title": "Keyword used as a variable name",
+      "phase": "semantic",
+      "priority": 55,
+      "handler": "two_types",
+      "patterns": [
+        "^cannot combine with previous '(?P<first>[^']+)' declaration specifier$",
+        "^two or more data types in declaration specifiers$",
+        "^multiple types in one declaration$"
+      ],
+      "what": "Line {line} has two type words in one declaration.",
+      "why": [
+        "A keyword such as `int`, `float`, `char` was used as a variable name.",
+        "Two types written together, e.g. `int float x;`."
+      ],
+      "fix": [
+        "Use one type and a normal name: `int count = 5;`."
+      ],
+      "example": {
+        "wrong": "int float = 2;",
+        "right": "int value = 2;"
+      },
+      "samples": [
+        "cannot combine with previous 'int' declaration specifier",
+        "two or more data types in declaration specifiers"
+      ]
+    },
+    {
+      "id": "M044",
+      "title": "Address (array or string) converted to a number",
+      "phase": "semantic",
+      "handler": "pointer_cast",
+      "patterns": [
+        "^pointer cannot be cast to type '(?P<to>[^']+)'$",
+        "^cast to smaller integer type '(?P<to>[^']+)' from '(?P<from>[^']+)'$",
+        "^cast from pointer to integer of different size$",
+        "^pointer value used where a floating-point was expected$",
+        "^pointer value used where a floating point value was expected$"
+      ],
+      "what": "On line {line} an array or string is cast to a number. An array name stands for its ADDRESS in memory, so the cast converts the address - not the values stored in it.",
+      "why": [
+        "Trying to convert text such as \"123\" to a number with a cast.",
+        "Using the array name where one element `a[i]` was meant."
+      ],
+      "fix": [
+        "To use one element, write `a[i]`.",
+        "To turn text into a number use `atoi(s)` / `atof(s)` from <stdlib.h>."
+      ],
+      "example": {
+        "wrong": "char s[] = \"123\";\nint x = (int)s;",
+        "right": "char s[] = \"123\";\nint x = atoi(s);"
+      },
+      "samples": [
+        "pointer cannot be cast to type 'float'",
+        "cast to smaller integer type 'int' from 'char *'",
+        "cast from pointer to integer of different size"
+      ]
+    },
+    {
+      "id": "M045",
+      "title": "Using [ ] on a function",
+      "phase": "semantic",
+      "handler": "subscript_function",
+      "patterns": [
+        "^subscript of pointer to function type '(?P<type>[^']+)'$",
+        "^subscripted value is pointer to function$"
+      ],
+      "what": "On line {line} `[ ]` is used on something that is a FUNCTION, not an array.",
+      "why": [
+        "The array was declared with `( )` instead of `[ ]`, e.g. `int a(5);`.",
+        "A function and an array have the same name."
+      ],
+      "fix": [
+        "Declare arrays with square brackets: `int a[5];`."
+      ],
+      "example": {
+        "wrong": "int a(5);\na[0] = 1;",
+        "right": "int a[5];\na[0] = 1;"
+      },
+      "samples": [
+        "subscript of pointer to function type 'int ()'",
+        "subscripted value is pointer to function"
+      ]
+    },
+    {
+      "id": "M046",
+      "title": "Text (a string) stored in a number variable",
+      "phase": "semantic",
+      "priority": 45,
+      "handler": "string_to_number",
+      "patterns": [
+        "^(?:initializing|assigning to) '(?P<to>float|double|long double)' with an expression of incompatible type '(?P<from>char \\*|const char \\*|char\\[\\d+\\]|const char\\[\\d+\\])'$",
+        "^incompatible types when (?:initializing|assigning to) type '(?P<to>float|double|long double)' (?:from|using) type '(?P<from>char \\*|const char \\*|char\\[\\d+\\])'$"
+      ],
+      "what": "On line {line} text in double quotes is stored in a `{to}` variable. Anything in `\" \"` is a STRING (text), not a number - even if it contains digits.",
+      "why": [
+        "Quotes put around a number by mistake: `\"2.5\"` instead of `2.5`."
+      ],
+      "fix": [
+        "Remove the quotes: `2.5`.",
+        "If the number really arrives as text, convert it with `atof(s)` from <stdlib.h>."
+      ],
+      "example": {
+        "wrong": "float f = \"2.5\";",
+        "right": "float f = 2.5;"
+      },
+      "samples": [
+        "initializing 'float' with an expression of incompatible type 'char[4]'"
+      ]
+    }
+  ]
+}

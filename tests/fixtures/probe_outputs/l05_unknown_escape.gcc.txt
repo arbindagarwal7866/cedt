@@ -1,0 +1,4 @@
+l05_unknown_escape.c: In function 'main':
+l05_unknown_escape.c:3:27: warning: unknown escape sequence: '\d'
+    3 |     printf("C:\data\new\n");
+      |                           ^

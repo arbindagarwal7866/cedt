@@ -1,0 +1,4 @@
+c06_iostream_h.cpp:1:10: fatal error: 'iostream.h' file not found
+    1 | #include <iostream.h>
+      |          ^~~~~~~~~~~~
+1 error generated.

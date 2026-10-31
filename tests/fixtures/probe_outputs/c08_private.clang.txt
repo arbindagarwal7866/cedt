@@ -1,0 +1,7 @@
+c08_private.cpp:8:7: error: 'balance' is a private member of 'Account'
+    8 |     a.balance = 100;
+      |       ^
+c08_private.cpp:4:9: note: implicitly declared private here
+    4 |     int balance = 0;
+      |         ^
+1 error generated.

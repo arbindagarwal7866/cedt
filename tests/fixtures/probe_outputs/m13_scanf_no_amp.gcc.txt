@@ -1,0 +1,13 @@
+m13_scanf_no_amp.c: In function 'main':
+m13_scanf_no_amp.c:4:13: warning: format '%d' expects argument of type 'int *', but argument 2 has type 'int' [-Wformat=]
+    4 |     scanf("%d", age);
+      |            ~^   ~~~
+      |             |   |
+      |             |   int
+      |             int *
+m13_scanf_no_amp.c:4:5: warning: 'age' is used uninitialized [-Wuninitialized]
+    4 |     scanf("%d", age);
+      |     ^~~~~~~~~~~~~~~~
+m13_scanf_no_amp.c:3:9: note: 'age' was declared here
+    3 |     int age;
+      |         ^~~

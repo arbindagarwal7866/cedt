@@ -1,0 +1,197 @@
+{
+ "_comment": "Held-out set: written after the rules were finished, never used for tuning. line = line of the mistake (null = compiler dependent).",
+ "programs": {
+  "h01_bubble_sort.c": {
+   "rules": [
+    "S001"
+   ],
+   "line": 9
+  },
+  "h02_matrix_multiply.c": {
+   "rules": [
+    "S002"
+   ],
+   "line": 10
+  },
+  "h03_factorial_after_main.c": {
+   "rules": [
+    "M002",
+    "M009"
+   ],
+   "line": null
+  },
+  "h04_student_records.c": {
+   "rules": [
+    "M019"
+   ],
+   "line": 9
+  },
+  "h05_reverse_string.c": {
+   "rules": [
+    "M002"
+   ],
+   "line": 5
+  },
+  "h06_prime_check.c": {
+   "rules": [
+    "M006"
+   ],
+   "line": 6
+  },
+  "h07_grade_switch.c": {
+   "rules": [
+    "M023"
+   ],
+   "line": 5
+  },
+  "h08_average_marks.c": {
+   "rules": [
+    "T002"
+   ],
+   "line": 8
+  },
+  "h09_temperature.c": {
+   "rules": [
+    "W006"
+   ],
+   "line": 6
+  },
+  "h10_array_total.c": {
+   "rules": [
+    "W002",
+    "T008"
+   ],
+   "line": null
+  },
+  "h11_menu_switch.c": {
+   "rules": [
+    "T007",
+    "W016"
+   ],
+   "line": 9
+  },
+  "h12_square_area.c": {
+   "rules": [
+    "T006"
+   ],
+   "line": 5
+  },
+  "h13_linked_list.c": {
+   "rules": [
+    "M002"
+   ],
+   "line": 9
+  },
+  "h14_gcd.c": {
+   "rules": [
+    "W004"
+   ],
+   "line": [
+    7,
+    8
+   ]
+  },
+  "h15_palindrome.c": {
+   "rules": [
+    "W009"
+   ],
+   "line": 10
+  },
+  "h16_count_digits.c": {
+   "rules": [
+    "T001",
+    "W012",
+    "W011"
+   ],
+   "line": 5
+  },
+  "h17_name_quotes.c": {
+   "rules": [
+    "L007",
+    "M034"
+   ],
+   "line": 4
+  },
+  "h18_return_local.c": {
+   "rules": [
+    "W005"
+   ],
+   "line": 5
+  },
+  "h19_dowhile_menu.c": {
+   "rules": [
+    "S001",
+    "S013"
+   ],
+   "line": 8
+  },
+  "h20_printf_typo.c": {
+   "rules": [
+    "M002",
+    "K001"
+   ],
+   "line": 5
+  },
+  "h21_function_header_semicolon.c": {
+   "rules": [
+    "S008"
+   ],
+   "line": 3
+  },
+  "h22_circle_area.c": {
+   "rules": [
+    "W006"
+   ],
+   "line": 5
+  },
+  "h23_endl_no_std.cpp": {
+   "rules": [
+    "M001"
+   ],
+   "line": 5
+  },
+  "h24_size_without_parens.cpp": {
+   "rules": [
+    "C008"
+   ],
+   "line": 7
+  },
+  "h25_bank_private.cpp": {
+   "rules": [
+    "C004"
+   ],
+   "line": 13
+  },
+  "h26_vector_push.cpp": {
+   "rules": [
+    "M021"
+   ],
+   "line": 7
+  },
+  "h27_string_to_int.cpp": {
+   "rules": [
+    "C003",
+    "M027"
+   ],
+   "line": 5
+  },
+  "h28_method_no_type.cpp": {
+   "rules": [
+    "M003"
+   ],
+   "line": 6
+  },
+  "h29_cin_extraction.cpp": {
+   "rules": [
+    "C001"
+   ],
+   "line": 7
+  },
+  "h30_class_semicolon.cpp": {
+   "rules": [
+    "S007"
+   ],
+   "line": 7
+  }
+ }
+}

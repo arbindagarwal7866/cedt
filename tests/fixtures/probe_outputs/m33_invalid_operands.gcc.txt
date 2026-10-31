@@ -1,0 +1,4 @@
+m33_invalid_operands.c: In function 'main':
+m33_invalid_operands.c:4:15: error: invalid operands to binary % (have 'double' and 'int')
+    4 |     int r = a % 2;
+      |               ^

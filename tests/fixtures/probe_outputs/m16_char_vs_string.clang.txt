@@ -1,0 +1,7 @@
+m16_char_vs_string.c:4:11: warning: result of comparison against a string literal is unspecified (use an explicit string comparison function instead) [-Wstring-compare]
+    4 |     if (c == "y")
+      |           ^  ~~~
+m16_char_vs_string.c:4:11: warning: comparison between pointer and integer ('char' and 'char *') [-Wpointer-integer-compare]
+    4 |     if (c == "y")
+      |         ~ ^  ~~~
+2 warnings generated.

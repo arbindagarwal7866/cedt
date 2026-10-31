@@ -1,0 +1,8 @@
+h10_array_total.c:7:9: warning: variable 'total' is uninitialized when used here [-Wuninitialized]
+    7 |         total += prices[i];
+      |         ^~~~~
+h10_array_total.c:5:14: note: initialize the variable 'total' to silence this warning
+    5 |     int total;
+      |              ^
+      |               = 0
+1 warning generated.

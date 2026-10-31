@@ -1,0 +1,7 @@
+c16_jump_case.cpp:9:9: error: cannot jump from switch statement to this case label
+    9 |         case 2:
+      |         ^
+c16_jump_case.cpp:6:17: note: jump bypasses variable initialization
+    6 |             int y = 5;
+      |                 ^
+1 error generated.

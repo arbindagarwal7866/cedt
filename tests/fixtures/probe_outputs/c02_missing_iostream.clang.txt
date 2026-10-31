@@ -1,0 +1,10 @@
+c02_missing_iostream.cpp:1:17: warning: using directive refers to implicitly-defined namespace 'std'
+    1 | using namespace std;
+      |                 ^
+c02_missing_iostream.cpp:3:5: error: use of undeclared identifier 'cout'
+    3 |     cout << "Hello" << endl;
+      |     ^
+c02_missing_iostream.cpp:3:24: error: use of undeclared identifier 'endl'
+    3 |     cout << "Hello" << endl;
+      |                        ^
+1 warning and 2 errors generated.

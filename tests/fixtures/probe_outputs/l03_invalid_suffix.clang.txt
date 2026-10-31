@@ -1,0 +1,4 @@
+l03_invalid_suffix.c:4:14: error: invalid suffix 'x' on integer constant
+    4 |     int y = 2x + 1;
+      |              ^
+1 error generated.

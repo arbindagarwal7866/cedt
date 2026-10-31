@@ -1,0 +1,6 @@
+c10_invalid_conversion.cpp: In function 'int main()':
+c10_invalid_conversion.cpp:4:14: error: invalid conversion from 'int' to 'int*' [-fpermissive]
+    4 |     int *p = x;
+      |              ^
+      |              |
+      |              int

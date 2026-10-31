@@ -1,0 +1,4 @@
+m15_string_compare.c:5:16: warning: result of comparison against a string literal is unspecified (use an explicit string comparison function instead) [-Wstring-compare]
+    5 |     if (answer == "yes")
+      |                ^  ~~~~~
+1 warning generated.

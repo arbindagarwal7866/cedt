@@ -1,0 +1,4 @@
+p01_header_typo.c:1:10: fatal error: stdoi.h: No such file or directory
+    1 | #include <stdoi.h>
+      |          ^~~~~~~~~
+compilation terminated.

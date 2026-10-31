@@ -1,0 +1,4 @@
+s11_expected_expression.c:3:13: error: expected expression
+    3 |     int x = ;
+      |             ^
+1 error generated.

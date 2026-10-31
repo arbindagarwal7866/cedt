@@ -1,0 +1,10 @@
+l06_unterminated_comment.c:3:5: error: unterminated /* comment
+    3 |     /* this comment never ends
+      |     ^
+l06_unterminated_comment.c:6:2: error: expected '}'
+    6 | }
+      |  ^
+l06_unterminated_comment.c:2:12: note: to match this '{'
+    2 | int main() {
+      |            ^
+2 errors generated.

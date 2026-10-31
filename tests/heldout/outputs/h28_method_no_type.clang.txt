@@ -1,0 +1,4 @@
+h28_method_no_type.cpp:6:5: error: a type specifier is required for all declarations
+    6 |     display() {
+      |     ^
+1 error generated.

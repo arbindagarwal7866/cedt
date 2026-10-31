@@ -1,0 +1,3 @@
+p04_include_semicolon.c:1:19: warning: extra tokens at end of #include directive
+    1 | #include <stdio.h>;
+      |                   ^

@@ -1,0 +1,7 @@
+m55_empty_body_if.c: In function 'main':
+m55_empty_body_if.c:4:5: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+    4 |     if (x > 5);
+      |     ^~
+m55_empty_body_if.c:5:9: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+    5 |         printf("big\n");
+      |         ^~~~~~

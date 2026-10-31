@@ -1,0 +1,8 @@
+m38_no_effect.c:4:7: warning: equality comparison result unused [-Wunused-comparison]
+    4 |     x == 5;
+      |     ~~^~~~
+m38_no_effect.c:4:7: note: use '=' to turn this equality comparison into an assignment
+    4 |     x == 5;
+      |       ^~
+      |       =
+1 warning generated.

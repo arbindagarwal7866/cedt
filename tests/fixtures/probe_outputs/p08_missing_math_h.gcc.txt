@@ -1,0 +1,15 @@
+p08_missing_math_h.c: In function 'main':
+p08_missing_math_h.c:4:20: warning: implicit declaration of function 'sqrt' [-Wimplicit-function-declaration]
+    4 |     printf("%f\n", sqrt(x));
+      |                    ^~~~
+p08_missing_math_h.c:2:1: note: include '<math.h>' or provide a declaration of 'sqrt'
+    1 | #include <stdio.h>
+  +++ |+#include <math.h>
+    2 | int main() {
+p08_missing_math_h.c:4:20: warning: incompatible implicit declaration of built-in function 'sqrt' [-Wbuiltin-declaration-mismatch]
+    4 |     printf("%f\n", sqrt(x));
+      |                    ^~~~
+p08_missing_math_h.c:4:20: note: include '<math.h>' or provide a declaration of 'sqrt'
+/usr/bin/ld: /tmp/ccE7q1Ic.o: in function `main':
+p08_missing_math_h.c:(.text+0x23): undefined reference to `sqrt'
+collect2: error: ld returned 1 exit status

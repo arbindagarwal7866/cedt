@@ -1,0 +1,4 @@
+m32_subscript.c: In function 'main':
+m32_subscript.c:4:6: error: subscripted value is neither array nor pointer nor vector
+    4 |     x[0] = 1;
+      |      ^

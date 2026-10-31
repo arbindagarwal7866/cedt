@@ -1,0 +1,4 @@
+c28_const_member_call.cpp: In function 'int main()':
+c28_const_member_call.cpp:6:15: error: cannot convert 'std::__cxx11::basic_string<char>::size' from type 'std::__cxx11::basic_string<char>::size_type (std::__cxx11::basic_string<char>::)() const noexcept' {aka 'long unsigned int (std::__cxx11::basic_string<char>::)() const noexcept'} to type 'int'
+    6 |     int n = s.size;
+      |               ^~~~

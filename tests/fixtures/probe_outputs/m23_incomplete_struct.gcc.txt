@@ -1,0 +1,5 @@
+m23_incomplete_struct.c: In function 'main':
+m23_incomplete_struct.c:3:20: error: storage size of 's' isn't known
+    3 |     struct Studnet s;
+      |                    ^
+m23_incomplete_struct.c:3:20: warning: unused variable 's' [-Wunused-variable]

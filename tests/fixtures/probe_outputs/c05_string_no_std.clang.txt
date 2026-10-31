@@ -1,0 +1,8 @@
+c05_string_no_std.cpp:4:5: error: unknown type name 'string'; did you mean 'std::string'?
+    4 |     string name = "Arbind";
+      |     ^~~~~~
+      |     std::string
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/stringfwd.h:77:33: note: 'std::string' declared here
+   77 |   typedef basic_string<char>    string;   
+      |                                 ^
+1 error generated.

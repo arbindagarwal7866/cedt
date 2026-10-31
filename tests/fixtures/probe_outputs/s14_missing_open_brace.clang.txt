@@ -1,0 +1,10 @@
+s14_missing_open_brace.c:3:5: error: expected function body after function declarator
+    3 |     printf("hi\n");
+      |     ^
+s14_missing_open_brace.c:4:5: error: expected identifier or '('
+    4 |     return 0;
+      |     ^
+s14_missing_open_brace.c:5:1: error: extraneous closing brace ('}')
+    5 | }
+      | ^
+3 errors generated.

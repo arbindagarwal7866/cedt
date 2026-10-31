@@ -1,0 +1,7 @@
+m39_misleading_indent.c: In function 'main':
+m39_misleading_indent.c:4:5: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+    4 |     if (x > 5)
+      |     ^~
+m39_misleading_indent.c:6:9: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+    6 |         printf("really big\n");
+      |         ^~~~~~

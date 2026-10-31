@@ -1,0 +1,4 @@
+c10_invalid_conversion.cpp:4:10: error: cannot initialize a variable of type 'int *' with an lvalue of type 'int'
+    4 |     int *p = x;
+      |          ^   ~
+1 error generated.

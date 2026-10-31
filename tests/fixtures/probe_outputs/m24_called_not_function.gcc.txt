@@ -1,0 +1,4 @@
+m24_called_not_function.c: In function 'main':
+m24_called_not_function.c:4:13: error: called object is not a function or function pointer
+    4 |     int y = 2(x + 1);
+      |             ^

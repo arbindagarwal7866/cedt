@@ -1,0 +1,5 @@
+c26_missing_semicolon.cpp:4:14: error: expected ';' at end of declaration
+    4 |     int a = 5
+      |              ^
+      |              ;
+1 error generated.

@@ -1,0 +1,5 @@
+c12_void_main.cpp:2:1: error: 'main' must return 'int'
+    2 | void main() {
+      | ^~~~
+      | int
+1 error generated.

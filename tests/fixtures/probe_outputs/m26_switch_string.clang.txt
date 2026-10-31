@@ -1,0 +1,7 @@
+m26_switch_string.c:4:5: error: statement requires expression of integer type ('char *' invalid)
+    4 |     switch (cmd) {
+      |     ^       ~~~
+m26_switch_string.c:5:14: error: integer constant expression must have integer type, not 'char[6]'
+    5 |         case "start": printf("go\n"); break;
+      |              ^~~~~~~
+2 errors generated.

@@ -1,0 +1,4 @@
+l08_empty_char.c: In function 'main':
+l08_empty_char.c:3:14: error: empty character constant
+    3 |     char c = '';
+      |              ^~

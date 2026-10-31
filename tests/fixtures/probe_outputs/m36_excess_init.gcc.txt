@@ -1,0 +1,5 @@
+m36_excess_init.c: In function 'main':
+m36_excess_init.c:3:26: warning: excess elements in array initializer
+    3 |     int a[3] = {1, 2, 3, 4};
+      |                          ^
+m36_excess_init.c:3:26: note: (near initialization for 'a')

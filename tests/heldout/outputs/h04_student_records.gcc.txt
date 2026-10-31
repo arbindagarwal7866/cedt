@@ -1,0 +1,5 @@
+h04_student_records.c: In function 'print_student':
+h04_student_records.c:9:31: error: 's' is a pointer; did you mean to use '->'?
+    9 |     printf("%s scored %d\n", s.name, s->marks);
+      |                               ^
+      |                               ->

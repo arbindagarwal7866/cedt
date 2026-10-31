@@ -1,0 +1,8 @@
+m20_ptr_dot.c: In function 'main':
+m20_ptr_dot.c:6:21: error: 'p' is a pointer; did you mean to use '->'?
+    6 |     printf("%d\n", p.x);
+      |                     ^
+      |                     ->
+m20_ptr_dot.c:5:19: warning: variable 'p' set but not used [-Wunused-but-set-variable]
+    5 |     struct Point *p = &pt;
+      |                   ^

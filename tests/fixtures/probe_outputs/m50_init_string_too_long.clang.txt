@@ -1,0 +1,4 @@
+m50_init_string_too_long.c:3:17: warning: initializer-string for char array is too long [-Wexcess-initializers]
+    3 |     char s[3] = "hello";
+      |                 ^~~~~~~
+1 warning generated.

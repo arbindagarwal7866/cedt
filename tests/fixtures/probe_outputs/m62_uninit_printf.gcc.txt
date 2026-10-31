@@ -1,0 +1,7 @@
+m62_uninit_printf.c: In function 'main':
+m62_uninit_printf.c:4:5: warning: 'x' is used uninitialized [-Wuninitialized]
+    4 |     printf("%d\n", x);
+      |     ^~~~~~~~~~~~~~~~~
+m62_uninit_printf.c:3:9: note: 'x' was declared here
+    3 |     int x;
+      |         ^

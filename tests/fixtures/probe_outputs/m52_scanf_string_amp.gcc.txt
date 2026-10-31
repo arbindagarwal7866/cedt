@@ -1,0 +1,7 @@
+m52_scanf_string_amp.c: In function 'main':
+m52_scanf_string_amp.c:4:13: warning: format '%s' expects argument of type 'char *', but argument 2 has type 'char (*)[20]' [-Wformat=]
+    4 |     scanf("%s", &name);
+      |            ~^   ~~~~~
+      |             |   |
+      |             |   char (*)[20]
+      |             char *

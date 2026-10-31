@@ -1,0 +1,11 @@
+c17_narrowing.cpp:3:11: error: type 'double' cannot be narrowed to 'int' in initializer list [-Wc++11-narrowing]
+    3 |     int x{3.7};
+      |           ^~~
+c17_narrowing.cpp:3:11: note: insert an explicit cast to silence this issue
+    3 |     int x{3.7};
+      |           ^~~
+      |           static_cast<int>( )
+c17_narrowing.cpp:3:11: warning: implicit conversion from 'double' to 'int' changes value from 3.7 to 3 [-Wliteral-conversion]
+    3 |     int x{3.7};
+      |          ~^~~
+1 warning and 1 error generated.

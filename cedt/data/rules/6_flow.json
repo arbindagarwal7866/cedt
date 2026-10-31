@@ -1,0 +1,665 @@
+{
+  "phase": "flow",
+  "description": "Warnings: the program compiles, but the compiler's analysis found code that is very likely a bug.",
+  "rules": [
+    {
+      "id": "W001",
+      "title": "= used instead of == in a condition",
+      "phase": "flow",
+      "patterns": [
+        "^suggest parentheses around assignment used as truth value$",
+        "^using the result of an assignment as a condition without parentheses$"
+      ],
+      "handler": "assign_in_condition",
+      "what": "The condition on line {line} uses `=` (assignment) instead of `==` (comparison). `if (x = 5)` STORES 5 in x and is then always true.",
+      "why": [
+        "In maths `=` means 'equals'; in C/C++ `=` means 'store' and `==` means 'is equal to'."
+      ],
+      "fix": [
+        "Use `==` to compare: `if (x == 5)`."
+      ],
+      "example": {
+        "wrong": "if (x = 5)",
+        "right": "if (x == 5)"
+      },
+      "tip": "Some programmers write constants first, `if (5 == x)`, so that a typo `5 = x` becomes a compile error.",
+      "samples": [
+        "suggest parentheses around assignment used as truth value",
+        "using the result of an assignment as a condition without parentheses"
+      ]
+    },
+    {
+      "id": "W002",
+      "title": "Variable used before it has a value",
+      "phase": "flow",
+      "patterns": [
+        "^'(?P<name>[^']+)' is used uninitialized(?: in this function)?$",
+        "^'(?P<name>[^']+)' may be used uninitialized(?: in this function)?$",
+        "^variable '(?P<name>[^']+)' is uninitialized when used here$",
+        "^variable '(?P<name>[^']+)' (?:is|may be) uninitialized when used (?:here|within its own initialization)$",
+        "^variable '(?P<name>[^']+)' is used uninitialized whenever .*$"
+      ],
+      "handler": "uninitialized",
+      "what": "`{name}` is read on line {line} before any value was stored in it. Local variables in C/C++ start with GARBAGE (a random leftover value), not 0.",
+      "why": [
+        "The variable was declared without `= 0` (or another starting value), e.g. a sum or counter.",
+        "scanf was given the variable without `&`, so it never received the input."
+      ],
+      "fix": [
+        "Give it a starting value where it is declared: `int {name} = 0;`."
+      ],
+      "example": {
+        "wrong": "int sum;\nsum += i;",
+        "right": "int sum = 0;\nsum += i;"
+      },
+      "samples": [
+        "'x' is used uninitialized",
+        "variable 'sum' is uninitialized when used here",
+        "'x' may be used uninitialized"
+      ]
+    },
+    {
+      "id": "W003",
+      "title": "Variable declared but never used",
+      "phase": "flow",
+      "level": "warning",
+      "patterns": [
+        "^unused variable '(?P<name>[^']+)'$",
+        "^variable '(?P<name>[^']+)' set but not used$",
+        "^unused parameter '(?P<name>[^']+)'$",
+        "^'(?P<name>[^']+)' defined but not used$",
+        "^unused function '(?P<name>[^']+)'$"
+      ],
+      "handler": "unused",
+      "what": "`{name}` is created but never used afterwards.",
+      "why": [
+        "Leftover code, or you used a different (misspelled) name where you meant `{name}`."
+      ],
+      "fix": [
+        "Delete the variable if it is not needed, or use it where intended."
+      ],
+      "example": {
+        "wrong": "int unused = 5;",
+        "right": "/* removed */"
+      },
+      "samples": [
+        "unused variable 'x'",
+        "variable 'p' set but not used"
+      ]
+    },
+    {
+      "id": "W004",
+      "title": "Function may end without returning a value",
+      "phase": "flow",
+      "patterns": [
+        "^control reaches end of non-void function$",
+        "^non-void function does not return a value(?: in all control paths)?$",
+        "^no return statement in function returning non-void$",
+        "^control may reach end of non-void function$"
+      ],
+      "handler": "missing_return",
+      "what": "Function `{func}` promises to return a `{rtype}`, but some path through it reaches the closing `}` without a `return` statement. The caller then receives garbage.",
+      "why": [
+        "An if / else-if chain returns in every branch you thought of, but not in the remaining case (e.g. x == 0).",
+        "The final `return` was forgotten."
+      ],
+      "fix": [
+        "Add a `return` statement before the closing `}` on line {line} that covers the remaining case."
+      ],
+      "example": {
+        "wrong": "int sign(int x) {\n    if (x > 0) return 1;\n    else if (x < 0) return -1;\n}",
+        "right": "int sign(int x) {\n    if (x > 0) return 1;\n    else if (x < 0) return -1;\n    return 0;\n}"
+      },
+      "samples": [
+        "control reaches end of non-void function",
+        "non-void function does not return a value in all control paths"
+      ]
+    },
+    {
+      "id": "W005",
+      "title": "Returning the address of a local variable",
+      "phase": "flow",
+      "patterns": [
+        "^function returns address of local variable$",
+        "^address of stack memory associated with (?:local variable|parameter) '(?P<name>[^']+)' returned$",
+        "^reference to local variable '(?P<name>[^']+)' returned$"
+      ],
+      "what": "The function returns the address of a local variable. Local variables are destroyed when the function ends, so the returned pointer points to memory that is no longer valid.",
+      "why": [
+        "Returning `&x` or a local array from a function."
+      ],
+      "fix": [
+        "Return the value itself instead of its address, use `static`, or allocate with `malloc` (and free it later)."
+      ],
+      "example": {
+        "wrong": "int *make(void) {\n    int x = 5;\n    return &x;\n}",
+        "right": "int make(void) {\n    int x = 5;\n    return x;\n}"
+      },
+      "samples": [
+        "function returns address of local variable",
+        "address of stack memory associated with local variable 'x' returned"
+      ]
+    },
+    {
+      "id": "W006",
+      "title": "printf/scanf format does not match the variable",
+      "phase": "flow",
+      "priority": 55,
+      "patterns": [
+        "^format '(?P<spec>%[^']*)' expects argument of type '(?P<expected>[^']+)', but argument (?P<argn>\\d+) has type '(?P<actual>[^']+)'(?: \\{aka '(?P<aka>[^']+)'\\})?$",
+        "^format specifies type '(?P<expected>[^']+)' but the argument has (?:underlying )?type '(?P<actual>[^']+)'$"
+      ],
+      "handler": "format_mismatch",
+      "what": "In the {func} call on line {line}, the placeholder `{spec}` expects a `{expected}`, but the value given is a `{actual}`.",
+      "why": [
+        "The wrong % code for the variable's type.",
+        "`&` missing in scanf (scanf needs the ADDRESS of the variable)."
+      ],
+      "fix": [
+        "Use the matching placeholder: %d int, %f float/double (printf), %lf double (scanf), %c char, %s string."
+      ],
+      "example": {
+        "wrong": "double pi = 3.14;\nprintf(\"%d\", pi);",
+        "right": "double pi = 3.14;\nprintf(\"%f\", pi);"
+      },
+      "tip": "Wrong format codes do not stop compilation, but they print garbage or even crash the program at run time.",
+      "samples": [
+        "format '%d' expects argument of type 'int *', but argument 2 has type 'int'",
+        "format specifies type 'int' but the argument has type 'double'"
+      ]
+    },
+    {
+      "id": "W007",
+      "title": "Fewer values than % placeholders",
+      "phase": "flow",
+      "patterns": [
+        "^format '(?P<spec>%[^']*)' expects a matching '(?P<expected>[^']+)' argument$",
+        "^more '%' conversions than data arguments$",
+        "^too few arguments for format$"
+      ],
+      "handler": "format_count",
+      "what": "The format string on line {line} has more `%` placeholders than values after it, so printf/scanf will read garbage for the missing ones.",
+      "why": [
+        "A variable was forgotten after the format string."
+      ],
+      "fix": [
+        "Give one value for every `%` code, in the same order."
+      ],
+      "example": {
+        "wrong": "printf(\"%d %d\", a);",
+        "right": "printf(\"%d %d\", a, b);"
+      },
+      "samples": [
+        "format '%d' expects a matching 'int' argument",
+        "more '%' conversions than data arguments"
+      ]
+    },
+    {
+      "id": "W008",
+      "title": "Extra values not used by the format",
+      "phase": "flow",
+      "patterns": [
+        "^too many arguments for format$",
+        "^data argument not used by format string$"
+      ],
+      "handler": "format_count",
+      "what": "The printf/scanf call on line {line} passes more values than there are `%` placeholders, so the extra values are ignored.",
+      "why": [
+        "The `%d` (or other code) for a value was forgotten in the format string."
+      ],
+      "fix": [
+        "Add a placeholder for every value, e.g. `printf(\"Value %d\\n\", x);`."
+      ],
+      "example": {
+        "wrong": "printf(\"Value\\n\", x);",
+        "right": "printf(\"Value %d\\n\", x);"
+      },
+      "samples": [
+        "too many arguments for format",
+        "data argument not used by format string"
+      ]
+    },
+    {
+      "id": "W009",
+      "title": "Strings compared with ==",
+      "phase": "flow",
+      "patterns": [
+        "^comparison with string literal results in unspecified behavio(?:u)?r$",
+        "^result of comparison against a string literal is unspecified.*$",
+        "^comparison between two arrays$",
+        "^array comparison always evaluates to (?:false|true)$"
+      ],
+      "handler": "string_compare",
+      "what": "`==` on line {line} compares the ADDRESSES of two strings, not their text, so it is almost never true.",
+      "why": [
+        "In C, strings are char arrays; `==` checks whether they are the same memory, not the same letters."
+      ],
+      "fix": [
+        "Use `strcmp(a, b) == 0` (from `<string.h>`) to compare text."
+      ],
+      "example": {
+        "wrong": "if (answer == \"yes\")",
+        "right": "if (strcmp(answer, \"yes\") == 0)"
+      },
+      "samples": [
+        "comparison with string literal results in unspecified behavior",
+        "result of comparison against a string literal is unspecified (use an explicit string comparison function instead)",
+        "comparison between two arrays",
+        "array comparison always evaluates to false"
+      ]
+    },
+    {
+      "id": "W010",
+      "title": "Comparing a pointer (or string) with a number / char",
+      "phase": "flow",
+      "patterns": [
+        "^comparison between pointer and integer.*$",
+        "^ordered comparison between pointer and integer.*$",
+        "^ISO C\\+\\+ forbids comparison between pointer and integer$"
+      ],
+      "handler": "string_compare",
+      "what": "Line {line} compares a pointer/string with a number or a single character, which is never what you want.",
+      "why": [
+        "Double quotes `\"y\"` (a string) were used where single quotes `'y'` (a character) were meant."
+      ],
+      "fix": [
+        "Compare characters with single quotes: `if (c == 'y')`."
+      ],
+      "example": {
+        "wrong": "if (c == \"y\")",
+        "right": "if (c == 'y')"
+      },
+      "samples": [
+        "comparison between pointer and integer",
+        "comparison between pointer and integer ('char' and 'char *')"
+      ]
+    },
+    {
+      "id": "W011",
+      "title": "Indentation suggests braces that are not there",
+      "phase": "flow",
+      "patterns": [
+        "^this '(?P<kw>if|else|for|while)' clause does not guard\\.\\.\\.$",
+        "^misleading indentation; statement is not part of the previous '(?P<kw>\\w+)'$"
+      ],
+      "handler": "misleading_indentation",
+      "what": "Without `{ }`, only ONE statement belongs to the `{kw}`. The next line is indented as if it were inside, but it always runs.",
+      "why": [
+        "Braces were left out because the body started as one line and a second line was added later.",
+        "A `;` right after the condition made the body empty."
+      ],
+      "fix": [
+        "Put the statements that belong to the `{kw}` inside `{ }`."
+      ],
+      "example": {
+        "wrong": "if (x > 5)\n    printf(\"big\\n\");\n    printf(\"really big\\n\");",
+        "right": "if (x > 5) {\n    printf(\"big\\n\");\n    printf(\"really big\\n\");\n}"
+      },
+      "samples": [
+        "this 'if' clause does not guard...",
+        "misleading indentation; statement is not part of the previous 'if'"
+      ]
+    },
+    {
+      "id": "W012",
+      "title": "Semicolon makes the if/loop body empty",
+      "phase": "flow",
+      "patterns": [
+        "^(?P<kw>if|for|while|switch) statement has empty body$",
+        "^(?P<kw>for|while) loop has empty body$",
+        "^suggest braces around empty body in an? '(?P<kw>if|else|do)' statement$"
+      ],
+      "handler": "empty_body",
+      "what": "The `;` right after `{kw} (...)` on line {line} is a complete (empty) statement, so the code below it is NOT controlled by the `{kw}`.",
+      "why": [
+        "A habit of ending every line with `;` - but `if (...)`, `for (...)` and `while (...)` lines must not end with one."
+      ],
+      "fix": [
+        "Remove the `;` after the closing `)`."
+      ],
+      "example": {
+        "wrong": "if (x > 5);\n    printf(\"big\");",
+        "right": "if (x > 5)\n    printf(\"big\");"
+      },
+      "samples": [
+        "if statement has empty body",
+        "while loop has empty body"
+      ]
+    },
+    {
+      "id": "W013",
+      "title": "Statement that does nothing",
+      "phase": "flow",
+      "patterns": [
+        "^statement with no effect$",
+        "^value computed is not used$",
+        "^equality comparison result unused$",
+        "^relational comparison result unused$",
+        "^expression result unused$",
+        "^(?:left|right)-hand operand of comma expression has no effect$",
+        "^left operand of comma operator has no effect$"
+      ],
+      "handler": "no_effect",
+      "what": "The statement on line {line} calculates something but the result is thrown away, so it has no effect.",
+      "why": [
+        "`==` written where `=` was meant (`x == 5;`).",
+        "A calculation without storing it (`i + 1;` instead of `i = i + 1;`).",
+        "Commas instead of semicolons in a for loop."
+      ],
+      "fix": [
+        "Store the result (`x = 5;`, `i = i + 1;`) or remove the statement."
+      ],
+      "example": {
+        "wrong": "x == 5;",
+        "right": "x = 5;"
+      },
+      "samples": [
+        "statement with no effect",
+        "equality comparison result unused"
+      ]
+    },
+    {
+      "id": "W014",
+      "title": "Division by zero",
+      "phase": "flow",
+      "patterns": [
+        "^division by zero(?: is undefined)?$",
+        "^remainder by zero is undefined$"
+      ],
+      "what": "Line {line} divides by the constant 0. Integer division by zero crashes the program (\"Floating point exception\").",
+      "why": [
+        "A typo, or a placeholder value left in the code."
+      ],
+      "fix": [
+        "Divide by the intended non-zero value, or check the divisor with `if (d != 0)` first."
+      ],
+      "example": {
+        "wrong": "int x = 10 / 0;",
+        "right": "if (d != 0) x = 10 / d;"
+      },
+      "samples": [
+        "division by zero",
+        "division by zero is undefined"
+      ]
+    },
+    {
+      "id": "W015",
+      "title": "Array index outside the array",
+      "phase": "flow",
+      "patterns": [
+        "^array index (?P<index>-?\\d+) is (?:past the end of|before the beginning of) the array.*$",
+        "^array subscript (?P<index>-?\\d+) is (?:above|below) array bounds of '(?P<type>[^']+)'$",
+        "^array subscript '(?P<type>.+?)' is (?:partly )?outside array bounds.*$",
+        "^iteration (?P<iter>\\d+) invokes undefined behavior$"
+      ],
+      "handler": "array_bounds",
+      "what": "Line {line} accesses an element outside the array. An array of size N has valid indexes 0 to N-1 only.",
+      "why": [
+        "Using index N (e.g. `a[5]` for `int a[5]`) - the last element is `a[4]`.",
+        "A loop condition `i <= N` that runs one step too far."
+      ],
+      "fix": [
+        "Use indexes 0 to N-1, and loop with `i < N`."
+      ],
+      "example": {
+        "wrong": "int a[5];\na[5] = 10;",
+        "right": "int a[5];\na[4] = 10;"
+      },
+      "samples": [
+        "array index 5 is past the end of the array (that has type 'int[5]')",
+        "array subscript 5 is above array bounds of 'int[5]'"
+      ]
+    },
+    {
+      "id": "W016",
+      "title": "switch case falls through",
+      "phase": "flow",
+      "patterns": [
+        "^this statement may fall through$",
+        "^unannotated fall-through between switch labels$"
+      ],
+      "what": "A `case` block on line {line} has no `break`, so execution continues into the next case.",
+      "why": [
+        "The `break;` at the end of the case was forgotten."
+      ],
+      "fix": [
+        "End each case with `break;` (unless falling through is really intended)."
+      ],
+      "example": {
+        "wrong": "case 1: printf(\"one\");\ncase 2: printf(\"two\"); break;",
+        "right": "case 1: printf(\"one\"); break;\ncase 2: printf(\"two\"); break;"
+      },
+      "samples": [
+        "this statement may fall through"
+      ]
+    },
+    {
+      "id": "W017",
+      "title": "Function name used without calling it",
+      "phase": "flow",
+      "patterns": [
+        "^the address of '(?P<name>[^']+)' will always evaluate as 'true'$",
+        "^address of (?:function|array) '(?P<name>[^']+)' will always evaluate to 'true'$",
+        "^the comparison will always evaluate as '(?P<value>true|false)' for the address of '(?P<name>[^']+)' will never be NULL$"
+      ],
+      "handler": "address_always_true",
+      "what": "`{name}` is used in a condition without `( )`, so you are testing the function's ADDRESS (always non-zero = true) instead of calling it.",
+      "why": [
+        "Forgetting the brackets and arguments of a function call: `if (isEven)` instead of `if (isEven(n))`."
+      ],
+      "fix": [
+        "Call the function: `{name}(...)` with its arguments."
+      ],
+      "example": {
+        "wrong": "if (isEven)",
+        "right": "if (isEven(n))"
+      },
+      "samples": [
+        "the address of 'isEven' will always evaluate as 'true'",
+        "address of function 'isEven' will always evaluate to 'true'"
+      ]
+    },
+    {
+      "id": "W018",
+      "title": "Value changes when converted",
+      "phase": "flow",
+      "patterns": [
+        "^overflow in conversion from '(?P<from>[^']+)' to '(?P<to>[^']+)' changes value from '(?P<v1>.+?)' to '(?P<v2>.+?)'$",
+        "^(?:implicit )?conversion from '(?P<from>[^']+)' to '(?P<to>[^']+)' changes value from '?(?P<v1>[^']+?)'? to '?(?P<v2>[^']+?)'?$",
+        "^integer overflow in expression.*$",
+        "^overflow in expression; result is .*$",
+        "^large integer implicitly truncated to unsigned type$"
+      ],
+      "what": "On line {line} a value is stored in a type that is too small (or too different) for it, so the value is silently changed.",
+      "why": [
+        "Storing several characters or a big number in a `char`, or a decimal number in an `int`."
+      ],
+      "fix": [
+        "Use a type big enough for the value (`int`, `long long`, `double`) or the right literal."
+      ],
+      "example": {
+        "wrong": "char c = 'ab';",
+        "right": "char c = 'a';"
+      },
+      "samples": [
+        "overflow in conversion from 'int' to 'char' changes value from '24930' to '98'",
+        "implicit conversion from 'int' to 'char' changes value from 24930 to 98"
+      ],
+      "handler": "value_changes"
+    },
+    {
+      "id": "W019",
+      "title": "Comparing signed and unsigned numbers",
+      "phase": "flow",
+      "patterns": [
+        "^comparison of integer expressions of different signedness: '(?P<t1>[^']+)'(?: \\{aka '[^']+'\\})? and '(?P<t2>[^']+)'(?: \\{aka '[^']+'\\})?$",
+        "^comparison of integers of different signs: '(?P<t1>[^']+)' and '(?P<t2>[^']+)'$"
+      ],
+      "what": "Line {line} compares a signed number (`{t1}`) with an unsigned one (`{t2}`). If the signed value is negative, the comparison gives the wrong answer.",
+      "why": [
+        "Looping `for (int i = 0; i < v.size(); i++)` - `size()` is unsigned."
+      ],
+      "fix": [
+        "Use the same type on both sides, e.g. `size_t i` or `(int)v.size()`."
+      ],
+      "example": {
+        "wrong": "for (int i = 0; i < v.size(); i++)",
+        "right": "for (size_t i = 0; i < v.size(); i++)"
+      },
+      "samples": [
+        "comparison of integer expressions of different signedness: 'int' and 'std::vector<int>::size_type' {aka 'long unsigned int'}"
+      ]
+    },
+    {
+      "id": "W020",
+      "title": "printf with a variable as the format string",
+      "phase": "flow",
+      "patterns": [
+        "^format not a string literal and no format arguments$",
+        "^format string is not a string literal.*$"
+      ],
+      "what": "The first argument of printf on line {line} is not a string in double quotes. If the text contains a `%`, printf will misbehave.",
+      "why": [
+        "`printf(name)` instead of `printf(\"%s\", name)`.",
+        "Single quotes used for text: `printf('Hello')`."
+      ],
+      "fix": [
+        "Write `printf(\"%s\", text);` - or put the text directly in double quotes."
+      ],
+      "example": {
+        "wrong": "printf(name);",
+        "right": "printf(\"%s\", name);"
+      },
+      "samples": [
+        "format not a string literal and no format arguments",
+        "format string is not a string literal (potentially insecure)"
+      ]
+    },
+    {
+      "id": "W021",
+      "title": "Operator precedence trap",
+      "phase": "flow",
+      "patterns": [
+        "^suggest parentheses around (?P<what>.+)$",
+        "^comparisons like '(?P<expr>.+)' do not have their mathematical meaning$",
+        "^comparison of constant '(?P<c>[^']+)' with boolean expression is always (?P<value>true|false)$",
+        "^result of comparison of constant (?P<c>\\S+) with (?:expression of type 'bool'|boolean expression) is always (?P<value>true|false)$",
+        "^logical not is only applied to the left hand side of (?:this )?comparison$",
+        "^(?:&|\\||\\^) has lower precedence than (?:==|!=); .*$"
+      ],
+      "handler": "precedence",
+      "what": "The expression on line {line} is not grouped the way it reads. C/C++ applies operators in a fixed order (precedence), which differs from maths here.",
+      "why": [
+        "`0 < x < 10` is evaluated as `(0 < x) < 10`, which is always true.",
+        "`x & 1 == 0` is evaluated as `x & (1 == 0)`.",
+        "`!x == 5` is evaluated as `(!x) == 5`."
+      ],
+      "fix": [
+        "Write the condition explicitly: `0 < x && x < 10`, or add brackets: `(x & 1) == 0`."
+      ],
+      "example": {
+        "wrong": "if (0 < x < 10)",
+        "right": "if (0 < x && x < 10)"
+      },
+      "samples": [
+        "comparisons like 'X<=Y<=Z' do not have their mathematical meaning",
+        "suggest parentheses around comparison in operand of '&'"
+      ]
+    },
+    {
+      "id": "W022",
+      "title": "Return value of scanf ignored",
+      "phase": "flow",
+      "level": "warning",
+      "patterns": [
+        "^ignoring return value of '(?P<func>[^']+)'.*$"
+      ],
+      "what": "`{func}` returns a result that tells you whether it worked, but the program ignores it.",
+      "why": [
+        "scanf returns how many values it read; if the user typed letters instead of a number it returns 0 and the variable keeps garbage."
+      ],
+      "fix": [
+        "Check it: `if (scanf(\"%d\", &n) != 1) { /* invalid input */ }` - or ignore this warning in simple lab programs."
+      ],
+      "example": {
+        "wrong": "scanf(\"%d\", &n);",
+        "right": "if (scanf(\"%d\", &n) != 1) return 1;"
+      },
+      "samples": [
+        "ignoring return value of 'scanf' declared with attribute 'warn_unused_result'"
+      ]
+    },
+    {
+      "id": "W023",
+      "title": "char used as an array index",
+      "phase": "flow",
+      "patterns": [
+        "^array subscript has type 'char'$"
+      ],
+      "what": "A `char` is used as an array index on line {line}. On some systems char can be negative, giving a negative index.",
+      "why": [
+        "Indexing a counting array with a character, e.g. `count[ch]`."
+      ],
+      "fix": [
+        "Convert it: `count[(unsigned char)ch]`, or use an int index."
+      ],
+      "example": {
+        "wrong": "count[ch]++;",
+        "right": "count[(unsigned char)ch]++;"
+      },
+      "samples": [
+        "array subscript has type 'char'"
+      ]
+    },
+    {
+      "id": "W024",
+      "title": "Function declared without a parameter list",
+      "phase": "flow",
+      "patterns": [
+        "^a function declaration without a prototype is deprecated.*$",
+        "^passing arguments to '(?P<name>\\w+)' without a prototype is deprecated.*$",
+        "^function declaration isn't a prototype$",
+        "^old-style function definition$"
+      ],
+      "what": "A function is declared with empty brackets `()` or in an old style. In C, empty brackets mean 'unknown parameters', so the compiler cannot check the calls.",
+      "why": [
+        "Writing `int f()` instead of `int f(void)` in C, or a line that the compiler had to treat as an old-style declaration because of an earlier mistake."
+      ],
+      "fix": [
+        "Write `(void)` for functions without parameters, or list the parameters with their types."
+      ],
+      "example": {
+        "wrong": "int show();",
+        "right": "int show(void);"
+      },
+      "samples": [
+        "a function declaration without a prototype is deprecated in all versions of C and is treated as a zero-parameter prototype in C23, conflicting with a previous declaration"
+      ]
+    },
+    {
+      "id": "W025",
+      "title": "Comparing decimal numbers with ==",
+      "phase": "flow",
+      "patterns": [
+        "^floating-point comparison is always (?P<result>false|true); constant cannot be represented exactly in type '(?P<type>[^']+)'$",
+        "^comparing floating-point with '?==' or '!='? is unsafe$",
+        "^comparing floating point with == or != is unsafe$"
+      ],
+      "what": "On line {line} decimal numbers are compared with `==`. Decimal numbers are stored only approximately: a `float` holding 0.1 is really 0.100000001, while the constant `0.1` is a `double` 0.1000000000000000055 - so the two are NOT equal and `==` gives false.",
+      "why": [
+        "Comparing a `float` with a `double` constant, or comparing results of decimal calculations exactly."
+      ],
+      "fix": [
+        "Compare with a small tolerance: `fabs(x - 0.1) < 0.0001` (needs <math.h>).",
+        "Or make both sides the same type: `x == 0.1f`, or declare `x` as `double`."
+      ],
+      "example": {
+        "wrong": "float x = 0.1;\nif (x == 0.1)",
+        "right": "float x = 0.1;\nif (fabs(x - 0.1) < 0.0001)"
+      },
+      "samples": [
+        "floating-point comparison is always false; constant cannot be represented exactly in type 'float'"
+      ]
+    }
+  ]
+}

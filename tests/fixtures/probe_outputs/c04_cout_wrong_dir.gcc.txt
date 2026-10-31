@@ -1,0 +1,85 @@
+c04_cout_wrong_dir.cpp: In function 'int main()':
+c04_cout_wrong_dir.cpp:5:10: error: no match for 'operator>>' (operand types are 'std::ostream' {aka 'std::basic_ostream<char>'} and 'int')
+    5 |     cout >> x;
+      |     ~~~~ ^~ ~
+      |     |       |
+      |     |       int
+      |     std::ostream {aka std::basic_ostream<char>}
+c04_cout_wrong_dir.cpp:5:10: note: candidate: 'operator>>(int, int)' (built-in)
+    5 |     cout >> x;
+      |     ~~~~~^~~~
+c04_cout_wrong_dir.cpp:5:10: note:   no known conversion for argument 1 from 'std::ostream' {aka 'std::basic_ostream<char>'} to 'int'
+In file included from /usr/include/c++/13/string:55,
+                 from /usr/include/c++/13/bits/locale_classes.h:40,
+                 from /usr/include/c++/13/bits/ios_base.h:41,
+                 from /usr/include/c++/13/ios:44,
+                 from /usr/include/c++/13/ostream:40,
+                 from /usr/include/c++/13/iostream:41,
+                 from c04_cout_wrong_dir.cpp:1:
+/usr/include/c++/13/bits/basic_string.tcc:827:5: note: candidate: 'template<class _CharT, class _Traits, class _Alloc> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, __cxx11::basic_string<_CharT, _Traits, _Allocator>&)'
+  827 |     operator>>(basic_istream<_CharT, _Traits>& __in,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/basic_string.tcc:827:5: note:   template argument deduction/substitution failed:
+c04_cout_wrong_dir.cpp:5:13: note:   'std::ostream' {aka 'std::basic_ostream<char>'} is not derived from 'std::basic_istream<_CharT, _Traits>'
+    5 |     cout >> x;
+      |             ^
+In file included from /usr/include/c++/13/bits/memory_resource.h:38,
+                 from /usr/include/c++/13/string:58:
+/usr/include/c++/13/cstddef:130:5: note: candidate: 'template<class _IntegerType> constexpr std::__byte_op_t<_IntegerType> std::operator>>(byte, _IntegerType)'
+  130 |     operator>>(byte __b, _IntegerType __shift) noexcept
+      |     ^~~~~~~~
+/usr/include/c++/13/cstddef:130:5: note:   template argument deduction/substitution failed:
+c04_cout_wrong_dir.cpp:5:5: note:   cannot convert 'std::cout' (type 'std::ostream' {aka 'std::basic_ostream<char>'}) to type 'std::byte'
+    5 |     cout >> x;
+      |     ^~~~
+In file included from /usr/include/c++/13/istream:1106,
+                 from /usr/include/c++/13/iostream:42:
+/usr/include/c++/13/bits/istream.tcc:975:5: note: candidate: 'template<class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, _CharT&)'
+  975 |     operator>>(basic_istream<_CharT, _Traits>& __in, _CharT& __c)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/istream.tcc:975:5: note:   template argument deduction/substitution failed:
+c04_cout_wrong_dir.cpp:5:13: note:   'std::ostream' {aka 'std::basic_ostream<char>'} is not derived from 'std::basic_istream<_CharT, _Traits>'
+    5 |     cout >> x;
+      |             ^
+/usr/include/c++/13/istream:846:5: note: candidate: 'template<class _Traits> std::basic_istream<char, _Traits>& std::operator>>(basic_istream<char, _Traits>&, unsigned char&)'
+  846 |     operator>>(basic_istream<char, _Traits>& __in, unsigned char& __c)
+      |     ^~~~~~~~
+/usr/include/c++/13/istream:846:5: note:   template argument deduction/substitution failed:
+c04_cout_wrong_dir.cpp:5:13: note:   'std::ostream' {aka 'std::basic_ostream<char>'} is not derived from 'std::basic_istream<char, _Traits>'
+    5 |     cout >> x;
+      |             ^
+/usr/include/c++/13/istream:851:5: note: candidate: 'template<class _Traits> std::basic_istream<char, _Traits>& std::operator>>(basic_istream<char, _Traits>&, signed char&)'
+  851 |     operator>>(basic_istream<char, _Traits>& __in, signed char& __c)
+      |     ^~~~~~~~
+/usr/include/c++/13/istream:851:5: note:   template argument deduction/substitution failed:
+c04_cout_wrong_dir.cpp:5:13: note:   'std::ostream' {aka 'std::basic_ostream<char>'} is not derived from 'std::basic_istream<char, _Traits>'
+    5 |     cout >> x;
+      |             ^
+/usr/include/c++/13/istream:893:5: note: candidate: 'template<class _CharT, class _Traits> std::basic_istream<_CharT, _Traits>& std::operator>>(basic_istream<_CharT, _Traits>&, _CharT*)'
+  893 |     operator>>(basic_istream<_CharT, _Traits>& __in, _CharT* __s)
+      |     ^~~~~~~~
+/usr/include/c++/13/istream:893:5: note:   template argument deduction/substitution failed:
+c04_cout_wrong_dir.cpp:5:13: note:   'std::ostream' {aka 'std::basic_ostream<char>'} is not derived from 'std::basic_istream<_CharT, _Traits>'
+    5 |     cout >> x;
+      |             ^
+/usr/include/c++/13/istream:936:5: note: candidate: 'template<class _Traits> std::basic_istream<char, _Traits>& std::operator>>(basic_istream<char, _Traits>&, unsigned char*)'
+  936 |     operator>>(basic_istream<char, _Traits>& __in, unsigned char* __s)
+      |     ^~~~~~~~
+/usr/include/c++/13/istream:936:5: note:   template argument deduction/substitution failed:
+c04_cout_wrong_dir.cpp:5:13: note:   'std::ostream' {aka 'std::basic_ostream<char>'} is not derived from 'std::basic_istream<char, _Traits>'
+    5 |     cout >> x;
+      |             ^
+/usr/include/c++/13/istream:942:5: note: candidate: 'template<class _Traits> std::basic_istream<char, _Traits>& std::operator>>(basic_istream<char, _Traits>&, signed char*)'
+  942 |     operator>>(basic_istream<char, _Traits>& __in, signed char* __s)
+      |     ^~~~~~~~
+/usr/include/c++/13/istream:942:5: note:   template argument deduction/substitution failed:
+c04_cout_wrong_dir.cpp:5:13: note:   'std::ostream' {aka 'std::basic_ostream<char>'} is not derived from 'std::basic_istream<char, _Traits>'
+    5 |     cout >> x;
+      |             ^
+/usr/include/c++/13/istream:1096:5: note: candidate: 'template<class _Istream, class _Tp> _Istream&& std::operator>>(_Istream&&, _Tp&&)'
+ 1096 |     operator>>(_Istream&& __is, _Tp&& __x)
+      |     ^~~~~~~~
+/usr/include/c++/13/istream:1096:5: note:   template argument deduction/substitution failed:
+/usr/include/c++/13/istream: In substitution of 'template<class _Istream, class _Tp> _Istream&& std::operator>>(_Istream&&, _Tp&&) [with _Istream = std::basic_ostream<char>&; _Tp = int&]':
+c04_cout_wrong_dir.cpp:5:13:   required from here
+/usr/include/c++/13/istream:1096:5: error: no type named 'type' in 'struct std::enable_if<false, void>'

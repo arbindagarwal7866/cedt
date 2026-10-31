@@ -1,0 +1,8 @@
+m62_uninit_printf.c:4:20: warning: variable 'x' is uninitialized when used here [-Wuninitialized]
+    4 |     printf("%d\n", x);
+      |                    ^
+m62_uninit_printf.c:3:10: note: initialize the variable 'x' to silence this warning
+    3 |     int x;
+      |          ^
+      |           = 0
+1 warning generated.

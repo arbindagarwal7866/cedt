@@ -1,0 +1,8 @@
+m10_void_main.c:2:1: warning: return type of 'main' is not 'int' [-Wmain-return-type]
+    2 | void main() {
+      | ^
+m10_void_main.c:2:1: note: change return type to 'int'
+    2 | void main() {
+      | ^~~~
+      | int
+1 warning generated.

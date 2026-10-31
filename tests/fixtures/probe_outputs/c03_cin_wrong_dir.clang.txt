@@ -1,0 +1,49 @@
+c03_cin_wrong_dir.cpp:5:9: error: invalid operands to binary expression ('istream' (aka 'basic_istream<char>') and 'int')
+    5 |     cin << x;
+      |     ~~~ ^  ~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/cstddef:124:5: note: candidate function template not viable: no known conversion from 'istream' (aka 'basic_istream<char>') to 'byte' for 1st argument
+  124 |     operator<<(byte __b, _IntegerType __shift) noexcept
+      |     ^          ~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/string_view:761:5: note: candidate template ignored: could not match 'basic_ostream' against 'basic_istream'
+  761 |     operator<<(basic_ostream<_CharT, _Traits>& __os,
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/basic_string.h:4032:5: note: candidate template ignored: could not match 'basic_ostream' against 'basic_istream'
+ 4032 |     operator<<(basic_ostream<_CharT, _Traits>& __os,
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/system_error:339:5: note: candidate template ignored: could not match 'basic_ostream' against 'basic_istream'
+  339 |     operator<<(basic_ostream<_CharT, _Traits>& __os, const error_code& __e)
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/ostream:554:5: note: candidate template ignored: could not match 'basic_ostream' against 'basic_istream'
+  554 |     operator<<(basic_ostream<_CharT, _Traits>& __out, _CharT __c)
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/ostream:564:5: note: candidate template ignored: could not match 'basic_ostream' against 'basic_istream'
+  564 |     operator<<(basic_ostream<_CharT, _Traits>& __out, char __c)
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/ostream:570:5: note: candidate template ignored: could not match 'basic_ostream' against 'basic_istream'
+  570 |     operator<<(basic_ostream<char, _Traits>& __out, char __c)
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/ostream:581:5: note: candidate template ignored: could not match 'basic_ostream' against 'basic_istream'
+  581 |     operator<<(basic_ostream<char, _Traits>& __out, signed char __c)
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/ostream:586:5: note: candidate template ignored: could not match 'basic_ostream' against 'basic_istream'
+  586 |     operator<<(basic_ostream<char, _Traits>& __out, unsigned char __c)
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/ostream:645:5: note: candidate template ignored: could not match 'basic_ostream' against 'basic_istream'
+  645 |     operator<<(basic_ostream<_CharT, _Traits>& __out, const _CharT* __s)
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/ostream:662:5: note: candidate template ignored: could not match 'basic_ostream' against 'basic_istream'
+  662 |     operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/ostream:675:5: note: candidate template ignored: could not match 'basic_ostream' against 'basic_istream'
+  675 |     operator<<(basic_ostream<char, _Traits>& __out, const signed char* __s)
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/ostream:680:5: note: candidate template ignored: could not match 'basic_ostream' against 'basic_istream'
+  680 |     operator<<(basic_ostream<char, _Traits>& __out, const unsigned char* __s)
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/ostream:801:5: note: candidate template ignored: requirement '__and_<std::is_class<std::basic_istream<char, std::char_traits<char>> &>, std::__not_<std::is_same<std::basic_istream<char, std::char_traits<char>> &, std::ios_base>>, std::is_convertible<std::basic_istream<char, std::char_traits<char>> *, std::ios_base *>>::value' was not satisfied [with _Ostream = istream &, _Tp = int]
+  801 |     operator<<(_Ostream&& __os, const _Tp& __x)
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/ostream.tcc:307:5: note: candidate template ignored: could not match 'basic_ostream' against 'basic_istream'
+  307 |     operator<<(basic_ostream<_CharT, _Traits>& __out, const char* __s)
+      |     ^
+1 error generated.

@@ -1,0 +1,4 @@
+h18_return_local.c:5:12: warning: address of stack memory associated with local variable 'text' returned [-Wreturn-stack-address]
+    5 |     return text;
+      |            ^~~~
+1 warning generated.

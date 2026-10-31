@@ -1,0 +1,7 @@
+h02_matrix_multiply.c:18:2: error: expected '}'
+   18 | }
+      |  ^
+h02_matrix_multiply.c:3:12: note: to match this '{'
+    3 | int main() {
+      |            ^
+1 error generated.

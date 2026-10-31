@@ -1,0 +1,4 @@
+m07_lvalue.c:4:15: error: expression is not assignable
+    4 |     if (x % 2 = 0)
+      |         ~~~~~ ^
+1 error generated.

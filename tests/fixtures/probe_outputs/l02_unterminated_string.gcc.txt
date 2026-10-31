@@ -1,0 +1,16 @@
+l02_unterminated_string.c: In function 'main':
+l02_unterminated_string.c:3:12: warning: missing terminating " character
+    3 |     printf("Hello World);
+      |            ^
+l02_unterminated_string.c:3:12: error: missing terminating " character
+    3 |     printf("Hello World);
+      |            ^~~~~~~~~~~~~~
+l02_unterminated_string.c:4:5: error: expected expression before 'return'
+    4 |     return 0;
+      |     ^~~~~~
+l02_unterminated_string.c:4:14: error: expected ';' before '}' token
+    4 |     return 0;
+      |              ^
+      |              ;
+    5 | }
+      | ~             

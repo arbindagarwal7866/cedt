@@ -1,0 +1,10 @@
+m04_func_after_main.c:3:15: error: call to undeclared function 'area'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    3 |     float r = area(2.0);
+      |               ^
+m04_func_after_main.c:7:7: error: conflicting types for 'area'
+    7 | float area(float r) {
+      |       ^
+m04_func_after_main.c:3:15: note: previous implicit declaration is here
+    3 |     float r = area(2.0);
+      |               ^
+2 errors generated.

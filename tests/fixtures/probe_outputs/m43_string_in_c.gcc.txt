@@ -1,0 +1,15 @@
+m43_string_in_c.c: In function 'main':
+m43_string_in_c.c:3:5: error: unknown type name 'string'; did you mean 'stdin'?
+    3 |     string name = "Arbind";
+      |     ^~~~~~
+      |     stdin
+m43_string_in_c.c:3:19: warning: initialization of 'int' from 'char *' makes integer from pointer without a cast [-Wint-conversion]
+    3 |     string name = "Arbind";
+      |                   ^~~~~~~~
+m43_string_in_c.c:4:14: warning: format '%s' expects argument of type 'char *', but argument 2 has type 'int' [-Wformat=]
+    4 |     printf("%s\n", name);
+      |             ~^     ~~~~
+      |              |     |
+      |              |     int
+      |              char *
+      |             %d

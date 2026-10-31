@@ -1,0 +1,6 @@
+s04_extra_close_brace.c:8:5: error: expected identifier or '(' before 'return'
+    8 |     return 0;
+      |     ^~~~~~
+s04_extra_close_brace.c:9:1: error: expected identifier or '(' before '}' token
+    9 | }
+      | ^

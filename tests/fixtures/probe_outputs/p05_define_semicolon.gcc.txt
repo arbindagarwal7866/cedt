@@ -1,0 +1,11 @@
+p05_define_semicolon.c: In function 'main':
+p05_define_semicolon.c:2:16: error: expected ']' before ';' token
+    2 | #define SIZE 10;
+      |                ^
+p05_define_semicolon.c:4:11: note: in expansion of macro 'SIZE'
+    4 |     int a[SIZE];
+      |           ^~~~
+p05_define_semicolon.c:5:5: error: 'a' undeclared (first use in this function)
+    5 |     a[0] = 1;
+      |     ^
+p05_define_semicolon.c:5:5: note: each undeclared identifier is reported only once for each function it appears in

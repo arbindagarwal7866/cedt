@@ -1,0 +1,11 @@
+s14_missing_open_brace.c: In function 'main':
+s14_missing_open_brace.c:3:5: error: expected declaration specifiers before 'printf'
+    3 |     printf("hi\n");
+      |     ^~~~~~
+s14_missing_open_brace.c:4:5: error: expected declaration specifiers before 'return'
+    4 |     return 0;
+      |     ^~~~~~
+s14_missing_open_brace.c:5:1: error: expected declaration specifiers before '}' token
+    5 | }
+      | ^
+s14_missing_open_brace.c:6: error: expected '{' at end of input

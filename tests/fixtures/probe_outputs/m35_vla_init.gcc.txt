@@ -1,0 +1,4 @@
+m35_vla_init.c: In function 'main':
+m35_vla_init.c:4:16: error: variable-sized object may not be initialized except with an empty initializer
+    4 |     int a[n] = {0};
+      |                ^

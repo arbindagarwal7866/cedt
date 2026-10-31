@@ -1,0 +1,7 @@
+c30_cin_string_compare.cpp:6:11: warning: result of comparison against a string literal is unspecified (use an explicit string comparison function instead) [-Wstring-compare]
+    6 |     if (c == "y") cout << "yes";
+      |           ^  ~~~
+c30_cin_string_compare.cpp:6:11: error: comparison between pointer and integer ('char' and 'const char *')
+    6 |     if (c == "y") cout << "yes";
+      |         ~ ^  ~~~
+1 warning and 1 error generated.

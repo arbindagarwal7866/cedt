@@ -1,0 +1,5 @@
+[01m[Kprog.c:[m[K In function ‘[01m[Kmain[m[K’:
+[01m[Kprog.c:3:22:[m[K [01;31m[Kerror: [m[Kexpected ‘[01m[K;[m[K’ before ‘[01m[Kreturn[m[K’
+    3 |     printf("Hello\n"[01;31m[K)[m[K
+      |                      [01;31m[K^[m[K
+      |                      [32m[K;[m[K

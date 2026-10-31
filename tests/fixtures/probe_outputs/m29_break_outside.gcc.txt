@@ -1,0 +1,4 @@
+m29_break_outside.c: In function 'main':
+m29_break_outside.c:5:9: error: break statement not within loop or switch
+    5 |         break;
+      |         ^~~~~

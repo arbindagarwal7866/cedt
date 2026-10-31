@@ -1,0 +1,4 @@
+m68_deref_non_ptr.c: In function 'main':
+m68_deref_non_ptr.c:4:20: error: invalid type argument of unary '*' (have 'int')
+    4 |     printf("%d\n", *x);
+      |                    ^~

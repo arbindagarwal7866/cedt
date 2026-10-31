@@ -1,0 +1,8 @@
+m45_func_address.c:4:9: warning: address of function 'isEven' will always evaluate to 'true' [-Wpointer-bool-conversion]
+    4 |     if (isEven)
+      |     ~~  ^~~~~~
+m45_func_address.c:4:9: note: prefix with the address-of operator to silence this warning
+    4 |     if (isEven)
+      |         ^
+      |         &
+1 warning generated.

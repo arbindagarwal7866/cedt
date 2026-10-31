@@ -1,0 +1,7 @@
+m06_too_many_args.c: In function 'main':
+m06_too_many_args.c:6:20: error: too many arguments to function 'add'
+    6 |     printf("%d\n", add(5, 6, 7));
+      |                    ^~~
+m06_too_many_args.c:2:5: note: declared here
+    2 | int add(int a, int b) {
+      |     ^~~

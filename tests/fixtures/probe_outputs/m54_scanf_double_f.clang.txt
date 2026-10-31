@@ -1,0 +1,5 @@
+m54_scanf_double_f.c:4:17: warning: format specifies type 'float *' but the argument has type 'double *' [-Wformat]
+    4 |     scanf("%f", &d);
+      |            ~~   ^~
+      |            %lf
+1 warning generated.

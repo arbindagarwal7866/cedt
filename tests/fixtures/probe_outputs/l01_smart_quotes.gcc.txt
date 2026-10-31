@@ -1,0 +1,16 @@
+l01_smart_quotes.c: In function 'main':
+l01_smart_quotes.c:3:12: error: stray '\342' in program
+    3 |     printf(<U+201C>Hello World<U+201D>);
+      |            ^~~~~~~~
+l01_smart_quotes.c:3:13: error: 'Hello' undeclared (first use in this function); did you mean 'ftello'?
+    3 |     printf(“Hello World”);
+      |             ^~~~~
+      |             ftello
+l01_smart_quotes.c:3:13: note: each undeclared identifier is reported only once for each function it appears in
+l01_smart_quotes.c:3:18: error: expected ')' before 'World'
+    3 |     printf(“Hello World”);
+      |           ~      ^~~~~~
+      |                  )
+l01_smart_quotes.c:3:24: error: stray '\342' in program
+    3 |     printf(<U+201C>Hello World<U+201D>);
+      |                               ^~~~~~~~

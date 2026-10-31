@@ -1,0 +1,4 @@
+m48_return_local_addr.c: In function 'make':
+m48_return_local_addr.c:4:12: warning: function returns address of local variable [-Wreturn-local-addr]
+    4 |     return &x;
+      |            ^~

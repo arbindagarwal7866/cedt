@@ -1,0 +1,8 @@
+m01_undeclared.c:5:20: error: use of undeclared identifier 'conut'; did you mean 'count'?
+    5 |     printf("%d\n", conut);
+      |                    ^~~~~
+      |                    count
+m01_undeclared.c:3:9: note: 'count' declared here
+    3 |     int count = 0;
+      |         ^
+1 error generated.

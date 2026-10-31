@@ -1,0 +1,4 @@
+m30_ptr_from_int.c:3:10: error: incompatible integer to pointer conversion initializing 'int *' with an expression of type 'int' [-Wint-conversion]
+    3 |     int *p = 5;
+      |          ^   ~
+1 error generated.

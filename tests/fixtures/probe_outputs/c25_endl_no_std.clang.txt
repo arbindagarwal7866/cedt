@@ -1,0 +1,8 @@
+c25_endl_no_std.cpp:3:26: error: use of undeclared identifier 'endl'; did you mean 'std::endl'?
+    3 |     std::cout << "hi" << endl;
+      |                          ^~~~
+      |                          std::endl
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/ostream:735:5: note: 'std::endl' declared here
+  735 |     endl(basic_ostream<_CharT, _Traits>& __os)
+      |     ^
+1 error generated.

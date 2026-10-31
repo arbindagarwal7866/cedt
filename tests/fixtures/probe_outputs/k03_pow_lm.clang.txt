@@ -1,0 +1,3 @@
+/usr/bin/ld: /tmp/k03_pow_lm-5fe372.o: in function `main':
+k03_pow_lm.c:(.text+0x30): undefined reference to `pow'
+clang: error: linker command failed with exit code 1 (use -v to see invocation)

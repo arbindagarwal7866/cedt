@@ -1,0 +1,5 @@
+s01_missing_semicolon_stmt.c:3:22: error: expected ';' after expression
+    3 |     printf("Hello\n")
+      |                      ^
+      |                      ;
+1 error generated.

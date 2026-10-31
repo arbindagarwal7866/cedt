@@ -1,0 +1,4 @@
+m46_incompatible_ptr.c:5:7: warning: incompatible pointer types assigning to 'int *' from 'float *' [-Wincompatible-pointer-types]
+    5 |     p = &f;
+      |       ^ ~~
+1 warning generated.

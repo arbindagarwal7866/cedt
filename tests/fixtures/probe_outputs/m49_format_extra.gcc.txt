@@ -1,0 +1,4 @@
+m49_format_extra.c: In function 'main':
+m49_format_extra.c:4:12: warning: too many arguments for format [-Wformat-extra-args]
+    4 |     printf("Value\n", x);
+      |            ^~~~~~~~~

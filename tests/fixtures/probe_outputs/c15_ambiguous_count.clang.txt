@@ -1,0 +1,25 @@
+c15_ambiguous_count.cpp:5:5: error: reference to 'count' is ambiguous
+    5 |     count++;
+      |     ^
+c15_ambiguous_count.cpp:3:5: note: candidate found by name lookup is 'count'
+    3 | int count = 0;
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/pstl/glue_algorithm_defs.h:101:1: note: candidate found by name lookup is 'std::count'
+  101 | count(_ExecutionPolicy&& __exec, _ForwardIterator __first, _ForwardIterator __last, const _Tp& __value);
+      | ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/stl_algo.h:4072:5: note: candidate found by name lookup is 'std::count'
+ 4072 |     count(_InputIterator __first, _InputIterator __last, const _Tp& __value)
+      |     ^
+c15_ambiguous_count.cpp:6:13: error: reference to 'count' is ambiguous
+    6 |     cout << count;
+      |             ^
+c15_ambiguous_count.cpp:3:5: note: candidate found by name lookup is 'count'
+    3 | int count = 0;
+      |     ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/pstl/glue_algorithm_defs.h:101:1: note: candidate found by name lookup is 'std::count'
+  101 | count(_ExecutionPolicy&& __exec, _ForwardIterator __first, _ForwardIterator __last, const _Tp& __value);
+      | ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/stl_algo.h:4072:5: note: candidate found by name lookup is 'std::count'
+ 4072 |     count(_InputIterator __first, _InputIterator __last, const _Tp& __value)
+      |     ^
+2 errors generated.

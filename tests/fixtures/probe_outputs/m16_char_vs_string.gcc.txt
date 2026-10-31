@@ -1,0 +1,5 @@
+m16_char_vs_string.c: In function 'main':
+m16_char_vs_string.c:4:11: warning: comparison between pointer and integer
+    4 |     if (c == "y")
+      |           ^~
+m16_char_vs_string.c:4:11: warning: comparison with string literal results in unspecified behavior [-Waddress]

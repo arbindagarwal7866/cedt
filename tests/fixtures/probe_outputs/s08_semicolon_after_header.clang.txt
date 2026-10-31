@@ -1,0 +1,4 @@
+s08_semicolon_after_header.c:3:1: error: expected identifier or '('
+    3 | {
+      | ^
+1 error generated.

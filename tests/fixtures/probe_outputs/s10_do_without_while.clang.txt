@@ -1,0 +1,7 @@
+s10_do_without_while.c:7:5: error: expected 'while' in do/while loop
+    7 |     printf("%d\n", i);
+      |     ^
+s10_do_without_while.c:4:5: note: to match this 'do'
+    4 |     do {
+      |     ^
+1 error generated.

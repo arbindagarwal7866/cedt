@@ -1,0 +1,4 @@
+m25_void_value.c:4:9: error: initializing 'int' with an expression of incompatible type 'void'
+    4 |     int r = greet();
+      |         ^   ~~~~~~~
+1 error generated.

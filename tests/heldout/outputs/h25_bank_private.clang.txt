@@ -1,0 +1,7 @@
+h25_bank_private.cpp:13:7: error: 'balance' is a private member of 'Account'
+   13 |     a.balance = 500;
+      |       ^
+h25_bank_private.cpp:5:12: note: implicitly declared private here
+    5 |     double balance;
+      |            ^
+1 error generated.

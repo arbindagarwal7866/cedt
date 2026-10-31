@@ -1,0 +1,4 @@
+prog.cpp:1:10: fatal error: 'bits/stdc++.h' file not found
+#include <bits/stdc++.h>
+         ^~~~~~~~~~~~~~~
+1 error generated.

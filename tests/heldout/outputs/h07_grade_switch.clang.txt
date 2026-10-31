@@ -1,0 +1,4 @@
+h07_grade_switch.c:5:5: error: statement requires expression of integer type ('char[3]' invalid)
+    5 |     switch (grade) {
+      |     ^       ~~~~~
+1 error generated.

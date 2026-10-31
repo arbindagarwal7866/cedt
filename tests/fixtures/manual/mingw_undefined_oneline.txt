@@ -1,0 +1,2 @@
+C:\Users\STUDEN~1\AppData\Local\Temp\ccA8xWqc.o:prog.c:(.text+0x1e): undefined reference to `add'
+collect2.exe: error: ld returned 1 exit status

@@ -1,0 +1,15 @@
+c01_cout_no_std.cpp:3:5: error: use of undeclared identifier 'cout'; did you mean 'std::cout'?
+    3 |     cout << "Hello" << endl;
+      |     ^~~~
+      |     std::cout
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/iostream:63:18: note: 'std::cout' declared here
+   63 |   extern ostream cout;          ///< Linked to standard output
+      |                  ^
+c01_cout_no_std.cpp:3:24: error: use of undeclared identifier 'endl'; did you mean 'std::endl'?
+    3 |     cout << "Hello" << endl;
+      |                        ^~~~
+      |                        std::endl
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/ostream:735:5: note: 'std::endl' declared here
+  735 |     endl(basic_ostream<_CharT, _Traits>& __os)
+      |     ^
+2 errors generated.

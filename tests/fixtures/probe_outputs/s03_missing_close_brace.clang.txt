@@ -1,0 +1,7 @@
+s03_missing_close_brace.c:7:2: error: expected '}'
+    7 | }
+      |  ^
+s03_missing_close_brace.c:2:12: note: to match this '{'
+    2 | int main() {
+      |            ^
+1 error generated.

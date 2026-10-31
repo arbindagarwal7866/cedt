@@ -1,0 +1,4 @@
+h27_string_to_int.cpp:5:9: error: cannot initialize a variable of type 'int' with an lvalue of type 'const char[3]'
+    5 |     int age = "19";
+      |         ^     ~~~~
+1 error generated.

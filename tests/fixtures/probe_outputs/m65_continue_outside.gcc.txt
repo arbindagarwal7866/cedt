@@ -1,0 +1,4 @@
+m65_continue_outside.c: In function 'main':
+m65_continue_outside.c:4:12: error: continue statement not within a loop
+    4 |     if (x) continue;
+      |            ^~~~~~~~

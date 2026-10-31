@@ -1,0 +1,4 @@
+m17_assign_in_if.c: In function 'main':
+m17_assign_in_if.c:4:9: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+    4 |     if (x = 5)
+      |         ^

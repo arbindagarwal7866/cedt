@@ -1,0 +1,5 @@
+duplicate symbol '_count' in:
+    /var/folders/xy/abc/T/a-1b2c3d.o
+    /var/folders/xy/abc/T/b-4e5f6a.o
+ld: 1 duplicate symbol for architecture arm64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)

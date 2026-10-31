@@ -1,0 +1,4 @@
+m21_arrow_nonptr.c: In function 'main':
+m21_arrow_nonptr.c:5:22: error: invalid type argument of '->' (have 'struct Point')
+    5 |     printf("%d\n", pt->x);
+      |                      ^~

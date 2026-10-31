@@ -1,0 +1,5 @@
+h19_dowhile_menu.c:8:26: error: expected ';' after do/while statement
+    8 |     } while (choice != 2)
+      |                          ^
+      |                          ;
+1 error generated.

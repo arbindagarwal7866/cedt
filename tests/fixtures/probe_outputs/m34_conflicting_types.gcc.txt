@@ -1,0 +1,6 @@
+m34_conflicting_types.c:3:7: error: conflicting types for 'square'; have 'float(float)'
+    3 | float square(float x) {
+      |       ^~~~~~
+m34_conflicting_types.c:2:5: note: previous declaration of 'square' with type 'int(int)'
+    2 | int square(int x);
+      |     ^~~~~~

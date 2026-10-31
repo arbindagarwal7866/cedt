@@ -1,0 +1,10 @@
+s06_else_without_if.c: In function 'main':
+s06_else_without_if.c:4:5: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+    4 |     if (x > 0);
+      |     ^~
+s06_else_without_if.c:5:5: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'if'
+    5 |     {
+      |     ^
+s06_else_without_if.c:8:5: error: 'else' without a previous 'if'
+    8 |     else
+      |     ^~~~

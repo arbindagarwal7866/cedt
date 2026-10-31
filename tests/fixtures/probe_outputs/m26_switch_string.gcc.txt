@@ -1,0 +1,7 @@
+m26_switch_string.c: In function 'main':
+m26_switch_string.c:4:13: error: switch quantity not an integer
+    4 |     switch (cmd) {
+      |             ^~~
+m26_switch_string.c:5:9: error: pointers are not permitted as case values
+    5 |         case "start": printf("go\n"); break;
+      |         ^~~~

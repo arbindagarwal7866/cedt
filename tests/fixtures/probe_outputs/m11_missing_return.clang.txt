@@ -1,0 +1,4 @@
+m11_missing_return.c:7:1: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+    7 | }
+      | ^
+1 warning generated.

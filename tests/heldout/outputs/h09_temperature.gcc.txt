@@ -1,0 +1,8 @@
+h09_temperature.c: In function 'main':
+h09_temperature.c:6:13: warning: format '%f' expects argument of type 'float *', but argument 2 has type 'double *' [-Wformat=]
+    6 |     scanf("%f", &celsius);
+      |            ~^   ~~~~~~~~
+      |             |   |
+      |             |   double *
+      |             float *
+      |            %lf

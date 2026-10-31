@@ -1,0 +1,7 @@
+s04_extra_close_brace.c:8:5: error: expected identifier or '('
+    8 |     return 0;
+      |     ^
+s04_extra_close_brace.c:9:1: error: extraneous closing brace ('}')
+    9 | }
+      | ^
+2 errors generated.

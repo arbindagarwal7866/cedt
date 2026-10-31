@@ -1,0 +1,4 @@
+m12_return_value_void.c:4:5: error: void function 'show' should not return a value [-Wreturn-type]
+    4 |     return x;
+      |     ^      ~
+1 error generated.

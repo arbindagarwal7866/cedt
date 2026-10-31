@@ -1,0 +1,7 @@
+h22_circle_area.c: In function 'main':
+h22_circle_area.c:5:21: warning: format '%d' expects argument of type 'int', but argument 2 has type 'double' [-Wformat=]
+    5 |     printf("Area = %d\n", 3.14159 * r * r);
+      |                    ~^     ~~~~~~~~~~~~~~~
+      |                     |                 |
+      |                     int               double
+      |                    %f

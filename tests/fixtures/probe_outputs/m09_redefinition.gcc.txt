@@ -1,0 +1,7 @@
+m09_redefinition.c: In function 'main':
+m09_redefinition.c:4:9: error: redefinition of 'x'
+    4 |     int x = 2;
+      |         ^
+m09_redefinition.c:3:9: note: previous definition of 'x' with type 'int'
+    3 |     int x = 1;
+      |         ^

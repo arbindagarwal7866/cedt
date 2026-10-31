@@ -1,0 +1,128 @@
+h29_cin_extraction.cpp: In function 'int main()':
+h29_cin_extraction.cpp:7:9: error: no match for 'operator<<' (operand types are 'std::istream' {aka 'std::basic_istream<char>'} and 'int')
+    7 |     cin << a << b;
+      |     ~~~ ^~ ~
+      |     |      |
+      |     |      int
+      |     std::istream {aka std::basic_istream<char>}
+h29_cin_extraction.cpp:7:9: note: candidate: 'operator<<(int, int)' (built-in)
+    7 |     cin << a << b;
+      |     ~~~~^~~~
+h29_cin_extraction.cpp:7:9: note:   no known conversion for argument 1 from 'std::istream' {aka 'std::basic_istream<char>'} to 'int'
+In file included from /usr/include/c++/13/bits/basic_string.h:47,
+                 from /usr/include/c++/13/string:54,
+                 from /usr/include/c++/13/bits/locale_classes.h:40,
+                 from /usr/include/c++/13/bits/ios_base.h:41,
+                 from /usr/include/c++/13/ios:44,
+                 from /usr/include/c++/13/ostream:40,
+                 from /usr/include/c++/13/iostream:41,
+                 from h29_cin_extraction.cpp:1:
+/usr/include/c++/13/string_view:761:5: note: candidate: 'template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(basic_ostream<_CharT, _Traits>&, basic_string_view<_CharT, _Traits>)'
+  761 |     operator<<(basic_ostream<_CharT, _Traits>& __os,
+      |     ^~~~~~~~
+/usr/include/c++/13/string_view:761:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:12: note:   'std::istream' {aka 'std::basic_istream<char>'} is not derived from 'std::basic_ostream<_CharT, _Traits>'
+    7 |     cin << a << b;
+      |            ^
+/usr/include/c++/13/bits/basic_string.h:4032:5: note: candidate: 'template<class _CharT, class _Traits, class _Alloc> std::basic_ostream<_CharT, _Traits>& std::operator<<(basic_ostream<_CharT, _Traits>&, const __cxx11::basic_string<_CharT, _Traits, _Allocator>&)'
+ 4032 |     operator<<(basic_ostream<_CharT, _Traits>& __os,
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/basic_string.h:4032:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:12: note:   'std::istream' {aka 'std::basic_istream<char>'} is not derived from 'std::basic_ostream<_CharT, _Traits>'
+    7 |     cin << a << b;
+      |            ^
+In file included from /usr/include/c++/13/bits/memory_resource.h:38,
+                 from /usr/include/c++/13/string:58:
+/usr/include/c++/13/cstddef:124:5: note: candidate: 'template<class _IntegerType> constexpr std::__byte_op_t<_IntegerType> std::operator<<(byte, _IntegerType)'
+  124 |     operator<<(byte __b, _IntegerType __shift) noexcept
+      |     ^~~~~~~~
+/usr/include/c++/13/cstddef:124:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:5: note:   cannot convert 'std::cin' (type 'std::istream' {aka 'std::basic_istream<char>'}) to type 'std::byte'
+    7 |     cin << a << b;
+      |     ^~~
+In file included from /usr/include/c++/13/bits/ios_base.h:46:
+/usr/include/c++/13/system_error:339:5: note: candidate: 'template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(basic_ostream<_CharT, _Traits>&, const error_code&)'
+  339 |     operator<<(basic_ostream<_CharT, _Traits>& __os, const error_code& __e)
+      |     ^~~~~~~~
+/usr/include/c++/13/system_error:339:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:12: note:   'std::istream' {aka 'std::basic_istream<char>'} is not derived from 'std::basic_ostream<_CharT, _Traits>'
+    7 |     cin << a << b;
+      |            ^
+/usr/include/c++/13/ostream:554:5: note: candidate: 'template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(basic_ostream<_CharT, _Traits>&, _CharT)'
+  554 |     operator<<(basic_ostream<_CharT, _Traits>& __out, _CharT __c)
+      |     ^~~~~~~~
+/usr/include/c++/13/ostream:554:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:12: note:   'std::istream' {aka 'std::basic_istream<char>'} is not derived from 'std::basic_ostream<_CharT, _Traits>'
+    7 |     cin << a << b;
+      |            ^
+/usr/include/c++/13/ostream:564:5: note: candidate: 'template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(basic_ostream<_CharT, _Traits>&, char)'
+  564 |     operator<<(basic_ostream<_CharT, _Traits>& __out, char __c)
+      |     ^~~~~~~~
+/usr/include/c++/13/ostream:564:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:12: note:   'std::istream' {aka 'std::basic_istream<char>'} is not derived from 'std::basic_ostream<_CharT, _Traits>'
+    7 |     cin << a << b;
+      |            ^
+/usr/include/c++/13/ostream:570:5: note: candidate: 'template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(basic_ostream<char, _Traits>&, char)'
+  570 |     operator<<(basic_ostream<char, _Traits>& __out, char __c)
+      |     ^~~~~~~~
+/usr/include/c++/13/ostream:570:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:12: note:   'std::istream' {aka 'std::basic_istream<char>'} is not derived from 'std::basic_ostream<char, _Traits>'
+    7 |     cin << a << b;
+      |            ^
+/usr/include/c++/13/ostream:581:5: note: candidate: 'template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(basic_ostream<char, _Traits>&, signed char)'
+  581 |     operator<<(basic_ostream<char, _Traits>& __out, signed char __c)
+      |     ^~~~~~~~
+/usr/include/c++/13/ostream:581:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:12: note:   'std::istream' {aka 'std::basic_istream<char>'} is not derived from 'std::basic_ostream<char, _Traits>'
+    7 |     cin << a << b;
+      |            ^
+/usr/include/c++/13/ostream:586:5: note: candidate: 'template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(basic_ostream<char, _Traits>&, unsigned char)'
+  586 |     operator<<(basic_ostream<char, _Traits>& __out, unsigned char __c)
+      |     ^~~~~~~~
+/usr/include/c++/13/ostream:586:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:12: note:   'std::istream' {aka 'std::basic_istream<char>'} is not derived from 'std::basic_ostream<char, _Traits>'
+    7 |     cin << a << b;
+      |            ^
+/usr/include/c++/13/ostream:645:5: note: candidate: 'template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(basic_ostream<_CharT, _Traits>&, const _CharT*)'
+  645 |     operator<<(basic_ostream<_CharT, _Traits>& __out, const _CharT* __s)
+      |     ^~~~~~~~
+/usr/include/c++/13/ostream:645:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:12: note:   'std::istream' {aka 'std::basic_istream<char>'} is not derived from 'std::basic_ostream<_CharT, _Traits>'
+    7 |     cin << a << b;
+      |            ^
+In file included from /usr/include/c++/13/ostream:880:
+/usr/include/c++/13/bits/ostream.tcc:307:5: note: candidate: 'template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(basic_ostream<_CharT, _Traits>&, const char*)'
+  307 |     operator<<(basic_ostream<_CharT, _Traits>& __out, const char* __s)
+      |     ^~~~~~~~
+/usr/include/c++/13/bits/ostream.tcc:307:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:12: note:   'std::istream' {aka 'std::basic_istream<char>'} is not derived from 'std::basic_ostream<_CharT, _Traits>'
+    7 |     cin << a << b;
+      |            ^
+/usr/include/c++/13/ostream:662:5: note: candidate: 'template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(basic_ostream<char, _Traits>&, const char*)'
+  662 |     operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+      |     ^~~~~~~~
+/usr/include/c++/13/ostream:662:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:12: note:   'std::istream' {aka 'std::basic_istream<char>'} is not derived from 'std::basic_ostream<char, _Traits>'
+    7 |     cin << a << b;
+      |            ^
+/usr/include/c++/13/ostream:675:5: note: candidate: 'template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(basic_ostream<char, _Traits>&, const signed char*)'
+  675 |     operator<<(basic_ostream<char, _Traits>& __out, const signed char* __s)
+      |     ^~~~~~~~
+/usr/include/c++/13/ostream:675:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:12: note:   'std::istream' {aka 'std::basic_istream<char>'} is not derived from 'std::basic_ostream<char, _Traits>'
+    7 |     cin << a << b;
+      |            ^
+/usr/include/c++/13/ostream:680:5: note: candidate: 'template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(basic_ostream<char, _Traits>&, const unsigned char*)'
+  680 |     operator<<(basic_ostream<char, _Traits>& __out, const unsigned char* __s)
+      |     ^~~~~~~~
+/usr/include/c++/13/ostream:680:5: note:   template argument deduction/substitution failed:
+h29_cin_extraction.cpp:7:12: note:   'std::istream' {aka 'std::basic_istream<char>'} is not derived from 'std::basic_ostream<char, _Traits>'
+    7 |     cin << a << b;
+      |            ^
+/usr/include/c++/13/ostream:801:5: note: candidate: 'template<class _Ostream, class _Tp> _Ostream&& std::operator<<(_Ostream&&, const _Tp&)'
+  801 |     operator<<(_Ostream&& __os, const _Tp& __x)
+      |     ^~~~~~~~
+/usr/include/c++/13/ostream:801:5: note:   template argument deduction/substitution failed:
+/usr/include/c++/13/ostream: In substitution of 'template<class _Ostream, class _Tp> _Ostream&& std::operator<<(_Ostream&&, const _Tp&) [with _Ostream = std::basic_istream<char>&; _Tp = int]':
+h29_cin_extraction.cpp:7:12:   required from here
+/usr/include/c++/13/ostream:801:5: error: no type named 'type' in 'struct std::enable_if<false, void>'

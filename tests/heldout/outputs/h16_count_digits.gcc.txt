@@ -1,0 +1,7 @@
+h16_count_digits.c: In function 'main':
+h16_count_digits.c:5:5: warning: this 'while' clause does not guard... [-Wmisleading-indentation]
+    5 |     while (n > 0);
+      |     ^~~~~
+h16_count_digits.c:6:5: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'while'
+    6 |     {
+      |     ^

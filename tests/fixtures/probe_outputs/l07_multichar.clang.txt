@@ -1,0 +1,7 @@
+l07_multichar.c:3:14: warning: multi-character character constant [-Wmultichar]
+    3 |     char c = 'ab';
+      |              ^
+l07_multichar.c:3:14: warning: implicit conversion from 'int' to 'char' changes value from 24930 to 98 [-Wconstant-conversion]
+    3 |     char c = 'ab';
+      |          ~   ^~~~
+2 warnings generated.

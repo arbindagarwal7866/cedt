@@ -1,0 +1,5 @@
+m51_implicit_int.c:2:1: error: type specifier missing, defaults to 'int'; ISO C99 and later do not support implicit int [-Wimplicit-int]
+    2 | main() {
+      | ^
+      | int
+1 error generated.

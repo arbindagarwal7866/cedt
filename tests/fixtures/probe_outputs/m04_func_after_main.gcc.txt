@@ -1,0 +1,11 @@
+m04_func_after_main.c: In function 'main':
+m04_func_after_main.c:3:15: warning: implicit declaration of function 'area' [-Wimplicit-function-declaration]
+    3 |     float r = area(2.0);
+      |               ^~~~
+m04_func_after_main.c: At top level:
+m04_func_after_main.c:7:7: error: conflicting types for 'area'; have 'float(float)'
+    7 | float area(float r) {
+      |       ^~~~
+m04_func_after_main.c:3:15: note: previous implicit declaration of 'area' with type 'int()'
+    3 |     float r = area(2.0);
+      |               ^~~~

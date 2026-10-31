@@ -1,0 +1,8 @@
+s05_missing_paren.c: In function 'main':
+s05_missing_paren.c:4:14: error: expected ')' before '{' token
+    4 |     if (x > 0 {
+      |        ~     ^~
+      |              )
+s05_missing_paren.c:8:1: error: expected expression before '}' token
+    8 | }
+      | ^

@@ -1,0 +1,8 @@
+m57_too_few_printf.c: In function 'main':
+m57_too_few_printf.c:3:5: error: too few arguments to function 'printf'
+    3 |     printf();
+      |     ^~~~~~
+In file included from m57_too_few_printf.c:1:
+/usr/include/stdio.h:363:12: note: declared here
+  363 | extern int printf (const char *__restrict __format, ...);
+      |            ^~~~~~

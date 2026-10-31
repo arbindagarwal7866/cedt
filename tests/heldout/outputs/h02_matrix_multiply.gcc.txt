@@ -1,0 +1,4 @@
+h02_matrix_multiply.c: In function 'main':
+h02_matrix_multiply.c:18:1: error: expected declaration or statement at end of input
+   18 | }
+      | ^

@@ -1,0 +1,9 @@
+c09_no_matching_function.cpp: In function 'int main()':
+c09_no_matching_function.cpp:5:20: error: invalid conversion from 'const char*' to 'int' [-fpermissive]
+    5 |     cout << square("5");
+      |                    ^~~
+      |                    |
+      |                    const char*
+c09_no_matching_function.cpp:3:16: note:   initializing argument 1 of 'int square(int)'
+    3 | int square(int x) { return x * x; }
+      |            ~~~~^

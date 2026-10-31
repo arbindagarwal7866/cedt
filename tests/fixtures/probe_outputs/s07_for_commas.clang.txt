@@ -1,0 +1,8 @@
+s07_for_commas.c:4:27: error: expected ';' in 'for' statement specifier
+    4 |     for (i = 0, i < 5, i++) {
+      |                           ^
+s07_for_commas.c:4:27: error: expected ';' in 'for' statement specifier
+s07_for_commas.c:4:19: warning: left operand of comma operator has no effect [-Wunused-value]
+    4 |     for (i = 0, i < 5, i++) {
+      |                 ~ ^ ~
+1 warning and 2 errors generated.

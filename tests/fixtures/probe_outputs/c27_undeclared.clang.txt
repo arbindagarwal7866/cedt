@@ -1,0 +1,8 @@
+c27_undeclared.cpp:5:13: error: use of undeclared identifier 'totl'; did you mean 'total'?
+    5 |     cout << totl << endl;
+      |             ^~~~
+      |             total
+c27_undeclared.cpp:4:9: note: 'total' declared here
+    4 |     int total = 0;
+      |         ^
+1 error generated.

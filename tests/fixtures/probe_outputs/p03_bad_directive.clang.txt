@@ -1,0 +1,8 @@
+p03_bad_directive.c:1:2: error: invalid preprocessing directive
+    1 | #inlcude <stdio.h>
+      |  ^
+p03_bad_directive.c:3:5: error: call to undeclared library function 'printf' with type 'int (const char *, ...)'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    3 |     printf("hi\n");
+      |     ^
+p03_bad_directive.c:3:5: note: include the header <stdio.h> or explicitly provide a declaration for 'printf'
+2 errors generated.

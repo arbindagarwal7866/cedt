@@ -1,0 +1,4 @@
+m69_const_assign.c: In function 'main':
+m69_const_assign.c:4:9: error: assignment of read-only variable 'MAX'
+    4 |     MAX = 20;
+      |         ^

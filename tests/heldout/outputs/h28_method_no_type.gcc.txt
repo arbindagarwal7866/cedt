@@ -1,0 +1,7 @@
+h28_method_no_type.cpp:6:5: error: ISO C++ forbids declaration of 'display' with no type [-fpermissive]
+    6 |     display() {
+      |     ^~~~~~~
+h28_method_no_type.cpp: In member function 'int Shape::display()':
+h28_method_no_type.cpp:8:5: warning: no return statement in function returning non-void [-Wreturn-type]
+    8 |     }
+      |     ^

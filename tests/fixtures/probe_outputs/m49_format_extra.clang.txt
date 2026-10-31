@@ -1,0 +1,4 @@
+m49_format_extra.c:4:23: warning: data argument not used by format string [-Wformat-extra-args]
+    4 |     printf("Value\n", x);
+      |            ~~~~~~~~~  ^
+1 warning generated.

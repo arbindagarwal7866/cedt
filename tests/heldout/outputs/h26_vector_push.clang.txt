@@ -1,0 +1,4 @@
+h26_vector_push.cpp:7:7: error: no member named 'push' in 'std::vector<int>'
+    7 |     v.push(5);
+      |     ~ ^
+1 error generated.

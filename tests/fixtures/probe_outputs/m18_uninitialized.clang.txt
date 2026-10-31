@@ -1,0 +1,8 @@
+m18_uninitialized.c:5:9: warning: variable 'sum' is uninitialized when used here [-Wuninitialized]
+    5 |         sum += i;
+      |         ^~~
+m18_uninitialized.c:3:12: note: initialize the variable 'sum' to silence this warning
+    3 |     int sum;
+      |            ^
+      |             = 0
+1 warning generated.

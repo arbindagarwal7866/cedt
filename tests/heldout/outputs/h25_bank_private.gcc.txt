@@ -1,0 +1,7 @@
+h25_bank_private.cpp: In function 'int main()':
+h25_bank_private.cpp:13:7: error: 'double Account::balance' is private within this context
+   13 |     a.balance = 500;
+      |       ^~~~~~~
+h25_bank_private.cpp:5:12: note: declared private here
+    5 |     double balance;
+      |            ^~~~~~~

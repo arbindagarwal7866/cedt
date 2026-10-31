@@ -1,0 +1,6 @@
+m44_printf_missing_arg.c: In function 'main':
+m44_printf_missing_arg.c:4:17: warning: format '%d' expects a matching 'int' argument [-Wformat=]
+    4 |     printf("%d %d\n", a);
+      |                ~^
+      |                 |
+      |                 int

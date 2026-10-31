@@ -1,0 +1,4 @@
+s03_missing_close_brace.c: In function 'main':
+s03_missing_close_brace.c:7:1: error: expected declaration or statement at end of input
+    7 | }
+      | ^

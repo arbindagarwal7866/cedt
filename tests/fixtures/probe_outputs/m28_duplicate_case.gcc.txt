@@ -1,0 +1,7 @@
+m28_duplicate_case.c: In function 'main':
+m28_duplicate_case.c:6:9: error: duplicate case value
+    6 |         case 1: printf("uno\n"); break;
+      |         ^~~~
+m28_duplicate_case.c:5:9: note: previously used here
+    5 |         case 1: printf("one\n"); break;
+      |         ^~~~

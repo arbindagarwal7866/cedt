@@ -1,0 +1,5 @@
+h17_name_quotes.c: In function 'main':
+h17_name_quotes.c:4:21: warning: character constant too long for its type
+    4 |     char name[20] = 'Arbind';
+      |                     ^~~~~~~~
+h17_name_quotes.c:4:21: error: invalid initializer

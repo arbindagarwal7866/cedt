@@ -1,0 +1,4 @@
+c11_string_to_charptr.cpp:3:15: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+    3 |     char *s = "hello";
+      |               ^
+1 warning generated.

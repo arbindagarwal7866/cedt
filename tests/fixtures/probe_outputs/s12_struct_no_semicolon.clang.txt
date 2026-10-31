@@ -1,0 +1,5 @@
+s12_struct_no_semicolon.c:5:2: error: expected ';' after struct
+    5 | }
+      |  ^
+      |  ;
+1 error generated.

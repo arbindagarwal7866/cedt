@@ -1,0 +1,13 @@
+m40_array_bounds.c:4:5: warning: array index 5 is past the end of the array (that has type 'int[5]') [-Warray-bounds]
+    4 |     a[5] = 10;
+      |     ^ ~
+m40_array_bounds.c:3:5: note: array 'a' declared here
+    3 |     int a[5];
+      |     ^
+m40_array_bounds.c:5:20: warning: array index 5 is past the end of the array (that has type 'int[5]') [-Warray-bounds]
+    5 |     printf("%d\n", a[5]);
+      |                    ^ ~
+m40_array_bounds.c:3:5: note: array 'a' declared here
+    3 |     int a[5];
+      |     ^
+2 warnings generated.

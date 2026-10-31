@@ -1,0 +1,4 @@
+c17_narrowing.cpp: In function 'int main()':
+c17_narrowing.cpp:3:11: error: narrowing conversion of '3.7000000000000002e+0' from 'double' to 'int' [-Wnarrowing]
+    3 |     int x{3.7};
+      |           ^~~

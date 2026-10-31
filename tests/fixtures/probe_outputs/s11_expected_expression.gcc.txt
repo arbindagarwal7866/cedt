@@ -1,0 +1,4 @@
+s11_expected_expression.c: In function 'main':
+s11_expected_expression.c:3:13: error: expected expression before ';' token
+    3 |     int x = ;
+      |             ^

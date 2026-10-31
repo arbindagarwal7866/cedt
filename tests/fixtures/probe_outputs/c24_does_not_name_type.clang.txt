@@ -1,0 +1,8 @@
+c24_does_not_name_type.cpp:4:1: error: unknown type name 'strng'; did you mean 'string'?
+    4 | strng name;
+      | ^~~~~
+      | string
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/stringfwd.h:77:33: note: 'string' declared here
+   77 |   typedef basic_string<char>    string;   
+      |                                 ^
+1 error generated.

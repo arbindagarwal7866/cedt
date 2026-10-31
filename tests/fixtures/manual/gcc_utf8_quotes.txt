@@ -1,0 +1,6 @@
+prog.c: In function ‘main’:
+prog.c:6:20: error: ‘conut’ undeclared (first use in this function); did you mean ‘count’?
+    6 |     printf("%d\n", conut);
+      |                    ^~~~~
+      |                    count
+prog.c:6:20: note: each undeclared identifier is reported only once for each function it appears in

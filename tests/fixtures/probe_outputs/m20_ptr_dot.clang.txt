@@ -1,0 +1,5 @@
+m20_ptr_dot.c:6:21: error: member reference type 'struct Point *' is a pointer; did you mean to use '->'?
+    6 |     printf("%d\n", p.x);
+      |                    ~^
+      |                     ->
+1 error generated.

@@ -1,0 +1,4 @@
+m70_struct_compare.c: In function 'main':
+m70_struct_compare.c:5:11: error: invalid operands to binary == (have 'struct P' and 'struct P')
+    5 |     if (a == b) printf("same\n");
+      |           ^~

@@ -1,0 +1,8 @@
+m64_param_type_mismatch.c:5:10: error: incompatible integer to pointer conversion passing 'int' to parameter of type 'int *'; take the address with & [-Wint-conversion]
+    5 |     show(x);
+      |          ^
+      |          &
+m64_param_type_mismatch.c:2:16: note: passing argument to parameter 'p' here
+    2 | void show(int *p) { printf("%d\n", *p); }
+      |                ^
+1 error generated.

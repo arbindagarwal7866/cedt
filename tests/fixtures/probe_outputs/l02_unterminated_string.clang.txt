@@ -1,0 +1,11 @@
+l02_unterminated_string.c:3:12: warning: missing terminating '"' character [-Winvalid-pp-token]
+    3 |     printf("Hello World);
+      |            ^
+l02_unterminated_string.c:3:12: error: expected expression
+l02_unterminated_string.c:5:2: error: expected '}'
+    5 | }
+      |  ^
+l02_unterminated_string.c:2:12: note: to match this '{'
+    2 | int main() {
+      |            ^
+1 warning and 2 errors generated.

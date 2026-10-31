@@ -1,0 +1,4 @@
+m30_ptr_from_int.c: In function 'main':
+m30_ptr_from_int.c:3:14: warning: initialization of 'int *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
+    3 |     int *p = 5;
+      |              ^

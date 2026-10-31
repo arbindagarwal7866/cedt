@@ -1,0 +1,8 @@
+m56_passing_int_to_ptr.c:5:20: error: incompatible integer to pointer conversion passing 'char' to parameter of type 'const char *'; take the address with & [-Wint-conversion]
+    5 |     int n = strlen(s[0]);
+      |                    ^~~~
+      |                    &
+/usr/include/string.h:407:35: note: passing argument to parameter '__s' here
+  407 | extern size_t strlen (const char *__s)
+      |                                   ^
+1 error generated.

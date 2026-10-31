@@ -1,0 +1,7 @@
+l06_unterminated_comment.c: In function 'main':
+l06_unterminated_comment.c:3:5: error: unterminated comment
+    3 |     /* this comment never ends
+      |     ^
+l06_unterminated_comment.c:2:1: error: expected declaration or statement at end of input
+    2 | int main() {
+      | ^~~

@@ -1,0 +1,10 @@
+h23_endl_no_std.cpp: In function 'int main()':
+h23_endl_no_std.cpp:5:40: error: 'endl' was not declared in this scope; did you mean 'std::endl'?
+    5 |     std::cout << "Marks: " << marks << endl;
+      |                                        ^~~~
+      |                                        std::endl
+In file included from /usr/include/c++/13/iostream:41,
+                 from h23_endl_no_std.cpp:1:
+/usr/include/c++/13/ostream:735:5: note: 'std::endl' declared here
+  735 |     endl(basic_ostream<_CharT, _Traits>& __os)
+      |     ^~~~

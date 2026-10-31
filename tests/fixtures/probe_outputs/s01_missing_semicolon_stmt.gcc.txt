@@ -1,0 +1,7 @@
+s01_missing_semicolon_stmt.c: In function 'main':
+s01_missing_semicolon_stmt.c:3:22: error: expected ';' before 'return'
+    3 |     printf("Hello\n")
+      |                      ^
+      |                      ;
+    4 |     return 0;
+      |     ~~~~~~            

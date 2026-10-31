@@ -1,0 +1,8 @@
+h20_printf_typo.c: In function 'main':
+h20_printf_typo.c:5:5: warning: implicit declaration of function 'prinft'; did you mean 'printf'? [-Wimplicit-function-declaration]
+    5 |     prinft("Roll number: %d\n", roll);
+      |     ^~~~~~
+      |     printf
+/usr/bin/ld: /tmp/ccOFiOc4.o: in function `main':
+h20_printf_typo.c:(.text+0x28): undefined reference to `prinft'
+collect2: error: ld returned 1 exit status

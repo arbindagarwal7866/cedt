@@ -1,0 +1,4 @@
+m27_case_non_const.c: In function 'main':
+m27_case_non_const.c:5:9: error: case label does not reduce to an integer constant
+    5 |         case a: printf("two\n"); break;
+      |         ^~~~

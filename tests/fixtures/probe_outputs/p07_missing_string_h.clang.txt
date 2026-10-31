@@ -1,0 +1,9 @@
+p07_missing_string_h.c:4:5: error: call to undeclared library function 'strcpy' with type 'char *(char *, const char *)'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    4 |     strcpy(a, "hi");
+      |     ^
+p07_missing_string_h.c:4:5: note: include the header <string.h> or explicitly provide a declaration for 'strcpy'
+p07_missing_string_h.c:5:25: error: call to undeclared library function 'strlen' with type 'unsigned long (const char *)'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    5 |     printf("%d\n", (int)strlen(a));
+      |                         ^
+p07_missing_string_h.c:5:25: note: include the header <string.h> or explicitly provide a declaration for 'strlen'
+2 errors generated.

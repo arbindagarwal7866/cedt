@@ -1,0 +1,8 @@
+m22_no_member.c:5:7: error: no member named 'agee' in 'struct Student'; did you mean 'age'?
+    5 |     s.agee = 20;
+      |       ^~~~
+      |       age
+m22_no_member.c:2:22: note: 'age' declared here
+    2 | struct Student { int age; char name[20]; };
+      |                      ^
+1 error generated.

@@ -1,0 +1,13 @@
+m42_bool_in_c.c: In function 'main':
+m42_bool_in_c.c:3:5: error: unknown type name 'bool'
+    3 |     bool done = true;
+      |     ^~~~
+m42_bool_in_c.c:2:1: note: 'bool' is defined in header '<stdbool.h>'; did you forget to '#include <stdbool.h>'?
+    1 | #include <stdio.h>
+  +++ |+#include <stdbool.h>
+    2 | int main() {
+m42_bool_in_c.c:3:17: error: 'true' undeclared (first use in this function)
+    3 |     bool done = true;
+      |                 ^~~~
+m42_bool_in_c.c:3:17: note: 'true' is defined in header '<stdbool.h>'; did you forget to '#include <stdbool.h>'?
+m42_bool_in_c.c:3:17: note: each undeclared identifier is reported only once for each function it appears in

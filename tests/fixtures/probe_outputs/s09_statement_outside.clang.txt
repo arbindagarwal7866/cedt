@@ -1,0 +1,17 @@
+s09_statement_outside.c:2:8: error: expected parameter declarator
+    2 | printf("hello\n");
+      |        ^
+s09_statement_outside.c:2:8: error: expected ')'
+s09_statement_outside.c:2:7: note: to match this '('
+    2 | printf("hello\n");
+      |       ^
+s09_statement_outside.c:2:1: error: type specifier missing, defaults to 'int'; ISO C99 and later do not support implicit int [-Wimplicit-int]
+    2 | printf("hello\n");
+      | ^
+      | int
+s09_statement_outside.c:2:1: warning: a function declaration without a prototype is deprecated in all versions of C and is treated as a zero-parameter prototype in C23, conflicting with a previous declaration [-Wdeprecated-non-prototype]
+s09_statement_outside.c:2:1: error: conflicting types for 'printf'
+/usr/include/stdio.h:363:12: note: previous declaration is here
+  363 | extern int printf (const char *__restrict __format, ...);
+      |            ^
+1 warning and 4 errors generated.

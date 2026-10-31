@@ -1,0 +1,7 @@
+m05_too_few_args.c:6:25: error: too few arguments to function call, expected 2, have 1
+    6 |     printf("%d\n", add(5));
+      |                    ~~~  ^
+m05_too_few_args.c:2:5: note: 'add' declared here
+    2 | int add(int a, int b) {
+      |     ^   ~~~~~~~~~~~~
+1 error generated.

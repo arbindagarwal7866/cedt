@@ -1,0 +1,4 @@
+m27_case_non_const.c:5:14: error: expression is not an integer constant expression
+    5 |         case a: printf("two\n"); break;
+      |              ^
+1 error generated.

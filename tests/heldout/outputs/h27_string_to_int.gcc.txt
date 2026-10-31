@@ -1,0 +1,6 @@
+h27_string_to_int.cpp: In function 'int main()':
+h27_string_to_int.cpp:5:15: error: invalid conversion from 'const char*' to 'int' [-fpermissive]
+    5 |     int age = "19";
+      |               ^~~~
+      |               |
+      |               const char*

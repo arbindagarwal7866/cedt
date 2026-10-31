@@ -1,0 +1,5 @@
+m47_array_size_missing.c: In function 'main':
+m47_array_size_missing.c:3:9: error: array size missing in 'a'
+    3 |     int a[];
+      |         ^
+m47_array_size_missing.c:3:9: warning: variable 'a' set but not used [-Wunused-but-set-variable]

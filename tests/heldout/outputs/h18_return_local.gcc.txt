@@ -1,0 +1,4 @@
+h18_return_local.c: In function 'make_greeting':
+h18_return_local.c:5:12: warning: function returns address of local variable [-Wreturn-local-addr]
+    5 |     return text;
+      |            ^~~~

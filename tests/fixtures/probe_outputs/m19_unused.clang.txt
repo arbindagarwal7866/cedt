@@ -1,0 +1,4 @@
+m19_unused.c:3:9: warning: unused variable 'unused' [-Wunused-variable]
+    3 |     int unused = 5;
+      |         ^~~~~~
+1 warning generated.

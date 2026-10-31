@@ -1,0 +1,5 @@
+m14_format_mismatch.c:4:20: warning: format specifies type 'int' but the argument has type 'double' [-Wformat]
+    4 |     printf("%d\n", pi);
+      |             ~~     ^~
+      |             %f
+1 warning generated.

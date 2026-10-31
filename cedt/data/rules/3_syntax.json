@@ -1,0 +1,617 @@
+{
+  "phase": "syntax",
+  "description": "Errors found by the parser: the tokens are not arranged according to the C/C++ grammar.",
+  "rules": [
+    {
+      "id": "S001",
+      "title": "Missing semicolon",
+      "phase": "syntax",
+      "priority": 60,
+      "patterns": [
+        "^expected ';' before (?P<before>.+)$",
+        "^expected ',' or ';' before (?P<before>.+)$",
+        "^expected ';' (?:after|at end of) (?P<after>.+)$",
+        "^expected ';', ',' or '\\)' before (?P<before>.+)$",
+        "^expected ';' at end of member declaration$",
+        "^expected ';' after top level declarator$"
+      ],
+      "handler": "missing_semicolon",
+      "what": "A statement is not finished: C/C++ needs a semicolon `;` at the end of every statement and declaration.",
+      "why": [
+        "The `;` at the end of the line was forgotten.",
+        "The compiler only notices when it reads the NEXT token, so it often reports the line AFTER the real mistake."
+      ],
+      "fix": [
+        "Add `;` at the end of line {real_line}."
+      ],
+      "example": {
+        "wrong": "int count = 5\nprintf(\"%d\", count);",
+        "right": "int count = 5;\nprintf(\"%d\", count);"
+      },
+      "tip": "Lines that do NOT get a semicolon: #include/#define lines, function headers like `int main()`, and lines ending with `{` or `}` of if/for/while blocks.",
+      "samples": [
+        "expected ';' before 'return'",
+        "expected ',' or ';' before 'printf'",
+        "expected ';' after expression",
+        "expected ';' at end of declaration"
+      ]
+    },
+    {
+      "id": "S002",
+      "title": "Missing closing brace }",
+      "phase": "syntax",
+      "priority": 60,
+      "patterns": [
+        "^expected declaration or statement at end of input$",
+        "^expected '\\}' at end of input$",
+        "^expected '\\}'$",
+        "^expected '\\}' before (?P<before>.+)$"
+      ],
+      "handler": "brace_eof",
+      "what": "A `{` was opened but never closed, so the compiler reached the end of the file still waiting for a `}`.",
+      "why": [
+        "A block of an if / for / while / function was not closed.",
+        "Every `{` needs exactly one matching `}`."
+      ],
+      "fix": [
+        "Add the missing `}` at the end of the block."
+      ],
+      "example": {
+        "wrong": "if (x > 0) {\n    printf(\"positive\");\nreturn 0;\n}",
+        "right": "if (x > 0) {\n    printf(\"positive\");\n}\nreturn 0;\n}"
+      },
+      "tip": "Indent your code consistently (4 spaces per block): a missing brace then becomes easy to spot because the closing braces no longer line up.",
+      "samples": [
+        "expected declaration or statement at end of input",
+        "expected '}'",
+        "expected '}' at end of input"
+      ]
+    },
+    {
+      "id": "S003",
+      "title": "Extra closing brace }",
+      "phase": "syntax",
+      "priority": 62,
+      "patterns": [
+        "^expected identifier or '\\(' before '\\}' token$",
+        "^expected declaration before '\\}' token$",
+        "^extraneous closing brace \\('\\}'\\)$"
+      ],
+      "handler": "extra_brace",
+      "what": "There is one `}` too many. It closes a block (or the whole function) earlier than you intended.",
+      "why": [
+        "An extra `}` was typed, or a `{` is missing at the start of a block."
+      ],
+      "fix": [
+        "Remove the extra `}` on line {real_line}."
+      ],
+      "example": {
+        "wrong": "    }\n    }\n    return 0;\n}",
+        "right": "    }\n    return 0;\n}"
+      },
+      "samples": [
+        "expected identifier or '(' before '}' token",
+        "extraneous closing brace ('}')"
+      ]
+    },
+    {
+      "id": "S004",
+      "title": "Missing closing bracket )",
+      "phase": "syntax",
+      "priority": 55,
+      "patterns": [
+        "^expected '\\)' before (?P<before>.+)$",
+        "^expected '\\)'$",
+        "^expected '\\)' at end of input$"
+      ],
+      "handler": "missing_paren",
+      "what": "A `(` was opened but not closed with `)` before {before}.",
+      "why": [
+        "A `)` was forgotten, often in an if/while condition or a function call with nested brackets."
+      ],
+      "fix": [
+        "Count the brackets on line {line}: every `(` needs a matching `)`."
+      ],
+      "example": {
+        "wrong": "if (x > 0 {",
+        "right": "if (x > 0) {"
+      },
+      "samples": [
+        "expected ')' before '{' token",
+        "expected ')'"
+      ]
+    },
+    {
+      "id": "S005",
+      "title": "else without a matching if",
+      "phase": "syntax",
+      "priority": 55,
+      "patterns": [
+        "^'else' without a previous 'if'$"
+      ],
+      "handler": "else_without_if",
+      "what": "The compiler found an `else` that does not belong to any `if`.",
+      "why": [
+        "A semicolon right after the condition, `if (x > 0);`, ends the if-statement immediately.",
+        "The if-part has two or more statements but no `{ }`, so only the first one belongs to the if."
+      ],
+      "fix": [
+        "Remove the `;` after `if (...)`.",
+        "Put the statements of the if-part inside `{ }`."
+      ],
+      "example": {
+        "wrong": "if (x > 0);\n    printf(\"positive\");\nelse\n    printf(\"negative\");",
+        "right": "if (x > 0)\n    printf(\"positive\");\nelse\n    printf(\"negative\");"
+      },
+      "samples": [
+        "'else' without a previous 'if'"
+      ]
+    },
+    {
+      "id": "S006",
+      "title": "Commas instead of semicolons in a for loop",
+      "phase": "syntax",
+      "priority": 70,
+      "patterns": [
+        "^expected ';' in 'for' statement specifier$",
+        "^expected ';' before '\\)' token$",
+        "^expected expression before '\\)' token$",
+        "^expected ';' before (?P<before>.+)$"
+      ],
+      "handler": "for_commas",
+      "what": "The three parts of a `for` loop must be separated by SEMICOLONS: `for (start; condition; update)`. Line {line} uses commas.",
+      "why": [
+        "Commas and semicolons look similar, but inside `for ( )` the parts are separated by `;`."
+      ],
+      "fix": [
+        "Replace the separating commas with semicolons."
+      ],
+      "example": {
+        "wrong": "for (i = 0, i < 5, i++)",
+        "right": "for (i = 0; i < 5; i++)"
+      },
+      "samples": [
+        "expected ';' in 'for' statement specifier",
+        "expected ';' before ')' token"
+      ]
+    },
+    {
+      "id": "S007",
+      "title": "Missing ; after struct / class definition",
+      "phase": "syntax",
+      "priority": 70,
+      "patterns": [
+        "^expected ';' after (?P<kind>struct|class|union|enum)(?: definition)?$",
+        "^expected ';', identifier or '\\(' before (?P<before>.+)$",
+        "^two or more data types in declaration specifiers$",
+        "^multiple types in one declaration$",
+        "^new types may not be defined in a return type$",
+        "^expected ';' before (?P<before>.+)$",
+        "^expected '=', ',', ';', 'asm' or '__attribute__' before (?P<before>.+)$"
+      ],
+      "handler": "struct_semicolon",
+      "what": "A `{kind}` definition must end with `};` - the semicolon after the closing brace is missing (line {real_line}).",
+      "why": [
+        "Unlike functions, struct/class/union/enum definitions are declarations, so they end with a semicolon."
+      ],
+      "fix": [
+        "Write `};` instead of `}` at the end of the {kind} definition."
+      ],
+      "example": {
+        "wrong": "struct Student {\n    int roll;\n}\nint main() {",
+        "right": "struct Student {\n    int roll;\n};\nint main() {"
+      },
+      "samples": [
+        "expected ';' after struct",
+        "expected ';' after class definition",
+        "expected ';', identifier or '(' before 'int'"
+      ]
+    },
+    {
+      "id": "S008",
+      "title": "Semicolon after a function header",
+      "phase": "syntax",
+      "priority": 70,
+      "patterns": [
+        "^expected identifier or '\\(' before '\\{' token$",
+        "^expected identifier or '\\('$",
+        "^expected unqualified-id before '\\{' token$",
+        "^expected unqualified-id$"
+      ],
+      "handler": "semicolon_after_header",
+      "what": "The function header on line {real_line} ends with a semicolon, so the `{ ... }` body below it is no longer attached to the function.",
+      "why": [
+        "`int main();` is a declaration only. A function DEFINITION has no `;` between `)` and `{`."
+      ],
+      "fix": [
+        "Remove the `;` at the end of line {real_line}."
+      ],
+      "example": {
+        "wrong": "int main();\n{\n    return 0;\n}",
+        "right": "int main()\n{\n    return 0;\n}"
+      },
+      "samples": [
+        "expected identifier or '(' before '{' token",
+        "expected identifier or '('"
+      ]
+    },
+    {
+      "id": "S009",
+      "title": "Code outside of any function",
+      "phase": "syntax",
+      "priority": 65,
+      "patterns": [
+        "^expected declaration specifiers or '\\.\\.\\.' before (?P<before>.+)$",
+        "^expected parameter declarator$",
+        "^expected identifier or '\\(' before (?P<before>.+)$",
+        "^expected identifier or '\\('$",
+        "^expected unqualified-id before (?P<before>.+)$",
+        "^expected constructor, destructor, or type conversion before (?P<before>.+)$",
+        "^'(?P<name>\\w+)' does not name a type.*$",
+        "^unknown type name '(?P<name>\\w+)'$",
+        "^type specifier missing, defaults to 'int'.*$"
+      ],
+      "handler": "code_outside_function",
+      "what": "Line {line} is an executable statement, but it is outside of every function. Statements like calls, assignments, if/for/while and return must be inside a function such as `main()`.",
+      "why": [
+        "The code was written above `main()` or below its closing `}`.",
+        "An extra `}` closed `main` too early, pushing the following lines outside."
+      ],
+      "fix": [
+        "Move the statement inside `main()` (between its `{` and `}`)."
+      ],
+      "example": {
+        "wrong": "printf(\"hi\");\nint main() {\n    return 0;\n}",
+        "right": "int main() {\n    printf(\"hi\");\n    return 0;\n}"
+      },
+      "samples": [
+        "expected declaration specifiers or '...' before string constant",
+        "expected parameter declarator",
+        "expected identifier or '(' before 'return'"
+      ]
+    },
+    {
+      "id": "S010",
+      "title": "Unknown type name or missing semicolon",
+      "phase": "syntax",
+      "priority": 55,
+      "patterns": [
+        "^expected '=', ',', ';', 'asm' or '__attribute__' before (?P<before>.+)$",
+        "^expected initializer before (?P<before>.+)$"
+      ],
+      "handler": "unknown_type_or_semicolon",
+      "what": "The parser was reading a declaration on line {line} and got confused before {before}.",
+      "why": [
+        "The type name is misspelled or unknown (e.g. `Int`, `integer`, `String`).",
+        "The previous declaration is missing its `;`."
+      ],
+      "fix": [
+        "Check the type name at the start of line {line}.",
+        "Check the end of the previous line for a missing `;`."
+      ],
+      "example": {
+        "wrong": "integer x = 5;",
+        "right": "int x = 5;"
+      },
+      "samples": [
+        "expected '=', ',', ';', 'asm' or '__attribute__' before 'x'",
+        "expected initializer before 'y'"
+      ]
+    },
+    {
+      "id": "S011",
+      "title": "A value is missing (expected expression)",
+      "phase": "syntax",
+      "priority": 50,
+      "patterns": [
+        "^expected expression before (?P<before>.+)$",
+        "^expected primary-expression before (?P<before>.+)$",
+        "^expected expression$"
+      ],
+      "handler": "expected_expression",
+      "what": "At this point the parser needed a value (a variable, number or calculation) but found {before}.",
+      "why": [
+        "Something is missing after an operator or `=` (for example `int x = ;`).",
+        "Empty brackets where a condition or argument is required."
+      ],
+      "fix": [
+        "Complete the expression on line {line}."
+      ],
+      "example": {
+        "wrong": "int x = ;",
+        "right": "int x = 0;"
+      },
+      "samples": [
+        "expected expression before ';' token",
+        "expected primary-expression before 'int'",
+        "expected expression"
+      ]
+    },
+    {
+      "id": "S012",
+      "title": "A name was expected",
+      "phase": "syntax",
+      "priority": 40,
+      "patterns": [
+        "^expected identifier (?:or '\\(' )?before (?P<before>.+)$",
+        "^expected identifier$",
+        "^expected identifier or '\\(' *$",
+        "^expected unqualified-id(?: before (?P<before>.+))?$"
+      ],
+      "handler": "expected_identifier",
+      "what": "The parser expected a name (identifier) here but found {before}.",
+      "why": [
+        "A keyword or number was used as a variable name (names cannot be keywords like `int`, `return`, or start with a digit).",
+        "Code is in a place where only declarations are allowed."
+      ],
+      "fix": [
+        "Use a valid name: letters, digits and `_`, not starting with a digit, and not a keyword."
+      ],
+      "example": {
+        "wrong": "int 2ndValue = 5;",
+        "right": "int secondValue = 5;"
+      },
+      "samples": [
+        "expected identifier before numeric constant",
+        "expected unqualified-id before 'return'"
+      ]
+    },
+    {
+      "id": "S013",
+      "title": "do-while loop without while",
+      "phase": "syntax",
+      "priority": 55,
+      "patterns": [
+        "^expected 'while' before (?P<before>.+)$",
+        "^expected 'while' in do/while loop$"
+      ],
+      "handler": "do_while",
+      "what": "A `do { ... }` loop must end with `while (condition);` - it is missing after the closing `}`.",
+      "why": [
+        "The `while (...)` part of the do-while loop was forgotten or misplaced."
+      ],
+      "fix": [
+        "Add `while (condition);` right after the `}` of the do block."
+      ],
+      "example": {
+        "wrong": "do {\n    i++;\n}\nprintf(\"%d\", i);",
+        "right": "do {\n    i++;\n} while (i < 10);\nprintf(\"%d\", i);"
+      },
+      "samples": [
+        "expected 'while' before 'printf'",
+        "expected 'while' in do/while loop"
+      ]
+    },
+    {
+      "id": "S014",
+      "title": "Function body without opening {",
+      "phase": "syntax",
+      "priority": 55,
+      "patterns": [
+        "^expected declaration specifiers before (?P<before>.+)$",
+        "^expected '\\{' at end of input$",
+        "^expected function body after function declarator$",
+        "^old-style parameter declarations in prototyped function definition$"
+      ],
+      "handler": "missing_open_brace",
+      "what": "The function header on line {real_line} is not followed by `{`, so the statements below it are not inside the function body.",
+      "why": [
+        "The opening `{` after `int main()` (or another function header) was forgotten."
+      ],
+      "fix": [
+        "Add `{` at the end of line {real_line} (or on the next line)."
+      ],
+      "example": {
+        "wrong": "int main()\n    printf(\"hi\");\n    return 0;\n}",
+        "right": "int main()\n{\n    printf(\"hi\");\n    return 0;\n}"
+      },
+      "samples": [
+        "expected declaration specifiers before 'printf'",
+        "expected function body after function declarator"
+      ]
+    },
+    {
+      "id": "S015",
+      "title": "case label without colon",
+      "phase": "syntax",
+      "priority": 55,
+      "patterns": [
+        "^expected ':' before (?P<before>.+)$",
+        "^expected ':' after '(?P<kw>case|default)'$",
+        "^expected ':'$"
+      ],
+      "handler": "case_colon",
+      "what": "A `case` or `default` label must end with a colon `:`.",
+      "why": [
+        "A semicolon or nothing was written instead of `:` (e.g. `case 1;`)."
+      ],
+      "fix": [
+        "Write `case 1:` (colon, not semicolon)."
+      ],
+      "example": {
+        "wrong": "case 1;\n    printf(\"one\");",
+        "right": "case 1:\n    printf(\"one\");"
+      },
+      "samples": [
+        "expected ':' before ';' token",
+        "expected ':' after 'case'"
+      ]
+    },
+    {
+      "id": "S016",
+      "title": "Missing ] in array brackets",
+      "phase": "syntax",
+      "priority": 50,
+      "patterns": [
+        "^expected '\\]' before (?P<before>.+)$",
+        "^expected '\\]'$"
+      ],
+      "what": "An array index or size opened with `[` was not closed with `]`.",
+      "why": [
+        "The `]` was forgotten, or something unexpected (like a `;` from a #define) appeared inside the brackets."
+      ],
+      "fix": [
+        "Close the brackets: `a[5]`, `a[i]`."
+      ],
+      "example": {
+        "wrong": "int a[5;",
+        "right": "int a[5];"
+      },
+      "samples": [
+        "expected ']' before ';' token",
+        "expected ']'"
+      ]
+    },
+    {
+      "id": "S017",
+      "title": "Condition without brackets",
+      "phase": "syntax",
+      "priority": 50,
+      "patterns": [
+        "^expected '\\(' before (?P<before>.+)$",
+        "^expected '\\(' after '(?P<kw>\\w+)'$"
+      ],
+      "handler": "missing_condition_parens",
+      "what": "In C/C++ the condition of `if`, `while`, `for` and `switch` must be inside brackets `( )`.",
+      "why": [
+        "Python-style or pseudo-code style `if x > 5` was used."
+      ],
+      "fix": [
+        "Put the condition in brackets: `if (x > 5)`."
+      ],
+      "example": {
+        "wrong": "if x > 5 {",
+        "right": "if (x > 5) {"
+      },
+      "samples": [
+        "expected '(' before 'x'",
+        "expected '(' after 'if'"
+      ]
+    },
+    {
+      "id": "S018",
+      "title": "Missing opening brace {",
+      "phase": "syntax",
+      "priority": 45,
+      "patterns": [
+        "^expected '\\{' before (?P<before>.+)$",
+        "^expected '\\{'$"
+      ],
+      "what": "The compiler expected a `{` to start a block or a class/struct body here.",
+      "why": [
+        "The opening brace of a function, class or struct was forgotten."
+      ],
+      "fix": [
+        "Add `{` where the body starts."
+      ],
+      "example": {
+        "wrong": "class Box\n    int w;\n};",
+        "right": "class Box {\n    int w;\n};"
+      },
+      "samples": [
+        "expected '{' before 'int'",
+        "expected '{'"
+      ]
+    },
+    {
+      "id": "S019",
+      "title": "Syntax error: something is missing",
+      "phase": "syntax",
+      "priority": 10,
+      "patterns": [
+        "^expected (?P<expected>.+?) before (?P<before>.+)$",
+        "^expected (?P<expected>.+)$"
+      ],
+      "what": "The parser expected {expected} at line {line}, column {col}, but found something else. Something just before this position is missing or in the wrong order.",
+      "why": [
+        "A missing symbol such as `;`, `)`, `}` or `,`.",
+        "An extra or misplaced word."
+      ],
+      "fix": [
+        "Look at line {line} around column {col}, and at the end of the line before it."
+      ],
+      "example": {},
+      "samples": [
+        "expected ',' before 'x'",
+        "expected '>'"
+      ],
+      "handler": "generic_syntax"
+    },
+    {
+      "id": "S020",
+      "title": "case / default outside a switch",
+      "phase": "syntax",
+      "priority": 50,
+      "patterns": [
+        "^case label not within a switch statement$",
+        "^'(?:case|default)' (?:label|statement) not in switch statement$",
+        "^'default' label not within a switch statement$"
+      ],
+      "what": "A `case` or `default` label appears outside of a `switch { ... }` block.",
+      "why": [
+        "The `switch (...) {` line is missing, or its block was closed too early by an extra `}`."
+      ],
+      "fix": [
+        "Put all case labels inside the braces of a `switch (variable) { ... }`."
+      ],
+      "example": {
+        "wrong": "case 1: printf(\"one\"); break;",
+        "right": "switch (choice) {\n    case 1: printf(\"one\"); break;\n}"
+      },
+      "samples": [
+        "case label not within a switch statement",
+        "'case' statement not in switch statement"
+      ]
+    },
+    {
+      "id": "S021",
+      "title": "Label with nothing after it",
+      "phase": "syntax",
+      "priority": 50,
+      "patterns": [
+        "^label at end of compound statement$"
+      ],
+      "what": "A `case`/`default` label (or goto label) is the last thing in a block, with no statement after it.",
+      "why": [
+        "`default:` was written at the end of a switch with nothing after it."
+      ],
+      "fix": [
+        "Add a statement after the label, e.g. `default: break;`."
+      ],
+      "example": {
+        "wrong": "    default:\n}",
+        "right": "    default:\n        break;\n}"
+      },
+      "samples": [
+        "label at end of compound statement"
+      ]
+    },
+    {
+      "id": "S022",
+      "title": "Array size written with ( ) instead of [ ]",
+      "phase": "syntax",
+      "priority": 65,
+      "handler": "array_parens",
+      "patterns": [
+        "^expected parameter declarator$",
+        "^expected declaration specifiers or '\\.\\.\\.' before (?P<before>numeric constant|'[^']+')$",
+        "^expected declaration specifiers or '\\.\\.\\.' before numeric constant$"
+      ],
+      "what": "Line {line} declares an array with round brackets `( )`. Array sizes go in SQUARE brackets `[ ]`.",
+      "why": [
+        "`( )` and `[ ]` mixed up - round brackets are for functions, square brackets are for arrays."
+      ],
+      "fix": [
+        "Write `int a[5];` instead of `int a(5);`."
+      ],
+      "example": {
+        "wrong": "int a(5);",
+        "right": "int a[5];"
+      },
+      "samples": [
+        "expected parameter declarator",
+        "expected declaration specifiers or '...' before numeric constant"
+      ]
+    }
+  ]
+}

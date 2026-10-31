@@ -1,0 +1,5 @@
+h22_circle_area.c:5:27: warning: format specifies type 'int' but the argument has type 'double' [-Wformat]
+    5 |     printf("Area = %d\n", 3.14159 * r * r);
+      |                    ~~     ^~~~~~~~~~~~~~~
+      |                    %f
+1 warning generated.

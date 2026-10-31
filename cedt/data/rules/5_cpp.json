@@ -1,0 +1,359 @@
+{
+  "phase": "semantic",
+  "description": "C++ specific semantic errors (streams, classes, overloading, conversions).",
+  "rules": [
+    {
+      "id": "C001",
+      "title": "<< and >> mixed up with cin / cout",
+      "phase": "semantic",
+      "lang": "c++",
+      "priority": 70,
+      "patterns": [
+        "^no match for 'operator(?P<op><<|>>)' \\(operand types are '(?P<t1>.+?)'(?: \\{aka '.+?'\\})? and '(?P<t2>.+?)'(?: \\{aka '.+?'\\})?\\)$",
+        "^invalid operands to binary expression \\('(?P<t1>.+?)'(?: \\(aka '.+?'\\))? and '(?P<t2>.+?)'(?: \\(aka '.+?'\\))?\\)$"
+      ],
+      "handler": "stream_operator",
+      "what": "The stream on line {line} is used with the wrong arrow. `cout` (output) uses `<<`, `cin` (input) uses `>>`.",
+      "why": [
+        "Think of the arrows as the direction the data flows: `cout << x` sends x OUT to the screen, `cin >> x` brings input IN to x."
+      ],
+      "fix": [
+        "Use `cin >> x;` for input and `cout << x;` for output."
+      ],
+      "example": {
+        "wrong": "cin << x;\ncout >> x;",
+        "right": "cin >> x;\ncout << x;"
+      },
+      "tip": "C++ printed a very long list of 'candidates' for this mistake. You can ignore all of them - they are just every version of << the library contains.",
+      "samples": [
+        "no match for 'operator<<' (operand types are 'std::istream' {aka 'std::basic_istream<char>'} and 'int')",
+        "invalid operands to binary expression ('istream' (aka 'basic_istream<char>') and 'int')"
+      ]
+    },
+    {
+      "id": "C002",
+      "title": "No version of the function accepts these arguments",
+      "phase": "semantic",
+      "lang": "c++",
+      "patterns": [
+        "^no matching function for call to '(?P<call>.+)'$",
+        "^no matching (?:function|constructor|member function) for (?:call to|initialization of) '(?P<call>[^']+)'$",
+        "^call of overloaded '(?P<call>.+)' is ambiguous$"
+      ],
+      "handler": "no_matching_function",
+      "what": "The call `{call}` on line {line} does not match any version of the function: the number or the types of the arguments are wrong.",
+      "why": [
+        "An argument has the wrong type (e.g. a string where an int is expected).",
+        "Too many or too few arguments."
+      ],
+      "fix": [
+        "Compare the call with the function's parameter list and pass matching values."
+      ],
+      "example": {
+        "wrong": "int square(int x);\nsquare(\"5\");",
+        "right": "int square(int x);\nsquare(5);"
+      },
+      "tip": "The 'candidate' notes below the error list every version the compiler tried and why it did not fit.",
+      "samples": [
+        "no matching function for call to 'square(const char [2])'",
+        "no matching function for call to 'square'"
+      ]
+    },
+    {
+      "id": "C003",
+      "title": "Value cannot be converted to the needed type",
+      "phase": "semantic",
+      "lang": "c++",
+      "priority": 45,
+      "patterns": [
+        "^invalid conversion from '(?P<from>.+?)' to '(?P<to>.+?)'$",
+        "^cannot convert '(?P<value>.+?)' from type '(?P<from>.+?)'(?: \\{aka '.+?'\\})? to type '(?P<to>.+?)'$",
+        "^cannot convert '(?P<from>.+?)' to '(?P<to>.+?)'(?: in (?P<ctx>.+))?$",
+        "^conversion from '(?P<from>.+?)' to non-scalar type '(?P<to>.+?)'(?: \\{aka '.+?'\\})? requested$",
+        "^no viable conversion from '(?P<from>.+?)' to '(?P<to>.+?)'.*$",
+        "^cannot initialize a (?:variable|parameter|return object) of type '(?P<to>.+?)' with an (?:l|r)value of type '(?P<from>.+?)'$",
+        "^assigning to '(?P<to>.+?)' from incompatible type '(?P<from>.+?)'$",
+        "^ISO C\\+\\+ forbids comparison between pointer and integer$",
+        "^comparison between pointer and integer \\('(?P<t1>[^']+)' and '(?P<t2>[^']+)'\\)$"
+      ],
+      "handler": "cpp_conversion",
+      "what": "On line {line} a `{from}` is used where a `{to}` is needed, and C++ will not convert it automatically.",
+      "why": [
+        "Double quotes (a string) used where a single character or number was expected.",
+        "A number assigned to a pointer, or a pointer to a number."
+      ],
+      "fix": [
+        "Give a value of type `{to}` (convert explicitly if really needed)."
+      ],
+      "example": {
+        "wrong": "int *p = x;",
+        "right": "int *p = &x;"
+      },
+      "samples": [
+        "invalid conversion from 'int' to 'int*'",
+        "conversion from 'int' to non-scalar type 'std::string' {aka 'std::__cxx11::basic_string<char>'} requested",
+        "cannot initialize a variable of type 'int *' with an lvalue of type 'int'"
+      ]
+    },
+    {
+      "id": "C004",
+      "title": "Accessing a private member of a class",
+      "phase": "semantic",
+      "lang": "c++",
+      "patterns": [
+        "^'(?P<decl>.+?)' is (?P<access>private|protected) within this context$",
+        "^'(?P<member>[^']+)' is a (?P<access>private|protected) member of '(?P<cls>[^']+)'$"
+      ],
+      "handler": "private_access",
+      "what": "`{member}` is a {access} member of class `{cls}`, so code outside the class (like main) cannot use it directly.",
+      "why": [
+        "In a `class`, members are private by default until you write `public:`."
+      ],
+      "fix": [
+        "Write `public:` above the members that must be used from outside, or add public getter/setter functions."
+      ],
+      "example": {
+        "wrong": "class Account {\n    int balance;\n};",
+        "right": "class Account {\npublic:\n    int balance;\n};"
+      },
+      "samples": [
+        "'int Account::balance' is private within this context",
+        "'balance' is a private member of 'Account'"
+      ]
+    },
+    {
+      "id": "C005",
+      "title": "Narrowing conversion in { } initialisation",
+      "phase": "semantic",
+      "lang": "c++",
+      "patterns": [
+        "^narrowing conversion of '(?P<value>.+?)' from '(?P<from>[^']+)' to '(?P<to>[^']+)'.*$",
+        "^type '(?P<from>[^']+)' cannot be narrowed to '(?P<to>[^']+)' in initializer list$",
+        "^constant expression evaluates to .* which cannot be narrowed to type '(?P<to>[^']+)'$",
+        "^non-constant-expression cannot be narrowed from type '(?P<from>[^']+)' to '(?P<to>[^']+)' in initializer list$"
+      ],
+      "what": "Brace initialisation `{ }` does not allow a value to lose information. A `{from}` cannot be squeezed into a `{to}` (the decimals would be cut off).",
+      "why": [
+        "`int x{3.7};` - the .7 would be lost."
+      ],
+      "fix": [
+        "Use the matching type (`double x{3.7};`) or convert explicitly: `int x{static_cast<int>(3.7)};`."
+      ],
+      "example": {
+        "wrong": "int x{3.7};",
+        "right": "double x{3.7};"
+      },
+      "samples": [
+        "narrowing conversion of '3.7000000000000002e+0' from 'double' to 'int' [-Wnarrowing]",
+        "type 'double' cannot be narrowed to 'int' in initializer list"
+      ]
+    },
+    {
+      "id": "C006",
+      "title": "Name clashes with the std library",
+      "phase": "semantic",
+      "lang": "c++",
+      "patterns": [
+        "^reference to '(?P<name>[^']+)' is ambiguous$",
+        "^call to '(?P<name>[^']+)' is ambiguous$"
+      ],
+      "handler": "ambiguous",
+      "what": "`{name}` could mean two different things here - usually YOUR variable and the standard-library `std::{name}`, because of `using namespace std;`.",
+      "why": [
+        "Global variables named `count`, `max`, `min`, `distance`, `data`, `size`, `next` clash with std functions of the same name."
+      ],
+      "fix": [
+        "Rename your variable (e.g. `cnt`, `maxValue`), or remove `using namespace std;` and write `std::` where needed."
+      ],
+      "example": {
+        "wrong": "using namespace std;\nint count = 0;\nint main() { count++; }",
+        "right": "using namespace std;\nint cnt = 0;\nint main() { cnt++; }"
+      },
+      "samples": [
+        "reference to 'count' is ambiguous"
+      ]
+    },
+    {
+      "id": "C007",
+      "title": "String literal stored in a char* (C++)",
+      "phase": "semantic",
+      "lang": "c++",
+      "patterns": [
+        "^ISO C\\+\\+ forbids converting a string constant to '(?P<to>[^']+)'$",
+        "^deprecated conversion from string constant to '(?P<to>[^']+)'$",
+        "^ISO C\\+\\+11 does not allow conversion from string literal to '(?P<to>[^']+)'$",
+        "^conversion from string literal to '(?P<to>[^']+)' is deprecated$"
+      ],
+      "handler": "write_strings",
+      "what": "A string literal like `\"hello\"` is read-only, so in C++ it must be stored in a `const char*` (or a `std::string`), not a plain `char*`.",
+      "why": [
+        "Code written for C (or old C++) that uses `char *s = \"...\";`."
+      ],
+      "fix": [
+        "Use `const char *s = \"hello\";` or better `std::string s = \"hello\";`."
+      ],
+      "example": {
+        "wrong": "char *s = \"hello\";",
+        "right": "string s = \"hello\";"
+      },
+      "samples": [
+        "ISO C++ forbids converting a string constant to 'char*'",
+        "ISO C++11 does not allow conversion from string literal to 'char *'"
+      ]
+    },
+    {
+      "id": "C008",
+      "title": "Member function used without ()",
+      "phase": "semantic",
+      "lang": "c++",
+      "priority": 60,
+      "patterns": [
+        "^reference to non-static member function must be called(?:; did you mean to call it with no arguments\\?)?$",
+        "^invalid use of non-static member function '(?P<decl>.+)'$",
+        "^cannot convert '(?P<value>.+?)' from type '(?P<from>.+?\\(.*\\).*?)'(?: \\{aka '.+?'\\})? to type '(?P<to>.+?)'$"
+      ],
+      "handler": "missing_call_parens",
+      "what": "`{member}` is a FUNCTION of the object, so it must be called with brackets: `{member}()`.",
+      "why": [
+        "Writing `s.size` or `s.length` instead of `s.size()` / `s.length()`."
+      ],
+      "fix": [
+        "Add `()` after the member function name."
+      ],
+      "example": {
+        "wrong": "int n = s.size;",
+        "right": "int n = s.size();"
+      },
+      "samples": [
+        "reference to non-static member function must be called; did you mean to call it with no arguments?",
+        "invalid use of non-static member function 'int A::get()'"
+      ]
+    },
+    {
+      "id": "C009",
+      "title": "Literal passed to a reference parameter",
+      "phase": "semantic",
+      "lang": "c++",
+      "patterns": [
+        "^cannot bind non-const lvalue reference of type '(?P<to>[^']+)' to an rvalue of type '(?P<from>[^']+)'$",
+        "^non-const lvalue reference to type '(?P<to>[^']+)' cannot bind to a temporary of type '(?P<from>[^']+)'$",
+        "^invalid initialization of non-const reference of type '(?P<to>[^']+)' from an rvalue of type '(?P<from>[^']+)'$"
+      ],
+      "what": "The function takes its parameter by reference (`int &x`), so it needs a real variable it can change - not a literal value like `5` or an expression like `a + b`.",
+      "why": [
+        "Calling `f(5)` when the function is `void f(int &x)`."
+      ],
+      "fix": [
+        "Pass a variable (`int v = 5; f(v);`), or change the parameter to `const int &x` / `int x` if it does not need to modify the argument."
+      ],
+      "example": {
+        "wrong": "void inc(int &x);\ninc(5);",
+        "right": "void inc(int &x);\nint v = 5;\ninc(v);"
+      },
+      "samples": [
+        "cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'"
+      ]
+    },
+    {
+      "id": "C010",
+      "title": "C++11 feature with an old compiler setting",
+      "phase": "semantic",
+      "lang": "c++",
+      "patterns": [
+        "^(?P<feature>.+) only available with '?-std=c\\+\\+11'? or '?-std=gnu\\+\\+11'?$",
+        "^(?P<feature>.+) (?:are|is) a C\\+\\+11 extension$",
+        "^'(?P<feature>auto)' changes meaning in C\\+\\+11.*$"
+      ],
+      "what": "Your code uses a newer C++ feature ({feature}), but the compiler is running in an old C++ standard mode.",
+      "why": [
+        "Old compilers (or old IDE settings) default to C++98."
+      ],
+      "fix": [
+        "Compile with `-std=c++17` (e.g. `g++ -std=c++17 prog.cpp`), or enable C++17 in your IDE's compiler settings."
+      ],
+      "example": {
+        "wrong": "g++ prog.cpp",
+        "right": "g++ -std=c++17 prog.cpp"
+      },
+      "samples": [
+        "range-based 'for' loops only available with '-std=c++11' or '-std=gnu++11'"
+      ]
+    },
+    {
+      "id": "C011",
+      "title": "Abstract class cannot be created",
+      "phase": "semantic",
+      "lang": "c++",
+      "patterns": [
+        "^cannot declare variable '(?P<name>[^']+)' to be of abstract type '(?P<cls>[^']+)'$",
+        "^variable type '(?P<cls>[^']+)' is an abstract class$",
+        "^invalid new-expression of abstract class type '(?P<cls>[^']+)'$"
+      ],
+      "what": "`{cls}` has a pure virtual function (`= 0`) that was not implemented, so objects of it cannot be created.",
+      "why": [
+        "A derived class forgot to override every pure virtual function, or the signature differs slightly (e.g. missing const)."
+      ],
+      "fix": [
+        "Implement all pure virtual functions in the derived class with exactly the same signature."
+      ],
+      "example": {
+        "wrong": "struct Shape { virtual double area() = 0; };\nShape s;",
+        "right": "struct Circle : Shape { double area() override { return 3.14; } };\nCircle c;"
+      },
+      "samples": [
+        "cannot declare variable 's' to be of abstract type 'Shape'"
+      ]
+    },
+    {
+      "id": "C012",
+      "title": "Wrong use of a class name / constructor",
+      "phase": "semantic",
+      "lang": "c++",
+      "patterns": [
+        "^return type specification for constructor invalid$",
+        "^constructor cannot have a return type$",
+        "^missing template arguments before '(?P<before>.+)'.*$",
+        "^use of class template '(?P<name>[^']+)' requires template arguments.*$"
+      ],
+      "what": "A class or template name is used in a way C++ does not allow on line {line}.",
+      "why": [
+        "A constructor written with a return type (`void Box()`).",
+        "A template such as `vector` used without its type in `< >`."
+      ],
+      "fix": [
+        "Constructors have no return type; templates need their type: `vector<int> v;`."
+      ],
+      "example": {
+        "wrong": "vector v;",
+        "right": "vector<int> v;"
+      },
+      "samples": [
+        "return type specification for constructor invalid",
+        "missing template arguments before 'v'"
+      ]
+    },
+    {
+      "id": "C013",
+      "title": "using namespace std without any C++ header",
+      "phase": "semantic",
+      "lang": "c++",
+      "patterns": [
+        "^using directive refers to implicitly-defined namespace 'std'$"
+      ],
+      "what": "`using namespace std;` is written, but no C++ library header (such as `<iostream>`) is included above it, so `std` is still empty.",
+      "why": [
+        "The `#include <iostream>` line is missing or comes after `using namespace std;`."
+      ],
+      "fix": [
+        "Put `#include <iostream>` (and other headers you need) ABOVE `using namespace std;`."
+      ],
+      "example": {
+        "wrong": "using namespace std;\nint main() { cout << \"hi\"; }",
+        "right": "#include <iostream>\nusing namespace std;\nint main() { cout << \"hi\"; }"
+      },
+      "samples": [
+        "using directive refers to implicitly-defined namespace 'std'"
+      ]
+    }
+  ]
+}

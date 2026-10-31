@@ -1,0 +1,4 @@
+h06_prime_check.c:6:19: error: expression is not assignable
+    6 |         if (n % i = 0) {
+      |             ~~~~~ ^
+1 error generated.

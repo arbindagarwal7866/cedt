@@ -1,0 +1,7 @@
+p05_define_semicolon.c:4:11: error: unexpected ';' before ']'
+    4 |     int a[SIZE];
+      |           ^
+p05_define_semicolon.c:2:16: note: expanded from macro 'SIZE'
+    2 | #define SIZE 10;
+      |                ^
+1 error generated.

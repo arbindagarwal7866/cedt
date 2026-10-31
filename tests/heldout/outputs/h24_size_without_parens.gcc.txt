@@ -1,0 +1,14 @@
+h24_size_without_parens.cpp: In function 'int main()':
+h24_size_without_parens.cpp:7:24: error: invalid use of non-static member function 'std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size_type std::__cxx11::basic_string<_CharT, _Traits, _Alloc>::size() const [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>; size_type = long unsigned int]'
+    7 |     cout << "Length: " << course.size << endl;
+      |     ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+In file included from /usr/include/c++/13/string:54,
+                 from /usr/include/c++/13/bits/locale_classes.h:40,
+                 from /usr/include/c++/13/bits/ios_base.h:41,
+                 from /usr/include/c++/13/ios:44,
+                 from /usr/include/c++/13/ostream:40,
+                 from /usr/include/c++/13/iostream:41,
+                 from h24_size_without_parens.cpp:1:
+/usr/include/c++/13/bits/basic_string.h:1071:7: note: declared here
+ 1071 |       size() const _GLIBCXX_NOEXCEPT
+      |       ^~~~

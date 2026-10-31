@@ -1,0 +1,7 @@
+c16_jump_case.cpp: In function 'int main()':
+c16_jump_case.cpp:9:14: error: jump to case label
+    9 |         case 2:
+      |              ^
+c16_jump_case.cpp:6:17: note:   crosses initialization of 'int y'
+    6 |             int y = 5;
+      |                 ^

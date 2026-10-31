@@ -1,0 +1,4 @@
+c20_conversion_nonscalar.cpp: In function 'int main()':
+c20_conversion_nonscalar.cpp:4:21: error: conversion from 'int' to non-scalar type 'std::string' {aka 'std::__cxx11::basic_string<char>'} requested
+    4 |     std::string s = 5;
+      |                     ^

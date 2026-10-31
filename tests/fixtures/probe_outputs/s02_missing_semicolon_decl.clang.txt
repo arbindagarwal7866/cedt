@@ -1,0 +1,5 @@
+s02_missing_semicolon_decl.c:3:18: error: expected ';' at end of declaration
+    3 |     int count = 5
+      |                  ^
+      |                  ;
+1 error generated.

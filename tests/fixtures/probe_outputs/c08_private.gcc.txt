@@ -1,0 +1,7 @@
+c08_private.cpp: In function 'int main()':
+c08_private.cpp:8:7: error: 'int Account::balance' is private within this context
+    8 |     a.balance = 100;
+      |       ^~~~~~~
+c08_private.cpp:4:9: note: declared private here
+    4 |     int balance = 0;
+      |         ^~~~~~~

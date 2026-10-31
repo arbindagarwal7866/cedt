@@ -1,0 +1,4 @@
+m44_printf_missing_arg.c:4:17: warning: more '%' conversions than data arguments [-Wformat-insufficient-args]
+    4 |     printf("%d %d\n", a);
+      |                ~^
+1 warning generated.

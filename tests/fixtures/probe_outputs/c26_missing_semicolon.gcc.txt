@@ -1,0 +1,7 @@
+c26_missing_semicolon.cpp: In function 'int main()':
+c26_missing_semicolon.cpp:5:5: error: expected ',' or ';' before 'cout'
+    5 |     cout << a << endl;
+      |     ^~~~
+c26_missing_semicolon.cpp:4:9: warning: unused variable 'a' [-Wunused-variable]
+    4 |     int a = 5
+      |         ^

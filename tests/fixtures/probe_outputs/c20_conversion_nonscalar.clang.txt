@@ -1,0 +1,22 @@
+c20_conversion_nonscalar.cpp:4:17: error: no viable conversion from 'int' to 'std::string' (aka 'basic_string<char>')
+    4 |     std::string s = 5;
+      |                 ^   ~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/basic_string.h:547:7: note: candidate constructor not viable: no known conversion from 'int' to 'const basic_string<char> &' for 1st argument
+  547 |       basic_string(const basic_string& __str)
+      |       ^            ~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/basic_string.h:641:7: note: candidate constructor template not viable: no known conversion from 'int' to 'const char *' for 1st argument
+  641 |       basic_string(const _CharT* __s, const _Alloc& __a = _Alloc())
+      |       ^            ~~~~~~~~~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/basic_string.h:677:7: note: candidate constructor not viable: no known conversion from 'int' to 'basic_string<char> &&' for 1st argument
+  677 |       basic_string(basic_string&& __str) noexcept
+      |       ^            ~~~~~~~~~~~~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/basic_string.h:706:7: note: candidate constructor not viable: no known conversion from 'int' to 'initializer_list<char>' for 1st argument
+  706 |       basic_string(initializer_list<_CharT> __l, const _Alloc& __a = _Alloc())
+      |       ^            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/basic_string.h:535:7: note: explicit constructor is not a candidate
+  535 |       basic_string(const _Alloc& __a) _GLIBCXX_NOEXCEPT
+      |       ^
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/basic_string.h:795:2: note: explicit constructor is not a candidate
+  795 |         basic_string(const _Tp& __t, const _Alloc& __a = _Alloc())
+      |         ^
+1 error generated.

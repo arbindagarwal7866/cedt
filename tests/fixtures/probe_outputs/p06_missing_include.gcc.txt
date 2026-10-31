@@ -1,0 +1,11 @@
+p06_missing_include.c: In function 'main':
+p06_missing_include.c:2:5: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+    2 |     printf("Hello\n");
+      |     ^~~~~~
+p06_missing_include.c:1:1: note: include '<stdio.h>' or provide a declaration of 'printf'
+  +++ |+#include <stdio.h>
+    1 | int main() {
+p06_missing_include.c:2:5: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+    2 |     printf("Hello\n");
+      |     ^~~~~~
+p06_missing_include.c:2:5: note: include '<stdio.h>' or provide a declaration of 'printf'

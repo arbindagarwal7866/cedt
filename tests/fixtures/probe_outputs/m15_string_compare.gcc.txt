@@ -1,0 +1,4 @@
+m15_string_compare.c: In function 'main':
+m15_string_compare.c:5:16: warning: comparison with string literal results in unspecified behavior [-Waddress]
+    5 |     if (answer == "yes")
+      |                ^~

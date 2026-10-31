@@ -1,0 +1,12 @@
+h05_reverse_string.c: In function 'main':
+h05_reverse_string.c:5:15: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
+    5 |     int len = strlen(word);
+      |               ^~~~~~
+h05_reverse_string.c:2:1: note: include '<string.h>' or provide a declaration of 'strlen'
+    1 | #include <stdio.h>
+  +++ |+#include <string.h>
+    2 | 
+h05_reverse_string.c:5:15: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
+    5 |     int len = strlen(word);
+      |               ^~~~~~
+h05_reverse_string.c:5:15: note: include '<string.h>' or provide a declaration of 'strlen'

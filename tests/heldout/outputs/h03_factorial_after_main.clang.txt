@@ -1,0 +1,14 @@
+h03_factorial_after_main.c:7:30: error: call to undeclared function 'fact'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    7 |     printf("%d! = %ld\n", n, fact(n));
+      |                              ^
+h03_factorial_after_main.c:7:30: warning: format specifies type 'long' but the argument has type 'int' [-Wformat]
+    7 |     printf("%d! = %ld\n", n, fact(n));
+      |                   ~~~        ^~~~~~~
+      |                   %d
+h03_factorial_after_main.c:11:6: error: conflicting types for 'fact'
+   11 | long fact(int n) {
+      |      ^
+h03_factorial_after_main.c:7:30: note: previous implicit declaration is here
+    7 |     printf("%d! = %ld\n", n, fact(n));
+      |                              ^
+1 warning and 2 errors generated.

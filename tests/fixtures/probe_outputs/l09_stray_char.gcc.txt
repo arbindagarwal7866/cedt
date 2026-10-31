@@ -1,0 +1,7 @@
+l09_stray_char.c: In function 'main':
+l09_stray_char.c:3:15: error: stray '@' in program
+    3 |     int x = 5 @ 3;
+      |               ^
+l09_stray_char.c:3:17: error: expected ',' or ';' before numeric constant
+    3 |     int x = 5 @ 3;
+      |                 ^

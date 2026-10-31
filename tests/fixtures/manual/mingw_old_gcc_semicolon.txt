@@ -1,0 +1,4 @@
+C:\Users\Arbind\Desktop\lab\prog.c: In function 'main':
+C:\Users\Arbind\Desktop\lab\prog.c:5:5: error: expected ';' before 'return'
+     return 0;
+     ^~~~~~

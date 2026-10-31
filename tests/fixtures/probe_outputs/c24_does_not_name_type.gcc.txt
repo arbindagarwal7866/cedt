@@ -1,0 +1,3 @@
+c24_does_not_name_type.cpp:4:1: error: 'strng' does not name a type
+    4 | strng name;
+      | ^~~~~

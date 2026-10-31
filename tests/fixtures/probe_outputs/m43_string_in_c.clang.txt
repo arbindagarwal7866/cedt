@@ -1,0 +1,21 @@
+m43_string_in_c.c:3:5: error: use of undeclared identifier 'string'; did you mean 'stdin'?
+    3 |     string name = "Arbind";
+      |     ^~~~~~
+      |     stdin
+/usr/include/stdio.h:149:14: note: 'stdin' declared here
+  149 | extern FILE *stdin;             /* Standard input stream.  */
+      |              ^
+m43_string_in_c.c:3:11: error: expected ';' after expression
+    3 |     string name = "Arbind";
+      |           ^
+      |           ;
+m43_string_in_c.c:3:12: error: use of undeclared identifier 'name'
+    3 |     string name = "Arbind";
+      |            ^
+m43_string_in_c.c:4:20: error: use of undeclared identifier 'name'
+    4 |     printf("%s\n", name);
+      |                    ^
+m43_string_in_c.c:3:5: warning: expression result unused [-Wunused-value]
+    3 |     string name = "Arbind";
+      |     ^~~~~~
+1 warning and 4 errors generated.

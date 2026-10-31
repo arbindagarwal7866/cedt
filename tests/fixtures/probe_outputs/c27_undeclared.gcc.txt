@@ -1,0 +1,8 @@
+c27_undeclared.cpp: In function 'int main()':
+c27_undeclared.cpp:5:13: error: 'totl' was not declared in this scope; did you mean 'total'?
+    5 |     cout << totl << endl;
+      |             ^~~~
+      |             total
+c27_undeclared.cpp:4:9: warning: unused variable 'total' [-Wunused-variable]
+    4 |     int total = 0;
+      |         ^~~~~

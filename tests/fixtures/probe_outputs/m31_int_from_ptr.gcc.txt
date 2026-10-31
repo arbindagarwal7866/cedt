@@ -1,0 +1,4 @@
+m31_int_from_ptr.c: In function 'main':
+m31_int_from_ptr.c:3:14: warning: initialization of 'char' from 'char *' makes integer from pointer without a cast [-Wint-conversion]
+    3 |     char c = "a";
+      |              ^~~

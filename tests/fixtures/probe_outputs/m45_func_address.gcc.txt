@@ -1,0 +1,4 @@
+m45_func_address.c: In function 'main':
+m45_func_address.c:4:9: warning: the address of 'isEven' will always evaluate as 'true' [-Waddress]
+    4 |     if (isEven)
+      |         ^~~~~~

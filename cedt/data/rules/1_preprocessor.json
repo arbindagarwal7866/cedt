@@ -1,0 +1,194 @@
+{
+  "phase": "preprocessor",
+  "description": "Errors found while handling #include / #define lines, before real compilation starts.",
+  "rules": [
+    {
+      "id": "P001",
+      "title": "Header file not found",
+      "phase": "preprocessor",
+      "origin": "compiler",
+      "patterns": [
+        "^(?P<header>[^:]+): No such file or directory$",
+        "^'(?P<header>.+?)' file not found$"
+      ],
+      "handler": "missing_header",
+      "what": "The compiler cannot find the header file `{header}` that you asked for with `#include`.",
+      "why": [
+        "The header name is misspelled (for example `stdoi.h` instead of `stdio.h`).",
+        "It is an old Turbo C header that modern compilers do not have (`conio.h`, `iostream.h`, `graphics.h`).",
+        "It is your own header file but it is not in the same folder as your program."
+      ],
+      "fix": [
+        "Check the spelling of the header name on line {line}.",
+        "Use standard headers only: `stdio.h`, `stdlib.h`, `string.h`, `math.h` (C) or `iostream`, `string`, `vector` (C++)."
+      ],
+      "example": {
+        "wrong": "#include <stdoi.h>",
+        "right": "#include <stdio.h>"
+      },
+      "tip": "A *fatal* error stops the compiler immediately, so nothing after this line was checked yet. Fix it and compile again.",
+      "samples": [
+        "stdoi.h: No such file or directory",
+        "'conio.h' file not found",
+        "iostream.h: No such file or directory"
+      ]
+    },
+    {
+      "id": "P002",
+      "title": "Unknown # directive",
+      "phase": "preprocessor",
+      "patterns": [
+        "^invalid preprocessing directive(?: #?(?P<directive>\\w+))?(?:; did you mean #(?P<suggest>\\w+)\\?)?$"
+      ],
+      "handler": "invalid_directive",
+      "what": "`#{directive}` is not a preprocessor command. A line that starts with `#` must use a known directive such as `#include` or `#define`.",
+      "why": [
+        "A typing mistake in the directive name (`#inlcude`, `#defien`, `#incldue`)."
+      ],
+      "fix": [
+        "Correct the spelling: `#{suggest}`."
+      ],
+      "example": {
+        "wrong": "#inlcude <stdio.h>",
+        "right": "#include <stdio.h>"
+      },
+      "tip": "Because the #include line was ignored, functions such as printf may now also look 'undeclared'. Those messages disappear once this line is fixed.",
+      "samples": [
+        "invalid preprocessing directive #inlcude; did you mean #include?",
+        "invalid preprocessing directive"
+      ]
+    },
+    {
+      "id": "P003",
+      "title": "Extra text after #include / #define line",
+      "phase": "preprocessor",
+      "patterns": [
+        "^extra tokens at end of #(?P<directive>\\w+) directive$"
+      ],
+      "handler": "extra_tokens",
+      "what": "There is something extra at the end of your `#{directive}` line - usually a semicolon.",
+      "why": [
+        "Preprocessor lines are not C statements, so they never end with `;`."
+      ],
+      "fix": [
+        "Delete the `;` (or other extra text) at the end of line {line}."
+      ],
+      "example": {
+        "wrong": "#include <stdio.h>;",
+        "right": "#include <stdio.h>"
+      },
+      "samples": [
+        "extra tokens at end of #include directive"
+      ]
+    },
+    {
+      "id": "P004",
+      "title": "Badly written #include",
+      "phase": "preprocessor",
+      "patterns": [
+        "^#include expects \"FILENAME\" or <FILENAME>$",
+        "^expected \"FILENAME\" or <FILENAME>$",
+        "^missing terminating > character$",
+        "^empty filename in #include$"
+      ],
+      "what": "The `#include` line is not written correctly. The header name must be inside `< >` (standard headers) or `\" \"` (your own files).",
+      "why": [
+        "A missing `<` or `>`.",
+        "Quotes or brackets mixed up, e.g. `#include <stdio.h\"`.",
+        "Nothing written after `#include`."
+      ],
+      "fix": [
+        "Write it exactly like `#include <stdio.h>` (or `#include \"myheader.h\"` for your own file)."
+      ],
+      "example": {
+        "wrong": "#include stdio.h",
+        "right": "#include <stdio.h>"
+      },
+      "samples": [
+        "#include expects \"FILENAME\" or <FILENAME>",
+        "missing terminating > character"
+      ]
+    },
+    {
+      "id": "P005",
+      "title": "Semicolon at the end of a #define",
+      "phase": "preprocessor",
+      "priority": 90,
+      "patterns": [
+        "^expected .* before ';' token$",
+        "^unexpected ';' before .*$",
+        "^expected expression.*$",
+        "^expected '[\\])]'$",
+        "^expected ';' .*$",
+        "^expected .*$"
+      ],
+      "handler": "macro_semicolon",
+      "what": "The macro `{macro}` is defined with a semicolon at the end (`#define {macro} {value}`). The preprocessor pastes that `;` everywhere you use `{macro}`, which breaks the code on line {line}.",
+      "why": [
+        "`#define` is a text replacement, not a statement. Everything after the name - including `;` - is copied into your code."
+      ],
+      "fix": [
+        "Remove the `;` at the end of the `#define` line (line {macro_line})."
+      ],
+      "example": {
+        "wrong": "#define SIZE 10;\nint a[SIZE];   /* becomes int a[10;]; */",
+        "right": "#define SIZE 10\nint a[SIZE];"
+      },
+      "samples": [
+        "expected ']' before ';' token",
+        "unexpected ';' before ']'"
+      ]
+    },
+    {
+      "id": "P006",
+      "title": "Macro defined twice",
+      "phase": "preprocessor",
+      "patterns": [
+        "^\"(?P<macro>\\w+)\" redefined$",
+        "^'(?P<macro>\\w+)' macro redefined$"
+      ],
+      "what": "The macro `{macro}` is defined with `#define` more than once, with different values.",
+      "why": [
+        "Two `#define {macro}` lines, or a header that already defines the same name."
+      ],
+      "fix": [
+        "Keep only one `#define {macro}`, or give the second one a different name."
+      ],
+      "example": {
+        "wrong": "#define MAX 10\n#define MAX 20",
+        "right": "#define MAX 20"
+      },
+      "samples": [
+        "\"MAX\" redefined",
+        "'MAX' macro redefined"
+      ]
+    },
+    {
+      "id": "P007",
+      "title": "Unbalanced #if / #endif",
+      "phase": "preprocessor",
+      "patterns": [
+        "^unterminated #(?P<d>\\w+)$",
+        "^#(?P<d>else|endif|elif)(?: without #if)?$",
+        "^#endif without #if$",
+        "^#else without #if$",
+        "^unterminated conditional directive$"
+      ],
+      "what": "The `#if` / `#ifdef` / `#ifndef` lines and their `#endif` lines do not pair up.",
+      "why": [
+        "An `#endif` is missing, or there is one `#endif` too many."
+      ],
+      "fix": [
+        "Every `#if`, `#ifdef` or `#ifndef` needs exactly one matching `#endif`."
+      ],
+      "example": {
+        "wrong": "#ifndef MYHEADER_H\n#define MYHEADER_H\nint f(void);",
+        "right": "#ifndef MYHEADER_H\n#define MYHEADER_H\nint f(void);\n#endif"
+      },
+      "samples": [
+        "unterminated #ifndef",
+        "#endif without #if"
+      ]
+    }
+  ]
+}

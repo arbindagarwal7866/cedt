@@ -1,0 +1,13 @@
+c02_missing_iostream.cpp: In function 'int main()':
+c02_missing_iostream.cpp:3:5: error: 'cout' was not declared in this scope
+    3 |     cout << "Hello" << endl;
+      |     ^~~~
+c02_missing_iostream.cpp:1:1: note: 'std::cout' is defined in header '<iostream>'; did you forget to '#include <iostream>'?
+  +++ |+#include <iostream>
+    1 | using namespace std;
+c02_missing_iostream.cpp:3:24: error: 'endl' was not declared in this scope
+    3 |     cout << "Hello" << endl;
+      |                        ^~~~
+c02_missing_iostream.cpp:1:1: note: 'std::endl' is defined in header '<ostream>'; did you forget to '#include <ostream>'?
+  +++ |+#include <ostream>
+    1 | using namespace std;

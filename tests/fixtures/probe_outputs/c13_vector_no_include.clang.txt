@@ -1,0 +1,4 @@
+c13_vector_no_include.cpp:4:5: error: no template named 'vector'
+    4 |     vector<int> v;
+      |     ^
+1 error generated.

@@ -1,0 +1,7 @@
+m23_incomplete_struct.c:3:20: error: variable has incomplete type 'struct Studnet'
+    3 |     struct Studnet s;
+      |                    ^
+m23_incomplete_struct.c:3:12: note: forward declaration of 'struct Studnet'
+    3 |     struct Studnet s;
+      |            ^
+1 error generated.

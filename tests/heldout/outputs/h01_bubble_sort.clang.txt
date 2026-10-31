@@ -1,0 +1,5 @@
+h01_bubble_sort.c:9:28: error: expected ';' after expression
+    9 |                 temp = a[j]
+      |                            ^
+      |                            ;
+1 error generated.

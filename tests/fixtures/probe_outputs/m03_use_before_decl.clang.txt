@@ -1,0 +1,4 @@
+m03_use_before_decl.c:3:5: error: use of undeclared identifier 'total'
+    3 |     total = 10;
+      |     ^
+1 error generated.

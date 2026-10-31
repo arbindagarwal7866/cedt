@@ -1,0 +1,8 @@
+c21_no_member_string.cpp:6:15: error: no member named 'lenght' in 'std::basic_string<char>'; did you mean 'length'?
+    6 |     cout << s.lenght();
+      |               ^~~~~~
+      |               length
+/usr/bin/../lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/basic_string.h:1078:7: note: 'length' declared here
+ 1078 |       length() const _GLIBCXX_NOEXCEPT
+      |       ^
+1 error generated.

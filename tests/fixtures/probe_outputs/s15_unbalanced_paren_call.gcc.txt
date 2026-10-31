@@ -1,0 +1,11 @@
+s15_unbalanced_paren_call.c: In function 'main':
+s15_unbalanced_paren_call.c:4:27: error: expected ')' before ';' token
+    4 |     printf("%d\n", (a + 2);
+      |           ~               ^
+      |                           )
+s15_unbalanced_paren_call.c:5:14: error: expected ';' before '}' token
+    5 |     return 0;
+      |              ^
+      |              ;
+    6 | }
+      | ~             

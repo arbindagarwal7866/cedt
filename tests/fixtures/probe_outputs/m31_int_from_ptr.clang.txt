@@ -1,0 +1,4 @@
+m31_int_from_ptr.c:3:10: error: incompatible pointer to integer conversion initializing 'char' with an expression of type 'char[2]' [-Wint-conversion]
+    3 |     char c = "a";
+      |          ^   ~~~
+1 error generated.

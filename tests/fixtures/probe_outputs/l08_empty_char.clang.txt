@@ -1,0 +1,5 @@
+l08_empty_char.c:3:14: warning: empty character constant [-Winvalid-pp-token]
+    3 |     char c = '';
+      |              ^
+l08_empty_char.c:3:14: error: expected expression
+1 warning and 1 error generated.

@@ -1,0 +1,3 @@
+/usr/bin/ld: /tmp/ccXKjuhf.o: in function `main':
+c19_undefined_method.cpp:(.text+0x23): undefined reference to `A::hello()'
+collect2: error: ld returned 1 exit status

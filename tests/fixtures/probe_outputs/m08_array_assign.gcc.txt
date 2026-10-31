@@ -1,0 +1,4 @@
+m08_array_assign.c: In function 'main':
+m08_array_assign.c:4:10: error: assignment to expression with array type
+    4 |     name = "Arbind";
+      |          ^

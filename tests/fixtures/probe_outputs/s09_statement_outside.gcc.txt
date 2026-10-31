@@ -1,0 +1,3 @@
+s09_statement_outside.c:2:8: error: expected declaration specifiers or '...' before string constant
+    2 | printf("hello\n");
+      |        ^~~~~~~~~

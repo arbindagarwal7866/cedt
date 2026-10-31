@@ -1,0 +1,4 @@
+m57_too_few_printf.c:3:12: error: too few arguments to function call, at least argument '__format' must be specified
+    3 |     printf();
+      |     ~~~~~~ ^
+1 error generated.

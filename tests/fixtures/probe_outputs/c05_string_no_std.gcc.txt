@@ -1,0 +1,23 @@
+c05_string_no_std.cpp: In function 'int main()':
+c05_string_no_std.cpp:4:5: error: 'string' was not declared in this scope
+    4 |     string name = "Arbind";
+      |     ^~~~~~
+c05_string_no_std.cpp:4:5: note: suggested alternatives:
+In file included from /usr/include/c++/13/iosfwd:41,
+                 from /usr/include/c++/13/ios:40,
+                 from /usr/include/c++/13/ostream:40,
+                 from /usr/include/c++/13/iostream:41,
+                 from c05_string_no_std.cpp:1:
+/usr/include/c++/13/bits/stringfwd.h:77:33: note:   'std::string'
+   77 |   typedef basic_string<char>    string;
+      |                                 ^~~~~~
+In file included from /usr/include/c++/13/bits/locale_classes.h:40,
+                 from /usr/include/c++/13/bits/ios_base.h:41,
+                 from /usr/include/c++/13/ios:44:
+/usr/include/c++/13/string:66:11: note:   'std::pmr::string'
+   66 |     using string    = basic_string<char>;
+      |           ^~~~~~
+c05_string_no_std.cpp:5:18: error: 'name' was not declared in this scope; did you mean 'tzname'?
+    5 |     std::cout << name;
+      |                  ^~~~
+      |                  tzname

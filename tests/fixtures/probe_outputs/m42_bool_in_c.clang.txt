@@ -1,0 +1,7 @@
+m42_bool_in_c.c:3:5: error: use of undeclared identifier 'bool'
+    3 |     bool done = true;
+      |     ^
+m42_bool_in_c.c:4:9: error: use of undeclared identifier 'done'
+    4 |     if (done) printf("done\n");
+      |         ^
+2 errors generated.

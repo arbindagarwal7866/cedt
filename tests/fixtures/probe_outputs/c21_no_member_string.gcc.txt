@@ -1,0 +1,5 @@
+c21_no_member_string.cpp: In function 'int main()':
+c21_no_member_string.cpp:6:15: error: 'std::string' {aka 'class std::__cxx11::basic_string<char>'} has no member named 'lenght'; did you mean 'length'?
+    6 |     cout << s.lenght();
+      |               ^~~~~~
+      |               length

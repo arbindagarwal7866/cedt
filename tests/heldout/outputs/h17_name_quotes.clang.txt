@@ -1,0 +1,8 @@
+h17_name_quotes.c:4:21: warning: multi-character character constant [-Wmultichar]
+    4 |     char name[20] = 'Arbind';
+      |                     ^
+h17_name_quotes.c:4:21: warning: character constant too long for its type
+h17_name_quotes.c:4:10: error: array initializer must be an initializer list or string literal
+    4 |     char name[20] = 'Arbind';
+      |          ^
+2 warnings and 1 error generated.

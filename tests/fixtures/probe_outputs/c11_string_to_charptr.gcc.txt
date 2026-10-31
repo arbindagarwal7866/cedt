@@ -1,0 +1,4 @@
+c11_string_to_charptr.cpp: In function 'int main()':
+c11_string_to_charptr.cpp:3:15: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+    3 |     char *s = "hello";
+      |               ^~~~~~~

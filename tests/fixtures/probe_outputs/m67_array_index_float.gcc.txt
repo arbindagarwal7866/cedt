@@ -1,0 +1,10 @@
+m67_array_index_float.c: In function 'main':
+m67_array_index_float.c:5:6: error: array subscript is not an integer
+    5 |     a[i] = 3;
+      |      ^
+m67_array_index_float.c:4:12: warning: variable 'i' set but not used [-Wunused-but-set-variable]
+    4 |     double i = 1;
+      |            ^
+m67_array_index_float.c:3:9: warning: variable 'a' set but not used [-Wunused-but-set-variable]
+    3 |     int a[5] = {0};
+      |         ^

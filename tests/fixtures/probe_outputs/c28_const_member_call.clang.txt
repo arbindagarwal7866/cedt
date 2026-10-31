@@ -1,0 +1,5 @@
+c28_const_member_call.cpp:6:15: error: reference to non-static member function must be called; did you mean to call it with no arguments?
+    6 |     int n = s.size;
+      |             ~~^~~~
+      |                   ()
+1 error generated.

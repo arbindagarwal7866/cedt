@@ -1,0 +1,4 @@
+p02_conio.c:2:10: fatal error: 'conio.h' file not found
+    2 | #include <conio.h>
+      |          ^~~~~~~~~
+1 error generated.

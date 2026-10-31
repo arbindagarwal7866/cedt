@@ -1,0 +1,4 @@
+h26_vector_push.cpp: In function 'int main()':
+h26_vector_push.cpp:7:7: error: 'class std::vector<int>' has no member named 'push'
+    7 |     v.push(5);
+      |       ^~~~

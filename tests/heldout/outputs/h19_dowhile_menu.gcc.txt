@@ -1,0 +1,7 @@
+h19_dowhile_menu.c: In function 'main':
+h19_dowhile_menu.c:8:26: error: expected ';' before 'printf'
+    8 |     } while (choice != 2)
+      |                          ^
+      |                          ;
+    9 |     printf("Bye\n");
+      |     ~~~~~~                

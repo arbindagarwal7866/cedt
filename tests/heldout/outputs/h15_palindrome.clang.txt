@@ -1,0 +1,4 @@
+h15_palindrome.c:10:14: warning: array comparison always evaluates to false [-Wtautological-compare]
+   10 |     if (word == rev)
+      |              ^
+1 warning generated.

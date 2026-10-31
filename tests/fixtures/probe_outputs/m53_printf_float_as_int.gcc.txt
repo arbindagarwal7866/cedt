@@ -1,0 +1,8 @@
+m53_printf_float_as_int.c: In function 'main':
+m53_printf_float_as_int.c:4:14: warning: format '%f' expects argument of type 'double', but argument 2 has type 'int' [-Wformat=]
+    4 |     printf("%f\n", n);
+      |             ~^     ~
+      |              |     |
+      |              |     int
+      |              double
+      |             %d

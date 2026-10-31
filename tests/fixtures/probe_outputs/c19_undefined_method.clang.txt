@@ -1,0 +1,3 @@
+/usr/bin/ld: /tmp/c19_undefined_method-01c289.o: in function `main':
+c19_undefined_method.cpp:(.text+0x14): undefined reference to `A::hello()'
+clang++: error: linker command failed with exit code 1 (use -v to see invocation)

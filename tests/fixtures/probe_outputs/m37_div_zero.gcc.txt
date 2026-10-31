@@ -1,0 +1,4 @@
+m37_div_zero.c: In function 'main':
+m37_div_zero.c:3:16: warning: division by zero [-Wdiv-by-zero]
+    3 |     int x = 10 / 0;
+      |                ^

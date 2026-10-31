@@ -1,0 +1,4 @@
+m38_no_effect.c: In function 'main':
+m38_no_effect.c:4:7: warning: statement with no effect [-Wunused-value]
+    4 |     x == 5;
+      |     ~~^~~~

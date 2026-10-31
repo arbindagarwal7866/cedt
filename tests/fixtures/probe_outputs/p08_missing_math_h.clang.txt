@@ -1,0 +1,5 @@
+p08_missing_math_h.c:4:20: error: call to undeclared library function 'sqrt' with type 'double (double)'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    4 |     printf("%f\n", sqrt(x));
+      |                    ^
+p08_missing_math_h.c:4:20: note: include the header <math.h> or explicitly provide a declaration for 'sqrt'
+1 error generated.

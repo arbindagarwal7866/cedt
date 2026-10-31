@@ -1,0 +1,5 @@
+l11_stray_backslash.c:4:14: error: expected ';' at end of declaration
+    4 |     int y = 6 \ 2;
+      |              ^
+      |              ;
+1 error generated.

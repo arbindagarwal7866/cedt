@@ -1,0 +1,237 @@
+{
+ "_comment": "Ground truth for the demo samples: acceptable rule ids for the first problem, the line of the bug (null = compiler dependent), and optional program input for --run.",
+ "samples": {
+  "c/01_missing_semicolon.c": {
+   "rules": [
+    "S001"
+   ],
+   "line": 6
+  },
+  "c/02_missing_brace.c": {
+   "rules": [
+    "S002"
+   ],
+   "line": 8
+  },
+  "c/03_extra_brace.c": {
+   "rules": [
+    "S009",
+    "S003"
+   ],
+   "line": 9
+  },
+  "c/04_typo_variable.c": {
+   "rules": [
+    "M001"
+   ],
+   "line": 10
+  },
+  "c/05_scope.c": {
+   "rules": [
+    "M001"
+   ],
+   "line": 6
+  },
+  "c/06_missing_header.c": {
+   "rules": [
+    "M002"
+   ],
+   "line": 6
+  },
+  "c/07_func_after_main.c": {
+   "rules": [
+    "M002",
+    "M009"
+   ],
+   "line": null
+  },
+  "c/08_scanf_ampersand.c": {
+   "rules": [
+    "W006"
+   ],
+   "line": 7,
+   "input": "21",
+   "run_rule": "R001"
+  },
+  "c/09_format_mismatch.c": {
+   "rules": [
+    "W006"
+   ],
+   "line": 8
+  },
+  "c/10_assign_in_if.c": {
+   "rules": [
+    "W001"
+   ],
+   "line": 6
+  },
+  "c/11_if_semicolon.c": {
+   "rules": [
+    "W011",
+    "W012",
+    "T001"
+   ],
+   "line": 6
+  },
+  "c/12_for_commas.c": {
+   "rules": [
+    "S006"
+   ],
+   "line": 6
+  },
+  "c/13_smart_quotes.c": {
+   "rules": [
+    "L001"
+   ],
+   "line": 5
+  },
+  "c/14_string_assign.c": {
+   "rules": [
+    "M007"
+   ],
+   "line": 6
+  },
+  "c/15_struct_semicolon.c": {
+   "rules": [
+    "S007"
+   ],
+   "line": 7
+  },
+  "c/16_turbo_c_habits.c": {
+   "rules": [
+    "P001"
+   ],
+   "line": 3
+  },
+  "c/17_pointer_arrow.c": {
+   "rules": [
+    "M019"
+   ],
+   "line": 11
+  },
+  "c/18_undefined_reference.c": {
+   "rules": [
+    "K001"
+   ],
+   "line": 4
+  },
+  "c/19_main_misspelled.c": {
+   "rules": [
+    "K001"
+   ],
+   "line": 4
+  },
+  "c/20_silent_bugs.c": {
+   "rules": [
+    "T005",
+    "T002",
+    "T006"
+   ],
+   "line": 7
+  },
+  "c/21_switch_fallthrough.c": {
+   "rules": [
+    "T007"
+   ],
+   "line": 7
+  },
+  "c/22_uninitialized_sum.c": {
+   "rules": [
+    "W002",
+    "T008"
+   ],
+   "line": null
+  },
+  "c/23_cascade.c": {
+   "rules": [
+    "L002"
+   ],
+   "line": 6
+  },
+  "c/24_divide_by_zero.c": {
+   "rules": [],
+   "line": null,
+   "input": "10 0",
+   "run_rule": "R002"
+  },
+  "c/25_return_missing.c": {
+   "rules": [
+    "W004"
+   ],
+   "line": 11
+  },
+  "c/26_string_compare.c": {
+   "rules": [
+    "W009"
+   ],
+   "line": 8
+  },
+  "cpp/01_cout_without_std.cpp": {
+   "rules": [
+    "M001"
+   ],
+   "line": 6
+  },
+  "cpp/02_cin_wrong_arrow.cpp": {
+   "rules": [
+    "C001"
+   ],
+   "line": 8
+  },
+  "cpp/03_vector_no_include.cpp": {
+   "rules": [
+    "M001",
+    "M004"
+   ],
+   "line": 6
+  },
+  "cpp/04_class_semicolon.cpp": {
+   "rules": [
+    "S007"
+   ],
+   "line": 9
+  },
+  "cpp/05_private_member.cpp": {
+   "rules": [
+    "C004"
+   ],
+   "line": 11
+  },
+  "cpp/06_member_typo.cpp": {
+   "rules": [
+    "M021"
+   ],
+   "line": 8
+  },
+  "cpp/07_cout_vector.cpp": {
+   "rules": [
+    "C001"
+   ],
+   "line": 8
+  },
+  "cpp/08_iostream_h.cpp": {
+   "rules": [
+    "P001"
+   ],
+   "line": 2
+  },
+  "cpp/09_count_ambiguous.cpp": {
+   "rules": [
+    "C006"
+   ],
+   "line": 9
+  },
+  "cpp/10_method_not_defined.cpp": {
+   "rules": [
+    "K001"
+   ],
+   "line": 7
+  },
+  "c/27_array_assign.c": {
+   "rules": [
+    "M007"
+   ],
+   "line": 7
+  }
+ }
+}

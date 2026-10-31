@@ -1,0 +1,5 @@
+h05_reverse_string.c:5:15: error: call to undeclared library function 'strlen' with type 'unsigned long (const char *)'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    5 |     int len = strlen(word);
+      |               ^
+h05_reverse_string.c:5:15: note: include the header <string.h> or explicitly provide a declaration for 'strlen'
+1 error generated.

@@ -1,0 +1,5 @@
+h15_palindrome.c: In function 'main':
+h15_palindrome.c:10:14: warning: comparison between two arrays [-Warray-compare]
+   10 |     if (word == rev)
+      |              ^~
+h15_palindrome.c:10:14: note: use '&word[0] == &rev[0]' to compare the addresses

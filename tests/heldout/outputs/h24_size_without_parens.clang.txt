@@ -1,0 +1,5 @@
+h24_size_without_parens.cpp:7:34: error: reference to non-static member function must be called; did you mean to call it with no arguments?
+    7 |     cout << "Length: " << course.size << endl;
+      |                           ~~~~~~~^~~~
+      |                                      ()
+1 error generated.

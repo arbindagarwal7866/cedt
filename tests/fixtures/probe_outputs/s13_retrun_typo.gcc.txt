@@ -1,0 +1,9 @@
+s13_retrun_typo.c: In function 'main':
+s13_retrun_typo.c:4:5: error: 'retrun' undeclared (first use in this function)
+    4 |     retrun 0;
+      |     ^~~~~~
+s13_retrun_typo.c:4:5: note: each undeclared identifier is reported only once for each function it appears in
+s13_retrun_typo.c:4:11: error: expected ';' before numeric constant
+    4 |     retrun 0;
+      |           ^~
+      |           ;

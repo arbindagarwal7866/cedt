@@ -1,0 +1,5 @@
+c22_using_no_semicolon.cpp:2:20: error: expected ';' after namespace name
+    2 | using namespace std
+      |                    ^
+      |                    ;
+1 error generated.

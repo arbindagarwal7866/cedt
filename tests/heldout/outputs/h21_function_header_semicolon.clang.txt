@@ -1,0 +1,4 @@
+h21_function_header_semicolon.c:4:1: error: expected identifier or '('
+    4 | {
+      | ^
+1 error generated.

@@ -1,0 +1,2 @@
+prog.c:3:5: note: this note has no parent error
+prog.c:4:5: error: 'x' undeclared (first use in this function)

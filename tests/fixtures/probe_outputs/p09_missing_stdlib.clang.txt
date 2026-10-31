@@ -1,0 +1,13 @@
+p09_missing_stdlib.c:3:14: error: call to undeclared library function 'malloc' with type 'void *(unsigned long)'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    3 |     int *p = malloc(10 * sizeof(int));
+      |              ^
+p09_missing_stdlib.c:3:14: note: include the header <stdlib.h> or explicitly provide a declaration for 'malloc'
+p09_missing_stdlib.c:5:5: error: call to undeclared library function 'free' with type 'void (void *)'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    5 |     free(p);
+      |     ^
+p09_missing_stdlib.c:5:5: note: include the header <stdlib.h> or explicitly provide a declaration for 'free'
+p09_missing_stdlib.c:6:5: error: call to undeclared library function 'exit' with type 'void (int) __attribute__((noreturn))'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    6 |     exit(0);
+      |     ^
+p09_missing_stdlib.c:6:5: note: include the header <stdlib.h> or explicitly provide a declaration for 'exit'
+3 errors generated.

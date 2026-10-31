@@ -1,0 +1,4 @@
+m29_break_outside.c:5:9: error: 'break' statement not in loop or switch statement
+    5 |         break;
+      |         ^
+1 error generated.

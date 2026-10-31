@@ -1,0 +1,7 @@
+m09_redefinition.c:4:9: error: redefinition of 'x'
+    4 |     int x = 2;
+      |         ^
+m09_redefinition.c:3:9: note: previous definition is here
+    3 |     int x = 1;
+      |         ^
+1 error generated.

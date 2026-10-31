@@ -1,0 +1,4 @@
+c29_missing_return_cpp.cpp:4:1: warning: non-void function does not return a value in all control paths [-Wreturn-type]
+    4 | }
+      | ^
+1 warning generated.

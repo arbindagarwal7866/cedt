@@ -1,0 +1,4 @@
+p01_header_typo.c:1:10: fatal error: 'stdoi.h' file not found
+    1 | #include <stdoi.h>
+      |          ^~~~~~~~~
+1 error generated.

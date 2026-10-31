@@ -1,0 +1,9 @@
+s07_for_commas.c: In function 'main':
+s07_for_commas.c:4:15: warning: right-hand operand of comma expression has no effect [-Wunused-value]
+    4 |     for (i = 0, i < 5, i++) {
+      |               ^
+s07_for_commas.c:4:27: error: expected ';' before ')' token
+    4 |     for (i = 0, i < 5, i++) {
+      |                           ^
+      |                           ;
+s07_for_commas.c:4:27: error: expected expression before ')' token

@@ -1,0 +1,17 @@
+h03_factorial_after_main.c: In function 'main':
+h03_factorial_after_main.c:7:30: warning: implicit declaration of function 'fact' [-Wimplicit-function-declaration]
+    7 |     printf("%d! = %ld\n", n, fact(n));
+      |                              ^~~~
+h03_factorial_after_main.c:7:21: warning: format '%ld' expects argument of type 'long int', but argument 3 has type 'int' [-Wformat=]
+    7 |     printf("%d! = %ld\n", n, fact(n));
+      |                   ~~^        ~~~~~~~
+      |                     |        |
+      |                     long int int
+      |                   %d
+h03_factorial_after_main.c: At top level:
+h03_factorial_after_main.c:11:6: error: conflicting types for 'fact'; have 'long int(int)'
+   11 | long fact(int n) {
+      |      ^~~~
+h03_factorial_after_main.c:7:30: note: previous implicit declaration of 'fact' with type 'int()'
+    7 |     printf("%d! = %ld\n", n, fact(n));
+      |                              ^~~~

@@ -1,0 +1,7 @@
+l03_invalid_suffix.c: In function 'main':
+l03_invalid_suffix.c:4:13: error: invalid suffix "x" on integer constant
+    4 |     int y = 2x + 1;
+      |             ^~
+l03_invalid_suffix.c:3:9: warning: unused variable 'x' [-Wunused-variable]
+    3 |     int x = 3;
+      |         ^

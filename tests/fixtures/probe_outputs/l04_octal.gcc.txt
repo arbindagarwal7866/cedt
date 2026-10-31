@@ -1,0 +1,4 @@
+l04_octal.c: In function 'main':
+l04_octal.c:3:17: error: invalid digit "8" in octal constant
+    3 |     int month = 08;
+      |                 ^~

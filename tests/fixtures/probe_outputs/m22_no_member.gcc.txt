@@ -1,0 +1,5 @@
+m22_no_member.c: In function 'main':
+m22_no_member.c:5:7: error: 'struct Student' has no member named 'agee'; did you mean 'age'?
+    5 |     s.agee = 20;
+      |       ^~~~
+      |       age

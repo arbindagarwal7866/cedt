@@ -1,0 +1,4 @@
+m25_void_value.c: In function 'main':
+m25_void_value.c:4:13: error: void value not ignored as it ought to be
+    4 |     int r = greet();
+      |             ^~~~~
